@@ -1,0 +1,17 @@
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto1\Proyecto1\bin\Release\netcoreapp3.1\Proyecto1.exe
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto1\Proyecto1\bin\Release\netcoreapp3.1\Proyecto1.deps.json
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto1\Proyecto1\bin\Release\netcoreapp3.1\Proyecto1.runtimeconfig.json
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto1\Proyecto1\bin\Release\netcoreapp3.1\Proyecto1.runtimeconfig.dev.json
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto1\Proyecto1\bin\Release\netcoreapp3.1\Proyecto1.dll
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto1\Proyecto1\bin\Release\netcoreapp3.1\Irony.dll
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto1\Proyecto1\obj\Release\netcoreapp3.1\Proyecto1.csprojAssemblyReference.cache
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto1\Proyecto1\obj\Release\netcoreapp3.1\Proyecto1.Form1.resources
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto1\Proyecto1\obj\Release\netcoreapp3.1\Proyecto1.csproj.GenerateResource.cache
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto1\Proyecto1\obj\Release\netcoreapp3.1\Proyecto1.AssemblyInfoInputs.cache
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto1\Proyecto1\obj\Release\netcoreapp3.1\Proyecto1.AssemblyInfo.cs
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto1\Proyecto1\obj\Release\netcoreapp3.1\Proyecto1.csproj.CoreCompileInputs.cache
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto1\Proyecto1\obj\Release\netcoreapp3.1\Proyecto1.csproj.CopyComplete
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto1\Proyecto1\obj\Release\netcoreapp3.1\Proyecto1.dll
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto1\Proyecto1\obj\Release\netcoreapp3.1\Proyecto1.genruntimeconfig.cache
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto1\Proyecto1\bin\Release\netcoreapp3.1\Proyecto1.pdb
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto1\Proyecto1\obj\Release\netcoreapp3.1\Proyecto1.pdb

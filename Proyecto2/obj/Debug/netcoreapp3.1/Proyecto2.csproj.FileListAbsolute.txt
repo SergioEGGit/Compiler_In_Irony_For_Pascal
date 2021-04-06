@@ -1,0 +1,17 @@
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto2\Proyecto2\bin\Debug\netcoreapp3.1\Proyecto2.exe
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto2\Proyecto2\bin\Debug\netcoreapp3.1\Proyecto2.deps.json
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto2\Proyecto2\bin\Debug\netcoreapp3.1\Proyecto2.runtimeconfig.json
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto2\Proyecto2\bin\Debug\netcoreapp3.1\Proyecto2.runtimeconfig.dev.json
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto2\Proyecto2\bin\Debug\netcoreapp3.1\Proyecto2.dll
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto2\Proyecto2\bin\Debug\netcoreapp3.1\Proyecto2.pdb
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto2\Proyecto2\bin\Debug\netcoreapp3.1\Irony.dll
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto2\Proyecto2\obj\Debug\netcoreapp3.1\Proyecto2.csprojAssemblyReference.cache
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto2\Proyecto2\obj\Debug\netcoreapp3.1\Proyecto2.csproj.GenerateResource.cache
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto2\Proyecto2\obj\Debug\netcoreapp3.1\Proyecto2.AssemblyInfoInputs.cache
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto2\Proyecto2\obj\Debug\netcoreapp3.1\Proyecto2.AssemblyInfo.cs
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto2\Proyecto2\obj\Debug\netcoreapp3.1\Proyecto2.csproj.CoreCompileInputs.cache
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto2\Proyecto2\obj\Debug\netcoreapp3.1\Proyecto2.csproj.CopyComplete
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto2\Proyecto2\obj\Debug\netcoreapp3.1\Proyecto2.dll
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto2\Proyecto2\obj\Debug\netcoreapp3.1\Proyecto2.pdb
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto2\Proyecto2\obj\Debug\netcoreapp3.1\Proyecto2.genruntimeconfig.cache
+C:\Usac\Organización De Lenguajes Y Compiladores 2\Laboratorio\Proyectos\Proyecto2\Proyecto2\obj\Debug\netcoreapp3.1\Proyecto2.Form1.resources
