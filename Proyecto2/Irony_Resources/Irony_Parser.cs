@@ -1783,7 +1783,7 @@ namespace Proyecto2.Irony_Resources
         // Misc 
 
         // Método Analizar 
-        public void AnalyzeTranslate(String AnalyzeString)
+        public void AnalyzeCompilate(String AnalyzeString)
         {
 
             // Instancia Clase Gramatica 
@@ -1900,15 +1900,14 @@ namespace Proyecto2.Irony_Resources
                     {
 
                         // Llamar A Método Traducir 
-                        ItemTranslate.Execute(GlobalEnv);
-                        ItemTranslate.Translate(GlobalEnv);
+                        ItemTranslate.Compilate(GlobalEnv);
 
                     }
 
                 }
 
                 // Mensaje De Exito 
-                MessageBox.Show("Traducción Completada Con Exito!");
+                MessageBox.Show("Compilación Completada Con Exito!");
 
             }
 
@@ -2037,9 +2036,6 @@ namespace Proyecto2.Irony_Resources
                     }
 
                 }
-
-                // Mensaje De Exito 
-                MessageBox.Show("Ejecución Completada Con Exito");
 
             }
 

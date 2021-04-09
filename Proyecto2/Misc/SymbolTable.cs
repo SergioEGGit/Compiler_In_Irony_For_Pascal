@@ -33,7 +33,7 @@ namespace Proyecto2.Misc
         public int Column;
 
         // Constructor 
-         public SymbolTable(String Identifier, String Type, object Value, String DecType, String Env, int Line, int Column) {
+        public SymbolTable(String Identifier, String Type, object Value, String DecType, String Env, int Line, int Column) {
 
             // Incializar Valores
             this.Identifier = Identifier;

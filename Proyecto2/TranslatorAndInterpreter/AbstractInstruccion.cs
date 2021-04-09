@@ -17,6 +17,9 @@ namespace Proyecto2.TranslatorAndInterpreter
         // Método Ejecutar 
         public abstract object Execute(EnviromentTable Env);
 
+        // Método Compilar 
+        public abstract object Compilate(EnviromentTable Env);
+
     }
     
 }

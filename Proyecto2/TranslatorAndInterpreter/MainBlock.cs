@@ -148,6 +148,56 @@ namespace Proyecto2.TranslatorAndInterpreter
 
         }
 
+        // Método Compilar
+        public override object Compilate(EnviromentTable Env)
+        {
+
+            // Nuevo Ambiente 
+            EnviromentTable MainEnv = new EnviromentTable(Env, "Env_Main");
+
+            // Instancia Codigo TA
+            ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
+
+            // Verificar Si No Esta Nullo
+            if (this.IntruccionsList != null)
+            {
+
+                // Agregar Comentario 
+                Instance_1.AddCommentOneLine("Método Main");
+
+                // Agregar Inicio Bloque
+                Instance_1.AddFuncBegin("main");
+
+                // Agregar Identacion
+                Instance_1.AddIdent();
+
+                // Recorrer Lista De Instrucciones 
+                foreach (AbstractInstruccion Instruccion in this.IntruccionsList)
+                {
+
+                    // Verificar Si Esta Nullo
+                    if (Instruccion != null)
+                    {
+
+                        Instruccion.Compilate(MainEnv);
+                                                
+                    }
+
+                }
+
+                // Quitar Identacion
+                Instance_1.DeleteIdent();
+
+                // Agregar Final Bloque
+                Instance_1.AddFuncEnd();
+
+            }
+
+            // Retornar 
+            return null;
+
+        }
+
     }
 
 }

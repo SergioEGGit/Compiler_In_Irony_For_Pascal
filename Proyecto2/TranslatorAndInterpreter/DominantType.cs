@@ -25,12 +25,12 @@ namespace Proyecto2.TranslatorAndInterpreter
         private static DataType[,] TypeTable = new DataType[5, 5] 
         
                                                 {       
-                                                    
-                                                    { DataType.Tstring, DataType.Terror,  DataType.Terror,   DataType.Terror,   DataType.Terror},
-                                                    { DataType.Terror,  DataType.Treal,   DataType.Terror,   DataType.Treal,    DataType.Terror},
-                                                    { DataType.Terror,  DataType.Terror,  DataType.Tboolean, DataType.Terror,   DataType.Terror},
-                                                    { DataType.Terror,  DataType.Treal,   DataType.Terror,   DataType.Tinteger, DataType.Terror},
-                                                    { DataType.Terror,  DataType.Terror,  DataType.Terror,   DataType.Terror,   DataType.Terror}
+                                                      /*   String   */  /*   Integer  */  /*   Boolean   */  /*     Real    */  /*    Error    */
+                                   /*    String  */ { DataType.Tstring, DataType.Terror,  DataType.Terror,   DataType.Terror,   DataType.Terror},
+                                   /*   Integer  */ { DataType.Terror,  DataType.Treal,   DataType.Terror,   DataType.Treal,    DataType.Terror},
+                                   /*   Boolean  */ { DataType.Terror,  DataType.Terror,  DataType.Tboolean, DataType.Terror,   DataType.Terror},
+                                   /*    Real    */ { DataType.Terror,  DataType.Treal,   DataType.Terror,   DataType.Tinteger, DataType.Terror},
+                                   /*    Error   */ { DataType.Terror,  DataType.Terror,  DataType.Terror,   DataType.Terror,   DataType.Terror}
 
                                                 };
         

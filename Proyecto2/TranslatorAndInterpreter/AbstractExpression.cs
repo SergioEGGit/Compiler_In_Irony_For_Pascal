@@ -15,10 +15,10 @@ namespace Proyecto2.TranslatorAndInterpreter
         public abstract ObjectReturn Translate(EnviromentTable Env); 
 
         // Método Ejecutar 
-        public abstract ObjectReturn Execute(EnviromentTable Env);  
-        
+        public abstract ObjectReturn Execute(EnviromentTable Env);
+
         // Método Compilar
-        //public abstract ObjectR
+        public abstract ObjectReturn Compilate(EnviromentTable Env);
 
     }
 }

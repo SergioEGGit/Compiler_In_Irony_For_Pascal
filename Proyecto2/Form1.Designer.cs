@@ -35,7 +35,7 @@ namespace Proyecto2
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.TextConsole = new System.Windows.Forms.RichTextBox();
-            this.ButtonTranslate = new System.Windows.Forms.Button();
+            this.ButtonCompilate = new System.Windows.Forms.Button();
             this.ButtonExecute = new System.Windows.Forms.Button();
             this.ButtonReports = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
@@ -107,18 +107,18 @@ namespace Proyecto2
             this.TextConsole.TabIndex = 9;
             this.TextConsole.Text = "> Consola";
             // 
-            // ButtonTranslate
+            // ButtonCompilate
             // 
-            this.ButtonTranslate.BackColor = System.Drawing.Color.Thistle;
-            this.ButtonTranslate.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.ButtonTranslate.ForeColor = System.Drawing.Color.Blue;
-            this.ButtonTranslate.Location = new System.Drawing.Point(1172, 112);
-            this.ButtonTranslate.Name = "ButtonTranslate";
-            this.ButtonTranslate.Size = new System.Drawing.Size(103, 36);
-            this.ButtonTranslate.TabIndex = 10;
-            this.ButtonTranslate.Text = "Traducir";
-            this.ButtonTranslate.UseVisualStyleBackColor = false;
-            this.ButtonTranslate.Click += new System.EventHandler(this.ButtonTranslate_Click);
+            this.ButtonCompilate.BackColor = System.Drawing.Color.Thistle;
+            this.ButtonCompilate.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.ButtonCompilate.ForeColor = System.Drawing.Color.Blue;
+            this.ButtonCompilate.Location = new System.Drawing.Point(1172, 112);
+            this.ButtonCompilate.Name = "ButtonCompilate";
+            this.ButtonCompilate.Size = new System.Drawing.Size(103, 36);
+            this.ButtonCompilate.TabIndex = 10;
+            this.ButtonCompilate.Text = "Compilar";
+            this.ButtonCompilate.UseVisualStyleBackColor = false;
+            this.ButtonCompilate.Click += new System.EventHandler(this.ButtonCompilate_Click);
             // 
             // ButtonExecute
             // 
@@ -166,7 +166,7 @@ namespace Proyecto2
             this.Controls.Add(this.label5);
             this.Controls.Add(this.ButtonReports);
             this.Controls.Add(this.ButtonExecute);
-            this.Controls.Add(this.ButtonTranslate);
+            this.Controls.Add(this.ButtonCompilate);
             this.Controls.Add(this.TextConsole);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -191,7 +191,7 @@ namespace Proyecto2
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RichTextBox TextConsole;
-        private System.Windows.Forms.Button ButtonTranslate;
+        private System.Windows.Forms.Button ButtonCompilate;
         private System.Windows.Forms.Button ButtonExecute;
         private System.Windows.Forms.Button ButtonReports;
         private System.Windows.Forms.Label label5;

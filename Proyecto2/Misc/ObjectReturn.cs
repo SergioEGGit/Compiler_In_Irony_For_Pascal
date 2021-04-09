@@ -32,7 +32,22 @@ namespace Proyecto2.TranslatorAndInterpreter
             this.End = "";
 
         }
+
+        // Obtener Valor 
+        public String GetValue() 
+        {
+
+            // Obtener Instancia
+            ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
+
+            // Eliminar Temporal 
+            Instance_1.DeleteTemporary(this.Value.ToString());
+
+            // Retornar Valor 
+            return this.Value.ToString();
         
+        }
+
     }
 
 }

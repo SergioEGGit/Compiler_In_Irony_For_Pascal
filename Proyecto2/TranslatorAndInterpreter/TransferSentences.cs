@@ -35,7 +35,7 @@ namespace Proyecto2.TranslatorAndInterpreter
             ObjectReturn TypeReturn = null;
 
             // Verificar Tipo
-            if(this.TransType.Equals("Break"))
+            if (this.TransType.Equals("Break"))
             {
 
                 // Inicializar 
@@ -45,7 +45,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                 TypeReturn.Option = "break";
 
             }
-            else if(this.TransType.Equals("Continue"))
+            else if (this.TransType.Equals("Continue"))
             {
 
                 // Inicializar 
@@ -76,14 +76,14 @@ namespace Proyecto2.TranslatorAndInterpreter
         {
 
             // Verificar Tipo 
-            if (this.TransType.Equals("Break")) 
+            if (this.TransType.Equals("Break"))
             {
 
                 // Agregar Trauddcion
                 VariablesMethods.TranslateString += "\n" + VariablesMethods.Ident() + "break;\n";
-            
+
             }
-            else if(this.TransType.Equals("Continue"))
+            else if (this.TransType.Equals("Continue"))
             {
 
                 // Agregar Trauddcion
@@ -107,6 +107,12 @@ namespace Proyecto2.TranslatorAndInterpreter
             // Retornar 
             return null;
 
+        }
+
+        // Método Compilar
+        public override object Compilate(EnviromentTable Env)
+        {
+            throw new NotImplementedException();
         }
 
     }

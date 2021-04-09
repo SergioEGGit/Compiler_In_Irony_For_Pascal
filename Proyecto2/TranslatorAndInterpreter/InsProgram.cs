@@ -58,6 +58,15 @@ namespace Proyecto2.TranslatorAndInterpreter
 
         }
 
+        // Método Compilar
+        public override object Compilate(EnviromentTable Env)
+        {
+
+            // Retornar 
+            return null;
+
+        }
+
     }
 
 }

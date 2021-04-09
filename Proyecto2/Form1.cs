@@ -23,25 +23,35 @@ namespace Proyecto2
         }
 
         // Acción Click Botón Analizar 
-        private void ButtonTranslate_Click(object sender, EventArgs e)
+        private void ButtonCompilate_Click(object sender, EventArgs e)
         {
 
-            ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance();
-            ThreeAddressCode Instance_2 = ThreeAddressCode.GetInstance();
+            // Obtener Texto De Consola De Entrada 
+            String EntranceString = TextEntrance.Text;
 
+            // Obtener Instnacia 
+            ThreeAddressCode Instancia_1 = ThreeAddressCode.GetInstance;
 
-            if (Instance_1 == Instance_2)
-            {
+            // Resetera Codigo 
+            Instancia_1.ResetIntermediateCode();
 
-                MessageBox.Show("Iguales");
+            // Analizar Texto Compilar
+            ParserTranslate.AnalyzeCompilate(EntranceString);
 
-            }
-            else 
-            {
+            // Analizar Texto Ejeuctar
+            ParserTranslate.AnalyzeExecute(EntranceString);
 
-                MessageBox.Show("No Iguales");
-            
-            }
+            // Limpiar Consola 
+            TextConsole.Text = "";
+
+            // Agregar Encabezado 
+            String Translate = Instancia_1.CreateHeader();
+
+            // Obtener codigo 
+            Translate += Instancia_1.GetIntermediateCode();
+
+            // Agregar Ejecucion
+            TextConsole.Text = Translate;
 
         }
 

@@ -291,6 +291,12 @@ namespace Proyecto2.TranslatorAndInterpreter
 
         }
 
+        // Método Compilar
+        public override object Compilate(EnviromentTable Env)
+        {
+            throw new NotImplementedException();
+        }
+
         // Indicar Error
         private void AddError(bool IsError, String Identifier) {
             

@@ -113,6 +113,7 @@ namespace Proyecto2.TranslatorAndInterpreter
 
         }
 
+        // Método Traducir
         public override object Translate(EnviromentTable Env)
         {
             
@@ -222,6 +223,89 @@ namespace Proyecto2.TranslatorAndInterpreter
             // Retornar 
             return null;
         
+        }
+
+        // Método Compilar
+        public override object Compilate(EnviromentTable Env)
+        {
+
+            // Objecto Auxiliar 
+            ObjectReturn AuxiliaryObject;
+
+            // Obtener Instnacia
+            ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
+
+            // Verificar Tipo De Write 
+            if(ExpressionList != null)
+            {
+
+                // Recorrer Lista De Expressiones 
+                foreach(AbstractExpression Expression in ExpressionList)
+                {
+
+                    // Obtener Valor
+                    AuxiliaryObject = Expression.Compilate(Env);
+
+                    // Añadir Comentario 
+                    Instance_1.AddCommentOneLine("Método Print");
+
+                    // Verificar Que No SEa Nullo
+                    if(Expression != null)
+                    {
+
+                        // Verificar SI ES Diferetne De Nullo
+                        if (AuxiliaryObject != null)
+                        {
+
+                            // Verificar Tipo 
+                            if (AuxiliaryObject.Type.Equals("integer")) 
+                            {
+
+                                // Agregar Print 
+                                Instance_1.AddPrintf("d", "(int) " + AuxiliaryObject.GetValue());
+
+                            }
+                            else if (AuxiliaryObject.Type.Equals("real"))
+                            {
+
+                                // Agregar Print 
+                                Instance_1.AddPrintf("f", "(float) " + AuxiliaryObject.GetValue());
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+                // Verificar Si Hay Que Agregar Salto De Linea
+                if (this.WriteType.Equals("WriteLine"))
+                {
+
+                    // Agregar Print
+                    Instance_1.AddPrintf("c", "(char) 10");
+
+                }
+
+            }
+            else
+            {
+
+                // Verificar Si Hay Que Agregar Salto De Linea
+                if (this.WriteType.Equals("WriteLine"))
+                {
+
+                    // Agregar Print
+                    Instance_1.AddPrintf("c", "(char) 10");
+
+                }
+
+            }
+
+            // Retornar 
+            return null;
+
         }
 
     }

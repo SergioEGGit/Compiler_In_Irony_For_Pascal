@@ -323,6 +323,7 @@ namespace Proyecto2.TranslatorAndInterpreter
 
         }
 
+        // Método Traducir
         public override ObjectReturn Translate(EnviromentTable Env)
         {
 
@@ -407,7 +408,156 @@ namespace Proyecto2.TranslatorAndInterpreter
             return null;
 
         }
-    
+
+        // Método Compilar
+        public override ObjectReturn Compilate(EnviromentTable Env)
+        {
+
+            // Crear Objeto Auxiliar 
+            ObjectReturn AuxiliaryReturn = null;
+
+            // Verificar Operacion
+            if (this.ArithmeticType.Equals("Sum"))
+            {
+
+                // Obtener Objetos Expresiones 
+                ObjectReturn Left = null;
+                ObjectReturn Right = null;
+
+                // Verificar Si No EStan Nullos 
+                if(this.LeftValue != null)
+                {
+
+                    // Ejecutar
+                    Left = this.LeftValue.Compilate(Env);
+
+                }
+                if(this.RightValue != null)
+                {
+
+                    // Ejecutar 
+                    Right = this.RightValue.Compilate(Env);
+
+                }
+
+                // Tipo De Dato 
+                String Type = "";
+
+                // Verificar Si No Es Nulo
+                if (Left != null && Right != null)
+                {
+
+                    // Obtener Tipo Operacion
+                    Type = DominantType.TypeTableValue(Left.Type.ToString(), Right.Type.ToString());
+
+                }                
+
+                // Obtener Instancia 
+                ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
+
+                // Crear Temporal
+                String ActualTemporary = Instance_1.CreateTemporary();
+
+                // Eliminar Temporal 
+                Instance_1.DeleteTemporary(ActualTemporary);
+
+                // Verificar Tipo 
+                if (Type == "integer")
+                {
+
+                    // Añadir Expression
+                    Instance_1.AddTwoExpression(ActualTemporary, Left.Value.ToString(), "+", Right.Value.ToString());
+
+                    // Obtener
+                    AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type);
+
+                }
+                else if (Type == "real")
+                {
+
+                    // Añadir Expression
+                    Instance_1.AddTwoExpression(ActualTemporary, Left.Value.ToString(), "+", Right.Value.ToString());
+
+                    // Obtener
+                    AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type);
+
+                }
+                else if(Type == "string") 
+                {
+                
+                    // Pendiente        
+                
+                }
+
+            }
+            else if (this.ArithmeticType.Equals("Substraction"))
+            {
+
+                // Traducir Valor Izquierda
+                this.LeftValue.Translate(Env);
+
+                // Agregar Traduccion 
+                VariablesMethods.TranslateString += " - ";
+
+                // Traducir Valor Derecha
+                this.RightValue.Translate(Env);
+
+            }
+            else if (this.ArithmeticType.Equals("Multiplication"))
+            {
+
+                // Traducir Valor Izquierda
+                this.LeftValue.Translate(Env);
+
+                // Agregar Traduccion 
+                VariablesMethods.TranslateString += " * ";
+
+                // Traducir Valor Derecha
+                this.RightValue.Translate(Env);
+
+            }
+            else if (this.ArithmeticType.Equals("Division"))
+            {
+
+                // Traducir Valor Izquierda
+                this.LeftValue.Translate(Env);
+
+                // Agregar Traduccion 
+                VariablesMethods.TranslateString += " / ";
+
+                // Traducir Valor Derecha
+                this.RightValue.Translate(Env);
+
+            }
+            else if (this.ArithmeticType.Equals("Mod"))
+            {
+
+                // Traducir Valor Izquierda
+                this.LeftValue.Translate(Env);
+
+                // Agregar Traduccion 
+                VariablesMethods.TranslateString += " % ";
+
+                // Traducir Valor Derecha
+                this.RightValue.Translate(Env);
+
+            }
+            else if (this.ArithmeticType.Equals("Minus"))
+            {
+
+                // Agregar Traduccion 
+                VariablesMethods.TranslateString += " -";
+
+                // Traducir Valor Derecha
+                this.RightValue.Translate(Env);
+
+            }
+
+            // Retornar 
+            return AuxiliaryReturn;
+
+        }
+
     }
 
 }
