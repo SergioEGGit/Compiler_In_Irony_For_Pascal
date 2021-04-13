@@ -999,11 +999,11 @@ namespace Proyecto2.TranslatorAndInterpreter
                     }
 
                     // Agregar Comentario
-                    Instance_1.AddCommetOneLine("Obtener Posicion Inicial De Los Strings");
+                    Instance_1.AddCommentOneLine("Obtener Posicion Inicial De Los Strings");
 
                     // Obtener Strings 
                     Instance_1.AddOneExpression("T1", Left.Value.ToString());
-                    Instance_1.AddOneExpression("T2", RIght.Value.ToString());
+                    Instance_1.AddOneExpression("T2", Right.Value.ToString());
 
                     // Agregar Comentario 
                     Instance_1.AddCommentOneLine("Llamada A Función");
