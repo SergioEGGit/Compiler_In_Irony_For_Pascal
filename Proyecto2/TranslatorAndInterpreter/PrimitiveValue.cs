@@ -154,18 +154,54 @@ namespace Proyecto2.TranslatorAndInterpreter
                 AuxiliaryReturn = new ObjectReturn(AuxiliaryValueD, "real");
 
             }
-            else if (this.Value.ToString() == "true")
+            else if(bool.TryParse(this.Value.ToString(), out bool AuxiliaryValueB))
             {
 
-                // Agregar A Objecto Valor
-                AuxiliaryReturn = new ObjectReturn(1, "boolean");
+                // Obtener Instancia 
+                ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
 
-            }
-            else if (this.Value.ToString() == "false")
-            {
+                // Agregar Labels 
+                if (this.BoolTrue.Equals(""))
+                {
 
-                // Agregar A Objecto Valor
-                AuxiliaryReturn = new ObjectReturn(0, "boolean");
+                    // Crear Label 
+                    this.BoolTrue = Instance_1.CreateLabel();
+
+                }
+                if (this.BoolFalse.Equals("")) 
+                {
+
+                    // Crear Label 
+                    this.BoolFalse = Instance_1.CreateLabel();
+                
+                }
+
+                // Agregar Comentario 
+                Instance_1.AddCommentOneLine("Salto Condición Bool");
+
+                // Verificar Valor 
+                if(AuxiliaryValueB)
+                {
+
+                    // Agregar Goto 
+                    Instance_1.AddNonConditionalJump(this.BoolTrue);
+
+                }
+                else
+                {
+
+                    // Agregar Goto 
+                    Instance_1.AddNonConditionalJump(this.BoolFalse);
+
+                }
+
+                // Pendiente
+                AuxiliaryReturn = new ObjectReturn("", "boolean") {
+
+                    BoolTrue = this.BoolTrue,
+                    BoolFalse = this.BoolFalse
+                
+                };
 
             }
             else
@@ -182,7 +218,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                     if (ActualVar != null)
                     {
 
-                        ObjectReturn ActualValue = (ObjectReturn)ActualVar.Value;
+                        ObjectReturn ActualValue = (ObjectReturn) ActualVar.Value;
 
                         // Retornar Objecto 
                         AuxiliaryReturn = new ObjectReturn(ActualValue.Value, ActualVar.Type);
@@ -206,11 +242,43 @@ namespace Proyecto2.TranslatorAndInterpreter
                     // Crear Temporal 
                     String ActualTemporary = Instancia_1.CreateTemporary();
 
-                    // Obtener Punter 
-                    Instancia_1.CreateOneExpression();
+                    // Agregar Comentario
+                    Instancia_1.AddCommentOneLine("Almacenar String En El Heap (Print)");
+
+                    // Obtener Puntero Heap 
+                    Instancia_1.AddOneExpression(ActualTemporary, "HP");
+
+                    // Variable Ascii
+                    int Ascii;
+
+                    // Insertar Valores Al Heap 
+                    foreach(Char Letter in this.Value.ToString()) 
+                    {
+
+                        // Valor Ascii
+                        Ascii = (int) Letter;
+
+                        // Agregar Valor A Heap
+                        Instancia_1.AddValueToHeap("HP", Ascii.ToString());
+
+                        // Mover Puntero 
+                        Instancia_1.MovePointerHeap();
+
+                    }
+
+                    // Agregar Valor A Heap
+                    Instancia_1.AddValueToHeap("HP", "-1");
+
+                    // Mover Puntero 
+                    Instancia_1.MovePointerHeap();
 
                     // Agregar A Objecto Valor
-                    AuxiliaryReturn = new ObjectReturn(this.Value.ToString(), "string");
+                    AuxiliaryReturn = new ObjectReturn(ActualTemporary, "string")
+                    {
+
+                        Temporary = true
+                    
+                    };
 
                 }
 

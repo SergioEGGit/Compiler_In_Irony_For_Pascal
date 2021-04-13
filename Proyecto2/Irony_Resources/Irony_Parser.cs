@@ -1656,7 +1656,7 @@ namespace Proyecto2.Irony_Resources
 
                         break;
 
-                    case "%":
+                    case "mod":
 
                         // Retornar 
                         AuxiliaryReturn = new Arithmetic(Expression(ActualNode.ChildNodes[0]), Expression(ActualNode.ChildNodes[2]), "Mod", ActualNode.ChildNodes[1].Token.Location.Line + 1, ActualNode.ChildNodes[1].Token.Location.Column + 1);

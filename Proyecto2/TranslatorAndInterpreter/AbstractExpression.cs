@@ -1,5 +1,6 @@
 ﻿// ------------------------------------------ Librerias E Imports --------------------------------------------------
 using Proyecto2.Misc;
+using System;
 
 // ------------------------------------------------ NameSpace ------------------------------------------------------
 namespace Proyecto2.TranslatorAndInterpreter
@@ -8,6 +9,14 @@ namespace Proyecto2.TranslatorAndInterpreter
     // Clase Abastracta     
     abstract class AbstractExpression
     {
+
+        // Atributos 
+        
+        // Es Bool Etiqueta True 
+        public String BoolTrue = "";
+
+        // Es Bool Etiqueta False 
+        public String BoolFalse = "";
 
         // Creación De Metodos Abstractos 
 

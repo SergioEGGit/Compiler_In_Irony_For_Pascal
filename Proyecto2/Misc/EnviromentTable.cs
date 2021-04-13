@@ -25,6 +25,9 @@ namespace Proyecto2.Misc
         // Nombre Del Ambiente Actual
         public String EnviromentName;
 
+        // Tamaño Del Ambiente 
+        public int EnviromentSize;
+
         // Constructor 
         public EnviromentTable(EnviromentTable ParentEnviroment, String EnviromentName) 
         {
@@ -34,6 +37,7 @@ namespace Proyecto2.Misc
             this.PrimitiveVariables = new Dictionary<String, SymbolTable>();
             this.Functions = new Dictionary<String, FunctionTable>();
             this.EnviromentName = EnviromentName;
+            this.EnviromentSize = 0;
 
             // Agregar Entorno A Lista 
             VariablesMethods.EnviromentList.AddLast(this);

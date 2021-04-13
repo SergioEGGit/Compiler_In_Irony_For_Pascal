@@ -179,6 +179,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                     if (Instruccion != null)
                     {
 
+                        // Compilar
                         Instruccion.Compilate(MainEnv);
                                                 
                     }

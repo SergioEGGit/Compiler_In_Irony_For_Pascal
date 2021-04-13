@@ -22,6 +22,15 @@ namespace Proyecto2.TranslatorAndInterpreter
         // End
         public String End;
 
+        // Temporal 
+        public bool Temporary;
+
+        // Label True 
+        public String BoolTrue;
+
+        // Label False 
+        public String BoolFalse;
+
         // Constructor 
         public ObjectReturn(object Value, object Type) {
 
@@ -30,6 +39,9 @@ namespace Proyecto2.TranslatorAndInterpreter
             this.Type = Type;
             this.Option = "";
             this.End = "";
+            this.Temporary = false;
+            this.BoolTrue = "";
+            this.BoolFalse = "";
 
         }
 

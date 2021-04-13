@@ -345,7 +345,8 @@ namespace Proyecto2.Irony_Resources
                                                                 "graficar_ts",
                                                                 "and",
                                                                 "or",
-                                                                "not"
+                                                                "not",
+                                                                "mod"
 
                                                        };
 

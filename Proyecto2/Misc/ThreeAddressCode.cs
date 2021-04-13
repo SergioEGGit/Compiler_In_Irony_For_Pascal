@@ -33,7 +33,7 @@ namespace Proyecto2.Misc
         {
 
             // Inicializar Valores
-            TemporaryCounter = 0;
+            TemporaryCounter = 4;
             LabelCounter = 0;
             IntermediateCode = "";
             TemporaryArray = new Dictionary<String, String>();
@@ -66,11 +66,31 @@ namespace Proyecto2.Misc
         }
 
         // Agregar Codigo 
-        public void AddLineToIntermediateCode(String LineCode)
+        public void AddLineToIntermediateCode(String LineCode, String Type)
         {
 
-            // Agregar Codigo A Variable 
-            IntermediateCode += Ident + LineCode + "\n";
+            // Verificar Tipo
+            if (Type.Equals("Dos"))
+            {
+
+                // Agregar Codigo A Variable 
+                IntermediateCode += Ident + LineCode + "\n\n";
+
+            }
+            else if(Type.Equals("Uno"))
+            {
+
+                // Agregar Codigo A Variable 
+                IntermediateCode += Ident + LineCode + "\n";
+
+            }
+            else if (Type.Equals("Sin"))
+            {
+
+                // Agregar Codigo A Variable 
+                IntermediateCode += Ident + LineCode;
+
+            }
 
         }
 
@@ -88,7 +108,7 @@ namespace Proyecto2.Misc
         {
 
             // Inicializar Valores
-            TemporaryCounter = 0;
+            TemporaryCounter = 4;
             LabelCounter = 0;
             IntermediateCode = "";
             TemporaryArray = new Dictionary<String, String>();
@@ -100,7 +120,7 @@ namespace Proyecto2.Misc
         {
 
             // Auxiliar Header 
-            String AuxiliaryString = "// Librerias Y Declaraciones\n\n" +
+            String AuxiliaryString = "// Librerias Y Declaraciones\n" +
                                      "#include <stdio.h> \n\n" +
                                      "float Heap[100000]; \n" +
                                      "float Stack[100000]; \n\n" +
@@ -108,7 +128,7 @@ namespace Proyecto2.Misc
                                      "float HP; \n\n";
 
             // Verificar Si Hay Temporales 
-            if(TemporaryCounter > 0) 
+            if (TemporaryCounter > 0)
             {
 
                 // Agregar Tipo
@@ -136,7 +156,7 @@ namespace Proyecto2.Misc
 
                 }
 
-            }
+            }            
 
             // Retornar 
             return AuxiliaryString;
@@ -169,11 +189,23 @@ namespace Proyecto2.Misc
             LabelCounter += 1;
 
             // String Auxiliar 
-            String AuxiliaryString = "L" + LabelCounter.ToString() + ":";
+            String AuxiliaryString = "L" + LabelCounter.ToString();
 
             // Crear Temporal 
             return AuxiliaryString;
 
+        }
+
+        // Agregar Label 
+        public void AddLabel(String Label) 
+        {
+
+            // Linea De codigo 
+            String LineCode = Label + ":";
+
+            // Agregar Linea 
+            AddLineToIntermediateCode(LineCode, "Dos");
+        
         }
 
         // Obtener Array De Temporales 
@@ -219,26 +251,26 @@ namespace Proyecto2.Misc
         }
 
         // Crear Goto 
-        public String CreateNonConditionalJump(String Label) 
+        public void AddNonConditionalJump(String Label) 
         {
 
             // String Auxiliar 
             String AuxiliaryString = "goto " + Label + ";";
 
-            // Retornar Goto 
-            return AuxiliaryString;
+            // Agregar Linea De Codigo
+            AddLineToIntermediateCode(AuxiliaryString, "Dos");
         
         }
 
         // Crear If 
-        public String CreateConditionalJump(String LeftExp, String Operator, String RightExp, String Label)
+        public void AddConditionalJump(String LeftExp, String Operator, String RightExp, String Label)
         {
 
             // String Auxiliar 
             String AuxiliaryString = "if(" + LeftExp + " " + Operator  + " " + RightExp + ") goto " + Label + ";";
 
-            // Retornar Goto 
-            return AuxiliaryString;
+            // Agregar Linea A Codigo
+            AddLineToIntermediateCode(AuxiliaryString, "Dos");
 
         }
 
@@ -250,7 +282,7 @@ namespace Proyecto2.Misc
             String AuxiliaryString = AssingExp + " = " + Exp + ";";
 
             // Agregar A Codigo
-            AddLineToIntermediateCode(AuxiliaryString);
+            AddLineToIntermediateCode(AuxiliaryString, "Dos");
 
         }
 
@@ -262,7 +294,7 @@ namespace Proyecto2.Misc
             String AuxiliaryString = AssingExp + " = " + LeftExp + " " + Operator + " " + RightExp + ";";
 
             // Agregar Linea De Codigo 
-            AddLineToIntermediateCode(AuxiliaryString);
+            AddLineToIntermediateCode(AuxiliaryString, "Dos");
 
         }
 
@@ -271,10 +303,10 @@ namespace Proyecto2.Misc
         {
 
             // Crear Linea 
-            String Begin = "void " + Identifier + "() { \n";
+            String Begin = "void " + Identifier + "() {";
 
             // Agregar Linea A codigo
-            AddLineToIntermediateCode(Begin);
+            AddLineToIntermediateCode(Begin, "Dos");
 
         }
 
@@ -287,7 +319,7 @@ namespace Proyecto2.Misc
                          "}\n";
 
             // Agregar Linea A codigo
-            AddLineToIntermediateCode(End);
+            AddLineToIntermediateCode(End, "Dos");
 
         }
 
@@ -296,7 +328,7 @@ namespace Proyecto2.Misc
         {
 
             // Agregar Identacion
-            Ident = "    ";
+            Ident += "    ";
         
         }
 
@@ -304,12 +336,18 @@ namespace Proyecto2.Misc
         public void DeleteIdent()
         {
 
-            // Agregar Identacion
-            Ident = "";
+            // Verificar Si Es Mayor Que 4
+            if (Ident.Length >= 4) 
+            {
+
+                // Agregar Identacion
+                Ident = Ident[0..^4];
+
+            }
 
         }
 
-        // Agergar Printf
+        // Agregar Printf
         public void AddPrintf(String Format, String Value) 
         {
 
@@ -317,7 +355,7 @@ namespace Proyecto2.Misc
             String LineCode = "printf(\"%" + Format + "\", " + Value + ");";
 
             // Añadir Linea De Codigo
-            AddLineToIntermediateCode(LineCode);
+            AddLineToIntermediateCode(LineCode, "Dos");
          
         }
 
@@ -326,10 +364,369 @@ namespace Proyecto2.Misc
         {
 
             // Crear String Con Comentario 
-            String LineCode = "\n" + Ident + "// " + Text;
+            String LineCode = "// " + Text;
 
             // Agregar Linea A Codigo
-            AddLineToIntermediateCode(LineCode);
+            AddLineToIntermediateCode(LineCode, "Uno");
+        
+        }
+
+        // Añadir Llamada A Función 
+        public void AddFunctionCall(String Identifier) 
+        {
+
+            // Linea De Codigo 
+            String LineCode = Identifier + "();";
+
+            // Agregar Linea De Codigo 
+            AddLineToIntermediateCode(LineCode, "Dos");
+        
+        }
+
+        // Heap 
+
+        // Agregar Valor A Heap 
+        public void AddValueToHeap(String Index, String Value) 
+        {
+
+            // String Con Instruccion
+            String LineCode = "Heap[(int) " + Index + "] = " + Value + ";";
+
+            // Agregar Linea A Heap 
+            AddLineToIntermediateCode(LineCode, "Dos");
+
+        }
+
+        // Obtener Valor Del Heap
+        public void GetValueOfHeap(String Index, String AssigExp)
+        {
+
+            // String Con Instruccion
+            String LineCode = AssigExp + " = Heap[(int) " + Index + "];";
+
+            // Agregar Linea A Heap 
+            AddLineToIntermediateCode(LineCode, "Dos");
+
+        }
+
+        // Avanzar Puntero Heap
+        public void MovePointerHeap()
+        {
+
+            // String Con Instruccion
+            String LineCode = "HP = HP + 1;";
+
+            // Agregar Linea A Heap 
+            AddLineToIntermediateCode(LineCode, "Dos");
+
+        }
+
+        // Nativas 
+
+        // Imprimir String 
+        public void AddNativePrintString()
+        {
+
+            // Crear Label 
+            String ActualLabel_1 = CreateLabel();
+
+            // Crear Label 
+            String ActualLabel_2 = CreateLabel();
+
+            // Agregar Inicio Funcion
+            AddFuncBegin("print_string");
+
+            // Agregar Identacion
+            AddIdent();
+
+            // Agregar Comentario
+            AddCommentOneLine("Ciclo For Para Imprimir String");
+
+            // Agregar Label
+            AddLabel(ActualLabel_1);
+
+            // Agregar Identacion
+            AddIdent();
+
+            // Obtener Valor De Heap
+            GetValueOfHeap("T1", "T2");
+
+            // Agregar If 
+            AddConditionalJump("T2", "==", "-1", ActualLabel_2);
+
+            // Agregar Identacion
+            AddIdent();
+
+            // Añadir Print
+            AddPrintf("c", "(char) T2");
+
+            // Aumentar Posicion 
+            AddTwoExpression("T1", "T1", "+", "1");
+
+            // Agregar Salto No Condicional
+            AddNonConditionalJump(ActualLabel_1);
+
+            // Quitar Identacion
+            DeleteIdent();
+            DeleteIdent();
+
+            // Agregar Label 2
+            AddLabel(ActualLabel_2);
+
+            // Agregar Identacion
+            AddIdent();
+
+            // Agregar Comentario 
+            AddCommentOneLine("Fin Del Método");
+
+            // Sin Identacion 
+            DeleteIdent();
+            DeleteIdent();
+
+            // Fin Del Metodo 
+            AddFuncEnd();
+
+        }
+
+        // Concatenar String
+        public void AddNativeConcatString()
+        {
+
+            // Crear Label 
+            String ActualLabel_1 = CreateLabel();
+
+            // Crear Label 
+            String ActualLabel_2 = CreateLabel();
+
+            // Crear Label 
+            String ActualLabel_3 = CreateLabel();
+
+            // Agregar Inicio Funcion
+            AddFuncBegin("concat_string");
+
+            // Agregar Identacion
+            AddIdent();
+
+            // Agregar Comentario
+            AddCommentOneLine("Almacenar Inicio String Retorno");
+
+            // Agregar Retorno 
+            AddOneExpression("T4", "HP");
+
+            // Agregar Comentario 
+            AddCommentOneLine("Recuperar Y Almacenar Nuevo String");
+
+            // Agregar Label
+            AddLabel(ActualLabel_1);
+
+            // Agregar Identacion
+            AddIdent();
+
+            // Obtener Valor De Heap
+            GetValueOfHeap("T1", "T3");
+
+            // Agregar If 
+            AddConditionalJump("T3", "==", "-1", ActualLabel_2);
+
+            // Agregar Identacion
+            AddIdent();
+
+            // Añadir Print
+            AddValueToHeap("HP", "T3");
+
+            // Mover Puntero 
+            MovePointerHeap();
+
+            // Aumentar Posicion 
+            AddTwoExpression("T1", "T1", "+", "1");
+
+            // Agregar Salto No Condicional
+            AddNonConditionalJump(ActualLabel_1);
+
+            // Quitar Identacion
+            DeleteIdent();
+            DeleteIdent();
+
+            // Agregar Label
+            AddLabel(ActualLabel_2);
+
+            // Agregar Identacion
+            AddIdent();
+
+            // Obtener Valor De Heap
+            GetValueOfHeap("T2", "T3");
+
+            // Agregar If 
+            AddConditionalJump("T3", "==", "-1", ActualLabel_3);
+
+            // Agregar Identacion
+            AddIdent();
+
+            // Añadir Print
+            AddValueToHeap("HP", "T3");
+
+            // Mover Puntero 
+            MovePointerHeap();
+
+            // Aumentar Posicion 
+            AddTwoExpression("T2", "T2", "+", "1");
+
+            // Agregar Salto No Condicional
+            AddNonConditionalJump(ActualLabel_2);
+
+            // Quitar Identacion
+            DeleteIdent();
+            DeleteIdent();
+
+            // Agregar Label
+            AddLabel(ActualLabel_3);
+
+            // Añadir Identacion 
+            AddIdent();
+
+            // Añadir Print
+            AddValueToHeap("HP", "-1");
+
+            // Mover Puntero 
+            MovePointerHeap();
+
+            // Agregar Comentario 
+            AddCommentOneLine("Fin Del Método");
+
+            // Sin Identacion 
+            DeleteIdent();
+            DeleteIdent();
+
+            // Fin Del Metodo 
+            AddFuncEnd();
+
+        }
+
+        // Comparar String 
+        public void AddNativeCompareString() 
+        {
+
+            // Crear Label 
+            String ActualLabel_1 = CreateLabel();
+
+            // Crear Label 
+            String ActualLabel_2 = CreateLabel();
+
+            // Crear Label 
+            String ActualLabel_3 = CreateLabel();
+
+            // Agregar Inicio Funcion
+            AddFuncBegin("compare_string");
+
+            // Agregar Identacion
+            AddIdent();
+
+            // Añadir Label 
+            AddLabel(ActualLabel_1);
+
+            // Agregar Identacion 
+            AddIdent();
+
+            // Agregar Comentario
+            AddCommentOneLine("Obtener Caracteres A Comparar");
+
+            // Obtener Valor Del Heap
+            GetValueOfHeap("T1", "T3");
+            GetValueOfHeap("T2", "T4");
+
+            // Agregar Comentario 
+            AddCommentOneLine("Verificar Si Son Iguales");
+
+            // Agregar Salto Condicional 
+            AddConditionalJump("T3", "==", "T4", ActualLabel_2);
+
+            // Agregar Identacion 
+            AddIdent();
+
+            // Agregar Comentario 
+            AddCommentOneLine("El 0 Indica Que Los Strings No Son Iguales");
+
+            // Agregar Estado 
+            AddOneExpression("T4", "0");
+
+            // Agregar Salto No Condicional
+            AddNonConditionalJump(ActualLabel_3);
+
+            // Quitar Identacion
+            DeleteIdent();
+            DeleteIdent();
+
+            // Agregar Label
+            AddLabel(ActualLabel_2);
+
+            // Agregar Identacion
+            AddIdent();
+
+            // Agregar Estado 
+            AddOneExpression("T4", "1");
+
+            // Agregar If 
+            AddConditionalJump("T3", "==", "-1", ActualLabel_3);
+
+            // Agregar Identacion
+            AddIdent();
+
+            // Aumentar Posicion 
+            AddTwoExpression("T1", "T1", "+", "1");
+
+            // Aumentar Posicion 
+            AddTwoExpression("T2", "T2", "+", "1");
+
+            // Agregar Salto No Condicional
+            AddNonConditionalJump(ActualLabel_1);
+
+            // Quitar Identacion
+            DeleteIdent();
+            DeleteIdent();
+
+            // Agregar Label
+            AddLabel(ActualLabel_3);
+
+            // Añadir Identacion 
+            AddIdent();
+            
+            // Agregar Comentario 
+            AddCommentOneLine("Fin Del Método");
+
+            // Sin Identacion 
+            DeleteIdent();
+
+            // Fin Del Metodo 
+            AddFuncEnd();
+
+        }
+
+        // Imprimir Bool
+        public void PrintBool(bool Value) 
+        {
+
+            // Verificar Valor 
+            if(Value)
+            {
+
+                // Agregar Print
+                AddPrintf("c", ((int)'t').ToString());
+                AddPrintf("c", ((int)'r').ToString());
+                AddPrintf("c", ((int)'u').ToString());
+                AddPrintf("c", ((int)'e').ToString());
+
+            }
+            else
+            {
+
+                // Agregar Print
+                AddPrintf("c", ((int)'f').ToString());
+                AddPrintf("c", ((int)'a').ToString());
+                AddPrintf("c", ((int)'l').ToString());
+                AddPrintf("c", ((int)'s').ToString());
+                AddPrintf("c", ((int)'e').ToString());
+
+            }
         
         }
 

@@ -256,8 +256,22 @@ namespace Proyecto2.TranslatorAndInterpreter
                     if (int.Parse(Right.Value.ToString()) != 0)
                     {
 
-                        // Obtener
-                        AuxiliaryReturn = new ObjectReturn(int.Parse(Left.Value.ToString()) % int.Parse(Right.Value.ToString()), Type);
+                        // Verificar Si Ambos Son Integer 
+                        if(Left.Type.Equals("integer") && Right.Type.Equals("integer")) 
+                        {
+
+                            // Obtener
+                            AuxiliaryReturn = new ObjectReturn(int.Parse(Left.Value.ToString()) % int.Parse(Right.Value.ToString()), Type);
+
+                        }
+                        else
+                        {
+
+                            // Agregar Error 
+                            VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "No Se Permite Mod Entre Integer Y Real", this.TokenLine, this.TokenColumn));
+
+
+                        }
 
                     }
                     else
@@ -267,6 +281,40 @@ namespace Proyecto2.TranslatorAndInterpreter
                         VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "Error Al Realizar Mod Sobre 0", this.TokenLine, this.TokenColumn));
 
                     }                    
+
+                }
+                else if (Type == "real")
+                {
+
+                    // Verificar Si Esta Divido Por Cero 
+                    if(Decimal.Parse(Right.Value.ToString()) != 0)
+                    {
+
+                        // Verificar Si Ambos Son Integer 
+                        if (Left.Type.Equals("integer") && Right.Type.Equals("integer"))
+                        {
+
+                            // Obtener
+                            AuxiliaryReturn = new ObjectReturn(int.Parse(Left.Value.ToString()) % int.Parse(Right.Value.ToString()), Type);
+
+                        }
+                        else
+                        {
+
+                            // Agregar Error 
+                            VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "No Se Permite Mod Entre Integer Y Real", this.TokenLine, this.TokenColumn));
+
+
+                        }
+
+                    }
+                    else
+                    {
+
+                        // Agregar Error 
+                        VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "Error Al Realizar Mod Sobre 0", this.TokenLine, this.TokenColumn));
+
+                    }
 
                 }
                 else
@@ -416,41 +464,41 @@ namespace Proyecto2.TranslatorAndInterpreter
             // Crear Objeto Auxiliar 
             ObjectReturn AuxiliaryReturn = null;
 
+            // Obtener Objetos Expresiones 
+            ObjectReturn Left = null;
+            ObjectReturn Right = null;
+
+            // Verificar Si No EStan Nullos 
+            if (this.LeftValue != null)
+            {
+
+                // Ejecutar
+                Left = this.LeftValue.Compilate(Env);
+
+            }
+            if (this.RightValue != null)
+            {
+
+                // Ejecutar 
+                Right = this.RightValue.Compilate(Env);
+
+            }
+
+            // Tipo De Dato 
+            String Type = "";
+
+            // Verificar Si No Es Nulo
+            if (Left != null && Right != null)
+            {
+
+                // Obtener Tipo Operacion
+                Type = DominantType.TypeTableValue(Left.Type.ToString(), Right.Type.ToString());
+
+            }
+
             // Verificar Operacion
             if (this.ArithmeticType.Equals("Sum"))
             {
-
-                // Obtener Objetos Expresiones 
-                ObjectReturn Left = null;
-                ObjectReturn Right = null;
-
-                // Verificar Si No EStan Nullos 
-                if(this.LeftValue != null)
-                {
-
-                    // Ejecutar
-                    Left = this.LeftValue.Compilate(Env);
-
-                }
-                if(this.RightValue != null)
-                {
-
-                    // Ejecutar 
-                    Right = this.RightValue.Compilate(Env);
-
-                }
-
-                // Tipo De Dato 
-                String Type = "";
-
-                // Verificar Si No Es Nulo
-                if (Left != null && Right != null)
-                {
-
-                    // Obtener Tipo Operacion
-                    Type = DominantType.TypeTableValue(Left.Type.ToString(), Right.Type.ToString());
-
-                }                
 
                 // Obtener Instancia 
                 ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
@@ -459,97 +507,309 @@ namespace Proyecto2.TranslatorAndInterpreter
                 String ActualTemporary = Instance_1.CreateTemporary();
 
                 // Eliminar Temporal 
-                Instance_1.DeleteTemporary(ActualTemporary);
+                // Instance_1.DeleteTemporary(ActualTemporary);
 
                 // Verificar Tipo 
                 if (Type == "integer")
                 {
 
                     // Añadir Expression
-                    Instance_1.AddTwoExpression(ActualTemporary, Left.Value.ToString(), "+", Right.Value.ToString());
+                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "+", Right.GetValue());
 
                     // Obtener
-                    AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type);
+                    AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type)
+                    {
+
+                        Temporary = true
+
+                    };
 
                 }
                 else if (Type == "real")
                 {
 
                     // Añadir Expression
-                    Instance_1.AddTwoExpression(ActualTemporary, Left.Value.ToString(), "+", Right.Value.ToString());
+                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "+", Right.GetValue());
 
                     // Obtener
-                    AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type);
+                    AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type)
+                    {
+
+                        Temporary = true
+
+                    };
 
                 }
-                else if(Type == "string") 
+                else if (Type == "string")
                 {
-                
-                    // Pendiente        
-                
+
+                    // Crear Temporal
+                    String ActualTemporary_1 = Instance_1.CreateTemporary();
+
+                    // Eliminar Temporal 
+                    // Instance_1.DeleteTemporary(ActualTemporary_1);
+
+                    // Añadir Expression 1
+                    Instance_1.AddOneExpression("T1", Left.GetValue());
+
+                    // Añadir Expression 2
+                    Instance_1.AddOneExpression("T2", Right.GetValue());
+
+                    // Agregar Comentario 
+                    Instance_1.AddCommentOneLine("Llamada Funcion Nativa (Concatenar String)");
+
+                    // Agregar Llamada A Funcion 
+                    Instance_1.AddFunctionCall("concat_string");
+
+                    // Obtener Valor De Nueva Cadena 
+                    Instance_1.AddOneExpression(ActualTemporary_1, "T4");
+
+                    // Obtener
+                    AuxiliaryReturn = new ObjectReturn(ActualTemporary_1, Type)
+                    {
+
+                        Temporary = true
+
+                    };
+
                 }
 
-            }
+            } 
             else if (this.ArithmeticType.Equals("Substraction"))
             {
 
-                // Traducir Valor Izquierda
-                this.LeftValue.Translate(Env);
+                // Obtener Instancia 
+                ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
 
-                // Agregar Traduccion 
-                VariablesMethods.TranslateString += " - ";
+                // Crear Temporal
+                String ActualTemporary = Instance_1.CreateTemporary();
 
-                // Traducir Valor Derecha
-                this.RightValue.Translate(Env);
+                // Eliminar Temporal 
+                // Instance_1.DeleteTemporary(ActualTemporary);
+
+                // Verificar Tipo 
+                if (Type == "integer")
+                {
+
+                    // Añadir Expression
+                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "-", Right.GetValue());
+
+                    // Obtener
+                    AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type)
+                    {
+
+                        Temporary = true
+
+                    };
+
+                }
+                else if (Type == "real")
+                {
+
+                    // Añadir Expression
+                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "-", Right.GetValue());
+
+                    // Obtener
+                    AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type)
+                    {
+
+                        Temporary = true
+
+                    };
+
+                }
 
             }
             else if (this.ArithmeticType.Equals("Multiplication"))
             {
 
-                // Traducir Valor Izquierda
-                this.LeftValue.Translate(Env);
+                // Obtener Instancia 
+                ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
 
-                // Agregar Traduccion 
-                VariablesMethods.TranslateString += " * ";
+                // Crear Temporal
+                String ActualTemporary = Instance_1.CreateTemporary();
 
-                // Traducir Valor Derecha
-                this.RightValue.Translate(Env);
+                // Eliminar Temporal 
+                // Instance_1.DeleteTemporary(ActualTemporary);
+
+                // Verificar Tipo 
+                if (Type == "integer")
+                {
+
+                    // Añadir Expression
+                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "*", Right.GetValue());
+
+                    // Obtener
+                    AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type)
+                    {
+
+                        Temporary = true
+
+                    };
+
+                }
+                else if (Type == "real")
+                {
+
+                    // Añadir Expression
+                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "*", Right.GetValue());
+
+                    // Obtener
+                    AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type)
+                    {
+
+                        Temporary = true
+
+                    };
+
+                }
 
             }
             else if (this.ArithmeticType.Equals("Division"))
             {
 
-                // Traducir Valor Izquierda
-                this.LeftValue.Translate(Env);
+                // Obtener Instancia 
+                ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
 
-                // Agregar Traduccion 
-                VariablesMethods.TranslateString += " / ";
+                // Crear Temporal
+                String ActualTemporary = Instance_1.CreateTemporary();
 
-                // Traducir Valor Derecha
-                this.RightValue.Translate(Env);
+                // Eliminar Temporal 
+                // Instance_1.DeleteTemporary(ActualTemporary);
+
+                // Verificar Tipo 
+                if (Type == "integer")
+                {
+
+                    // Añadir Expression
+                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "/", Right.GetValue());
+
+                    // Obtener
+                    AuxiliaryReturn = new ObjectReturn(ActualTemporary, "real")
+                    {
+
+                        Temporary = true
+
+                    };
+
+                }
+                else if (Type == "real")
+                {
+
+                    // Añadir Expression
+                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "/", Right.GetValue());
+
+                    // Obtener
+                    AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type)
+                    {
+
+                        Temporary = true
+
+                    };
+
+                }
 
             }
             else if (this.ArithmeticType.Equals("Mod"))
             {
 
-                // Traducir Valor Izquierda
-                this.LeftValue.Translate(Env);
+                // Obtener Instancia 
+                ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
 
-                // Agregar Traduccion 
-                VariablesMethods.TranslateString += " % ";
+                // Crear Temporal
+                String ActualTemporary = Instance_1.CreateTemporary();
 
-                // Traducir Valor Derecha
-                this.RightValue.Translate(Env);
+                // Eliminar Temporal 
+                // Instance_1.DeleteTemporary(ActualTemporary);
+
+                // Verificar Tipo 
+                if (Type == "integer")
+                {
+
+                    // Verificar Tipo Exp 
+                    if (Left.Type.Equals("integer") && Right.Type.Equals("integer"))
+                    {
+
+                        // Añadir Expression
+                        Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "%", Right.GetValue());
+
+                        // Obtener
+                        AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type)
+                        {
+
+                            Temporary = true
+
+                        };
+
+                    }
+
+                }
+                else if (Type == "real")
+                {
+
+                    // Verificar Tipo Exp 
+                    if(Left.Type.Equals("integer") && Right.Type.Equals("integer")) 
+                    {
+
+                        // Añadir Expression
+                        Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "%", Right.GetValue());
+
+                        // Obtener
+                        AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type)
+                        {
+
+                            Temporary = true
+
+                        };
+
+                    }
+
+                }
 
             }
             else if (this.ArithmeticType.Equals("Minus"))
             {
 
-                // Agregar Traduccion 
-                VariablesMethods.TranslateString += " -";
+                // Obtener Instancia 
+                ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
 
-                // Traducir Valor Derecha
-                this.RightValue.Translate(Env);
+                // Crear Temporal
+                String ActualTemporary = Instance_1.CreateTemporary();
+
+                // Eliminar Temporal 
+                // Instance_1.DeleteTemporary(ActualTemporary);
+
+                // Verificar Tipo 
+                if (Type == "integer")
+                {
+
+                    // Añadir Expression
+                    Instance_1.AddTwoExpression(ActualTemporary, "0", "-", Right.GetValue());
+
+                    // Obtener
+                    AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type)
+                    {
+
+                        Temporary = true
+
+                    };
+
+                }
+                else if (Type == "real")
+                {
+
+                    // Añadir Expression
+                    Instance_1.AddTwoExpression(ActualTemporary, "0", "-", Right.GetValue());
+
+                    // Obtener
+                    AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type)
+                    {
+
+                        Temporary = true
+
+                    };
+
+                }
 
             }
 

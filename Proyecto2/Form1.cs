@@ -35,6 +35,18 @@ namespace Proyecto2
             // Resetera Codigo 
             Instancia_1.ResetIntermediateCode();
 
+            // Agregar Comentario
+            Instancia_1.AddCommentOneLine("Funciones Nativas");
+
+            // Agregar Print
+            Instancia_1.AddNativePrintString();
+
+            // Agregar Concat
+            Instancia_1.AddNativeConcatString();
+
+            // Agregar Compare 
+            Instancia_1.AddNativeCompareString();
+
             // Analizar Texto Compilar
             ParserTranslate.AnalyzeCompilate(EntranceString);
 

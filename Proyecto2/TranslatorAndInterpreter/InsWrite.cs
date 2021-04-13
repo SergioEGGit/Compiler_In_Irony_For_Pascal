@@ -54,12 +54,12 @@ namespace Proyecto2.TranslatorAndInterpreter
                 foreach(AbstractExpression Expression in ExpressionList) 
                 {
 
-                    // Obtener Valor
-                    AuxiliaryObject = Expression.Execute(Env);
-
                     // Verificar Que No SEa Nullo
                     if(Expression != null) 
                     {
+
+                        // Obtener Valor
+                        AuxiliaryObject = Expression.Execute(Env);
 
                         // Verificar SI ES Diferetne De Nullo
                         if (AuxiliaryObject != null) 
@@ -243,22 +243,22 @@ namespace Proyecto2.TranslatorAndInterpreter
                 foreach(AbstractExpression Expression in ExpressionList)
                 {
 
-                    // Obtener Valor
-                    AuxiliaryObject = Expression.Compilate(Env);
-
-                    // Añadir Comentario 
-                    Instance_1.AddCommentOneLine("Método Print");
-
                     // Verificar Que No SEa Nullo
                     if(Expression != null)
                     {
+
+                        // Obtener Valor
+                        AuxiliaryObject = Expression.Compilate(Env);
+
+                        // Añadir Comentario 
+                        Instance_1.AddCommentOneLine("Método Print");
 
                         // Verificar SI ES Diferetne De Nullo
                         if (AuxiliaryObject != null)
                         {
 
                             // Verificar Tipo 
-                            if (AuxiliaryObject.Type.Equals("integer")) 
+                            if (AuxiliaryObject.Type.Equals("integer"))
                             {
 
                                 // Agregar Print 
@@ -270,6 +270,68 @@ namespace Proyecto2.TranslatorAndInterpreter
 
                                 // Agregar Print 
                                 Instance_1.AddPrintf("f", "(float) " + AuxiliaryObject.GetValue());
+
+                            }
+                            else if (AuxiliaryObject.Type.Equals("string")) 
+                            {
+
+                                // Agregar Expresion
+                                Instance_1.AddOneExpression("T1", AuxiliaryObject.GetValue());
+
+                                // Agregar Comentario 
+                                Instance_1.AddCommentOneLine("Llamada Funcion Nativa (Imprimir String)");
+                                
+                                // Agregar Llamada A Funcion 
+                                Instance_1.AddFunctionCall("print_string");
+                            
+                            }
+                            else if(AuxiliaryObject.Type.Equals("boolean")) 
+                            {
+
+                                // Crear Label Salida 
+                                String ExitLabel = Instance_1.CreateLabel();
+
+                                // Agregar Lable True 
+                                Instance_1.AddLabel(AuxiliaryObject.BoolTrue);
+
+                                // Agregar Identacion 
+                                Instance_1.AddIdent();
+
+                                // Imprimir Bool 
+                                Instance_1.PrintBool(true);
+
+                                // Añadir Goto
+                                Instance_1.AddNonConditionalJump(ExitLabel);
+
+                                // Quitar Identacion
+                                Instance_1.DeleteIdent();
+
+                                // Agregar Lable True 
+                                Instance_1.AddLabel(AuxiliaryObject.BoolFalse);
+
+                                // Agregar Identacion 
+                                Instance_1.AddIdent();
+
+                                // Imprimir Bool 
+                                Instance_1.PrintBool(false);
+
+                                // Añadir Goto
+                                Instance_1.AddNonConditionalJump(ExitLabel);
+
+                                // Quitar Identacion
+                                Instance_1.DeleteIdent();
+
+                                // Agregar Etiquta Salida 
+                                Instance_1.AddLabel(ExitLabel);
+
+                                // Agregar Identacion 
+                                Instance_1.AddIdent();
+
+                                // Agregar Comentario 
+                                Instance_1.AddCommentOneLine("Fin Imprimir Bool\n");
+
+                                // Quitar Identacion 
+                                Instance_1.DeleteIdent();
 
                             }
 
