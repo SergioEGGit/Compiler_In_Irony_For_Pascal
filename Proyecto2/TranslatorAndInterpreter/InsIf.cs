@@ -242,7 +242,70 @@ namespace Proyecto2.TranslatorAndInterpreter
         // Método Compilar
         public override object Compilate(EnviromentTable Env)
         {
-            throw new NotImplementedException();
+
+            // Crear Nuevo Entorno 
+            EnviromentTable IfEnv = new EnviromentTable(Env, "Env_If");
+
+            // Obtener Instancia 
+            ThreeAddressCode Instancia_1 = ThreeAddressCode.GetInstance;
+
+            // Agregar Comentarios 
+            Instancia_1.AddCommentOneLine("Comienzo Instrucción If\n");
+
+            // Verificar La Expression
+            ObjectReturn ElseExp = this.Expression_.Compilate(IfEnv);
+
+            // Verificar Si Hay Error Semantico 
+            if(ElseExp.Type.Equals("boolean"))
+            {
+
+                // Verificar Si Hay Instrucciones 
+                if (this.InstruccionsList != null)
+                {
+
+                    // Agregar Lable 
+                    Instancia_1.AddLabel(ElseExp.BoolTrue);
+
+                    // Agregar Identacion 
+                    Instancia_1.AddIdent();
+
+                    // Recorrer Lista De Instrucciones 
+                    foreach (AbstractInstruccion Instruccion in this.InstruccionsList)
+                    {
+
+                        // Verificar Si Es Nulloo
+                        if (Instruccion != null)
+                        {
+
+                            // Ejecutar Instruccion 
+                            Instruccion.Compilate(IfEnv);
+
+                        }
+
+                    }
+
+                }
+
+                // Quitar Identacion 
+                Instancia_1.DeleteIdent();
+
+                // Verificar Si ESta Nullo
+                if (InsElse != null)
+                {
+
+                    // Agregar Etiquetas 
+                    this.InsElse.BoolAux = ElseExp.BoolFalse;
+
+                    // Ejectar Instruccion Else 
+                    this.InsElse.Compilate(Env);
+
+                }
+
+            }
+
+            // Retornar 
+            return null;
+
         }
 
     }

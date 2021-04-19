@@ -18,12 +18,16 @@ namespace Proyecto2.TranslatorAndInterpreter
         // Valor 
         private readonly object Value;
 
+        // Es String 
+        public bool IsString;
+
         // Constructor 
         public PrimitiveValue(object Value, String StringType) {
 
             // Inicicalizar Valores  
             this.Value = Value;
             this.StringType = StringType;
+            this.IsString = false;
         
         }
 
@@ -32,57 +36,28 @@ namespace Proyecto2.TranslatorAndInterpreter
         {
 
             // Objecto A Retornar
-            ObjectReturn AuxiliaryReturn;
-            
-            // Verificar Que Tipo De Valor Primtivo ES 
-            if(int.TryParse(this.Value.ToString(), out int AuxiliaryValueI))
-            {
+            ObjectReturn AuxiliaryReturn = null;
 
-                // Agreagr A Objecto Valor 
-                AuxiliaryReturn = new ObjectReturn(AuxiliaryValueI, "integer");
-
-            }
-            else if(Decimal.TryParse(this.Value.ToString(), out Decimal AuxiliaryValueD))
-            {
-
-                // Agregar A Objecto Valor 
-                AuxiliaryReturn = new ObjectReturn(AuxiliaryValueD, "real");
-
-            }
-            else if(this.Value.ToString() == "true")
-            {
-
-                // Agregar A Objecto Valor
-                AuxiliaryReturn = new ObjectReturn(true, "boolean");
-
-            }
-            else if(this.Value.ToString() == "false")
-            {
-
-                // Agregar A Objecto Valor
-                AuxiliaryReturn = new ObjectReturn(false, "boolean");
-
-            }
-            else
+            if(IsString)
             {
 
                 // Verificar Tipo
-                if(this.StringType.Equals("Identifier")) 
+                if (this.StringType.Equals("Identifier"))
                 {
 
                     // Buscar Variable 
                     SymbolTable ActualVar = Env.GetVariable(this.Value.ToString());
 
                     // Obtener Variable 
-                    if(ActualVar != null) 
+                    if (ActualVar != null)
                     {
 
-                        ObjectReturn ActualValue = (ObjectReturn) ActualVar.Value;
+                        ObjectReturn ActualValue = (ObjectReturn)ActualVar.Value;
 
                         // Retornar Objecto 
                         AuxiliaryReturn = new ObjectReturn(ActualValue.Value, ActualVar.Type);
 
-                    }   
+                    }
                     else
                     {
 
@@ -92,11 +67,45 @@ namespace Proyecto2.TranslatorAndInterpreter
                     }
 
                 }
-                else 
+                else
                 {
 
                     // Agregar A Objecto Valor
                     AuxiliaryReturn = new ObjectReturn(this.Value.ToString(), "string");
+
+                }
+
+            }
+            else
+            {
+
+                // Verificar Que Tipo De Valor Primtivo ES 
+                if (int.TryParse(this.Value.ToString(), out int AuxiliaryValueI))
+                {
+
+                    // Agreagr A Objecto Valor 
+                    AuxiliaryReturn = new ObjectReturn(AuxiliaryValueI, "integer");
+
+                }
+                else if (Decimal.TryParse(this.Value.ToString(), out Decimal AuxiliaryValueD))
+                {
+
+                    // Agregar A Objecto Valor 
+                    AuxiliaryReturn = new ObjectReturn(AuxiliaryValueD, "real");
+
+                }
+                else if (this.Value.ToString() == "true")
+                {
+
+                    // Agregar A Objecto Valor
+                    AuxiliaryReturn = new ObjectReturn(true, "boolean");
+
+                }
+                else if (this.Value.ToString() == "false")
+                {
+
+                    // Agregar A Objecto Valor
+                    AuxiliaryReturn = new ObjectReturn(false, "boolean");
 
                 }
 
@@ -137,79 +146,14 @@ namespace Proyecto2.TranslatorAndInterpreter
         {
 
             // Objecto A Retornar
-            ObjectReturn AuxiliaryReturn;
+            ObjectReturn AuxiliaryReturn = null;
 
-            // Verificar Que Tipo De Valor Primtivo ES 
-            if(int.TryParse(this.Value.ToString(), out int AuxiliaryValueI))
-            {
-
-                // Agreagr A Objecto Valor 
-                AuxiliaryReturn = new ObjectReturn(AuxiliaryValueI, "integer");
-
-            }
-            else if(Decimal.TryParse(this.Value.ToString(), out Decimal AuxiliaryValueD))
-            {
-
-                // Agregar A Objecto Valor 
-                AuxiliaryReturn = new ObjectReturn(AuxiliaryValueD, "real");
-
-            }
-            else if(bool.TryParse(this.Value.ToString(), out bool AuxiliaryValueB))
-            {
-
-                // Obtener Instancia 
-                ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
-
-                // Agregar Labels 
-                if (this.BoolTrue.Equals(""))
-                {
-
-                    // Crear Label 
-                    this.BoolTrue = Instance_1.CreateLabel();
-
-                }
-                if (this.BoolFalse.Equals("")) 
-                {
-
-                    // Crear Label 
-                    this.BoolFalse = Instance_1.CreateLabel();
-                
-                }
-
-                // Agregar Comentario 
-                Instance_1.AddCommentOneLine("Salto Condición Bool");
-
-                // Verificar Valor 
-                if(AuxiliaryValueB)
-                {
-
-                    // Agregar Goto 
-                    Instance_1.AddNonConditionalJump(this.BoolTrue);
-
-                }
-                else
-                {
-
-                    // Agregar Goto 
-                    Instance_1.AddNonConditionalJump(this.BoolFalse);
-
-                }
-
-                // Pendiente
-                AuxiliaryReturn = new ObjectReturn("", "boolean") {
-
-                    BoolTrue = this.BoolTrue,
-                    BoolFalse = this.BoolFalse
-                
-                };
-
-            }
-            else
+            if(IsString)
             {
 
                 // Verificar Tipo
                 if (this.StringType.Equals("Identifier"))
-                {
+                {  
 
                     // Buscar Variable 
                     SymbolTable ActualVar = Env.GetVariable(this.Value.ToString());
@@ -218,7 +162,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                     if (ActualVar != null)
                     {
 
-                        ObjectReturn ActualValue = (ObjectReturn) ActualVar.Value;
+                        ObjectReturn ActualValue = (ObjectReturn)ActualVar.Value;
 
                         // Retornar Objecto 
                         AuxiliaryReturn = new ObjectReturn(ActualValue.Value, ActualVar.Type);
@@ -252,11 +196,11 @@ namespace Proyecto2.TranslatorAndInterpreter
                     int Ascii;
 
                     // Insertar Valores Al Heap 
-                    foreach(Char Letter in this.Value.ToString()) 
+                    foreach (Char Letter in this.Value.ToString())
                     {
 
                         // Valor Ascii
-                        Ascii = (int) Letter;
+                        Ascii = (int)Letter;
 
                         // Agregar Valor A Heap
                         Instancia_1.AddValueToHeap("HP", Ascii.ToString());
@@ -277,7 +221,78 @@ namespace Proyecto2.TranslatorAndInterpreter
                     {
 
                         Temporary = true
-                    
+
+                    };
+
+                }
+
+            }
+            else
+            {
+
+                // Verificar Tipo
+                if (int.TryParse(this.Value.ToString(), out int AuxiliaryValueI))
+                {
+
+                    // Agreagr A Objecto Valor 
+                    AuxiliaryReturn = new ObjectReturn(AuxiliaryValueI, "integer");
+
+                }
+                else if (Decimal.TryParse(this.Value.ToString(), out Decimal AuxiliaryValueD))
+                {
+
+                    // Agregar A Objecto Valor 
+                    AuxiliaryReturn = new ObjectReturn(AuxiliaryValueD, "real");
+
+                }
+                else if (bool.TryParse(this.Value.ToString(), out bool AuxiliaryValueB))
+                {
+
+                    // Obtener Instancia 
+                    ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
+
+                    // Agregar Labels 
+                    if (this.BoolTrue.Equals(""))
+                    {
+
+                        // Crear Label 
+                        this.BoolTrue = Instance_1.CreateLabel();
+
+                    }
+                    if (this.BoolFalse.Equals(""))
+                    {
+
+                        // Crear Label 
+                        this.BoolFalse = Instance_1.CreateLabel();
+
+                    }
+
+                    // Agregar Comentario 
+                    Instance_1.AddCommentOneLine("Salto Condición Bool");
+
+                    // Verificar Valor 
+                    if (AuxiliaryValueB)
+                    {
+
+                        // Agregar Goto 
+                        Instance_1.AddNonConditionalJump(this.BoolTrue);
+
+                    }
+                    else
+                    {
+
+                        // Agregar Goto 
+                        Instance_1.AddNonConditionalJump(this.BoolFalse);
+
+                    }
+
+                    // Pendiente
+                    AuxiliaryReturn = new ObjectReturn("", "boolean")
+                    {
+
+                        BoolTrue = this.BoolTrue,
+                        BoolFalse = this.BoolFalse
+
                     };
 
                 }

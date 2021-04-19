@@ -242,7 +242,133 @@ namespace Proyecto2.TranslatorAndInterpreter
         // Método Compilar
         public override object Compilate(EnviromentTable Env)
         {
-            throw new NotImplementedException();
+
+            // Obtener Instancia 
+            ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
+
+            // Verificar Tipo Else 
+            if(this.ElseType.Equals("ElseIf"))
+            {
+
+                // Crear Nuevo Entorno 
+                EnviromentTable ElseIfEnv = new EnviromentTable(Env, "Env_ElseIf");
+
+                // Verificar Si Instruccion No Es Nulla
+                if (InsIf != null)
+                {
+
+                    // Crear Etiqueta 
+                    String TemporaryAux = Instance_1.CreateLabel();
+
+                    // Agregar Salto 
+                    Instance_1.AddNonConditionalJump(TemporaryAux);
+
+                    // Agregar Label 
+                    Instance_1.AddLabel(this.BoolAux);
+
+                    // Agregar Identacion 
+                    Instance_1.AddIdent();
+                    
+                    // AGregar Comentario 
+                    Instance_1.AddCommentOneLine("Else If");
+
+                    // Ejecutar Else If 
+                    InsIf.Compilate(ElseIfEnv);
+
+                    // Quitar Identacion
+                    Instance_1.DeleteIdent();
+
+                    // Añadir Label
+                    Instance_1.AddLabel(TemporaryAux);
+
+                    // Agregar Identacion
+                    Instance_1.AddIdent();
+
+                    // Agregar Comentario 
+                    Instance_1.AddCommentOneLine("Fin Else If \n");
+
+                    // Eliminar IDentacion
+                    Instance_1.DeleteIdent();
+
+                }
+
+            }
+            else if (this.ElseType.Equals("Else"))
+            {
+
+                // Crear Nuevo Entorno 
+                EnviromentTable ElseEnv = new EnviromentTable(Env, "Env_Else");
+
+                // Crear Etiqueta 
+                String TemporaryAux = Instance_1.CreateLabel();
+
+                // Agregar Salto 
+                Instance_1.AddNonConditionalJump(TemporaryAux);
+
+                // Agregar Label 
+                Instance_1.AddLabel(this.BoolAux);
+
+                // Agregar Identacion 
+                Instance_1.AddIdent();
+
+                // Verificar Si Instruccion No Es Nulla
+                if (InstruccionsList != null)
+                {
+
+                    // Recorrer Lista 
+                    foreach (AbstractInstruccion Instruccion in this.InstruccionsList)
+                    {
+
+                        // Veriricar Si ESt aNullo
+                        if (Instruccion != null)
+                        {
+
+                            // Compilar Instruccion
+                            Instruccion.Compilate(ElseEnv);
+                                                        
+                        }
+
+                    }
+
+
+                }
+
+                // Eliminar Identacion 
+                Instance_1.DeleteIdent();
+                 
+                // Añadir Label
+                Instance_1.AddLabel(TemporaryAux);
+
+                // Agregar Identacion
+                Instance_1.AddIdent();
+
+                // Agregar Comentario 
+                Instance_1.AddCommentOneLine("Fin Else \n");
+
+                // Eliminar IDentacion
+                Instance_1.DeleteIdent();
+
+            }
+            else
+            {
+
+                // Agregar Salida 
+                Instance_1.AddLabel(this.BoolAux);
+
+                // Agregar Identacion
+                Instance_1.AddIdent();
+
+                // Agregar Comentario 
+                Instance_1.AddCommentOneLine("Fin If \n");
+
+                // Eliminar IDentacion
+                Instance_1.DeleteIdent();
+
+            }
+
+            // Retonra 
+            return null;
+
         }
 
     }

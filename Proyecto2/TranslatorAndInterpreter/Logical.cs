@@ -251,7 +251,232 @@ namespace Proyecto2.TranslatorAndInterpreter
         // Método Compilar
         public override ObjectReturn Compilate(EnviromentTable Env)
         {
-            throw new NotImplementedException();
+            
+            // Varibles 
+            ObjectReturn Left = null;
+            ObjectReturn Right = null;
+
+            // Auxiliar
+            ObjectReturn AuxiliaryReturn = null;
+
+            // Verificar Operacion
+            if (this.LogicalType.Equals("And"))
+            {
+
+                // Obtener Instancia 
+                ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
+
+                // Agregar Labels 
+                if (this.BoolTrue.Equals(""))
+                {
+
+                    // Crear Label 
+                    this.BoolTrue = Instance_1.CreateLabel();
+
+                }
+                if (this.BoolFalse.Equals(""))
+                {
+
+                    // Crear Label 
+                    this.BoolFalse = Instance_1.CreateLabel();
+
+                }
+
+                // Crear Etiqueta Auxiliar 
+                String AuxLabel = Instance_1.CreateLabel();
+
+                // Agregar A Izquierda Verdadera
+                this.LeftValue.BoolTrue = AuxLabel;
+
+                // Agregar A Derecha Verdadera
+                this.RightValue.BoolTrue = this.BoolTrue;
+
+                // Agregar A Izquierda Falsa 
+                this.LeftValue.BoolFalse = this.BoolFalse;
+
+                // Agregar A Derecha Falsa
+                this.RightValue.BoolFalse = this.BoolFalse;
+
+                // Verificar Si No Esta Nullo
+                if(this.LeftValue != null) 
+                {
+
+                    // Compilar Left 
+                    Left = this.LeftValue.Compilate(Env);
+                    
+                }
+
+                // Agregar Label 
+                Instance_1.AddLabel(this.LeftValue.BoolTrue);
+
+                // Agregar Identacion
+                Instance_1.AddIdent();
+
+                // Verificar Si No Esta Nullo
+                if (this.RightValue != null)
+                {
+
+                    // Compilar Right 
+                    Right = this.RightValue.Compilate(Env);
+
+                }
+
+                // Quitar Identacion
+                Instance_1.DeleteIdent();
+
+                // Verificar Tipos 
+                if (Left.Type.Equals("boolean") && Left != null && Right.Type.Equals("boolean") && Right != null) 
+                {
+
+                    // Obtener
+                    AuxiliaryReturn = new ObjectReturn("", "boolean")
+                    {
+
+                        BoolTrue = this.BoolTrue,
+                        BoolFalse = this.RightValue.BoolFalse
+
+                    };
+
+                }
+                                
+            }
+            else if (this.LogicalType.Equals("Or"))
+            {
+
+                // Obtener Instancia 
+                ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
+
+                // Agregar Labels 
+                if (this.BoolTrue.Equals(""))
+                {
+
+                    // Crear Label 
+                    this.BoolTrue = Instance_1.CreateLabel();
+
+                }
+                if (this.BoolFalse.Equals(""))
+                {
+
+                    // Crear Label 
+                    this.BoolFalse = Instance_1.CreateLabel();
+
+                }
+
+                // Crear Etiqueta Auxiliar 
+                String AuxLabel = Instance_1.CreateLabel();
+
+                // Agregar A Izquierda Verdadera
+                this.LeftValue.BoolTrue = this.BoolTrue;
+
+                // Agregar A Derecha Verdadera
+                this.RightValue.BoolTrue = this.BoolTrue;
+
+                // Agregar A Izquierda Falsa 
+                this.LeftValue.BoolFalse = AuxLabel;
+
+                // Agregar A Derecha Falsa
+                this.RightValue.BoolFalse = this.BoolFalse;
+
+                // Verificar Si No Esta Nullo
+                if (this.LeftValue != null)
+                {
+
+                    // Compilar Left 
+                    Left = this.LeftValue.Compilate(Env);
+
+                }
+
+                // Agregar Label 
+                Instance_1.AddLabel(this.LeftValue.BoolFalse);
+
+                // Agregar Identacion
+                Instance_1.AddIdent();
+
+                // Verificar Si No Esta Nullo
+                if (this.RightValue != null)
+                {
+
+                    // Compilar Right 
+                    Right = this.RightValue.Compilate(Env);
+
+                }
+
+                // Quitar Identacion
+                Instance_1.DeleteIdent();
+
+                // Verificar Tipos 
+                if (Left.Type.Equals("boolean") && Left != null && Right.Type.Equals("boolean") && Right != null)
+                {
+
+                    // Obtener
+                    AuxiliaryReturn = new ObjectReturn("", "boolean")
+                    {
+
+                        BoolTrue = this.BoolTrue,
+                        BoolFalse = this.RightValue.BoolFalse
+
+                    };
+
+                }
+
+            }
+            else if (this.LogicalType.Equals("Not"))
+            {
+
+                // Obtener Instancia 
+                ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
+
+                // Agregar Labels 
+                if (this.BoolTrue.Equals(""))
+                {
+
+                    // Crear Label 
+                    this.BoolTrue = Instance_1.CreateLabel();
+
+                }
+                if (this.BoolFalse.Equals(""))
+                {
+
+                    // Crear Label 
+                    this.BoolFalse = Instance_1.CreateLabel();
+
+                }
+
+                // Agregar A Izquierda Verdadera
+                this.RightValue.BoolTrue = this.BoolFalse;
+
+                // Agregar A Derecha Verdadera
+                this.RightValue.BoolFalse = this.BoolTrue;
+
+                // Verificar Si No Esta Nullo
+                if (this.RightValue != null)
+                {
+
+                    // Compilar Left 
+                    Right = this.RightValue.Compilate(Env);
+
+                }
+
+                // Verificar Tipos 
+                if (Right.Type.Equals("boolean") && Right != null)
+                {
+
+                    // Obtener
+                    AuxiliaryReturn = new ObjectReturn("", "boolean")
+                    {
+
+                        BoolTrue = this.BoolTrue,
+                        BoolFalse = this.BoolFalse
+
+                    };
+
+                }
+
+            }
+
+            // Retorno
+            return AuxiliaryReturn;
+
         }
 
     }

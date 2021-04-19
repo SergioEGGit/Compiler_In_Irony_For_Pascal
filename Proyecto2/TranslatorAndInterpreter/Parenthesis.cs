@@ -56,7 +56,8 @@ namespace Proyecto2.TranslatorAndInterpreter
             return AuxiliaryReturn;
 
         }
-
+                
+        // Método Traducir
         public override ObjectReturn Translate(EnviromentTable Env)
         {
             
@@ -77,7 +78,64 @@ namespace Proyecto2.TranslatorAndInterpreter
         // Método Compilar
         public override ObjectReturn Compilate(EnviromentTable Env)
         {
-            throw new NotImplementedException();
+
+            // Varibles 
+            ObjectReturn Value_ = null;
+
+            // Obtener Instancia 
+            ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
+
+            // Verificar Si Etiqueta Estan Vacias 
+            if (this.BoolTrue.Equals("")) 
+            {
+
+                // Agregar Etiqueta 
+                this.BoolTrue = Instance_1.CreateLabel();
+            
+            }
+
+            // Verificar Si Etiqueta Estan Vacias 
+            if (this.BoolFalse.Equals(""))
+            {
+
+                // Agregar Etiqueta 
+                this.BoolFalse = Instance_1.CreateLabel();
+
+            }
+
+            // Agregar Etiquetas 
+            Value.BoolTrue = this.BoolTrue;
+            Value.BoolFalse = this.BoolFalse;            
+
+            // Verificar Si No EStan Nullos 
+            if(this.Value != null)
+            {
+
+                // Ejecutar
+                Value_ = this.Value.Compilate(Env);
+
+            }
+
+            // Auxiliar
+            ObjectReturn AuxiliaryReturn = null;
+
+            // Verificar 
+            if (Value_ != null)
+            {
+
+                // Obtener
+                AuxiliaryReturn = new ObjectReturn(Value_.Value, Value_.Type) { 
+                
+                    BoolTrue = Value.BoolTrue,
+                    BoolFalse = Value.BoolFalse
+                
+                };
+
+            }
+
+            // Retorno
+            return AuxiliaryReturn;
+
         }
 
     }

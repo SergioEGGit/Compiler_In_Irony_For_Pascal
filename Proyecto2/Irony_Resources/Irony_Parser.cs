@@ -1765,14 +1765,24 @@ namespace Proyecto2.Irony_Resources
                 {
 
                     // Retornar Valor Expression
-                    return new PrimitiveValue(SplitMethod(ActualNode.ChildNodes[0].ToString(), "Value"), "Identifier");
+                    return new PrimitiveValue(SplitMethod(ActualNode.ChildNodes[0].ToString(), "Value"), "Identifier")
+                    {
+
+                        IsString = ActualNode.ChildNodes[0].ToString().Contains("(SimpleIdentifier)")
+
+                    };
 
                 }
                 else
                 {
-
+                    
                     // Retornar Valor Expression
-                    return new PrimitiveValue(SplitMethod(ActualNode.ChildNodes[0].ToString(), "Value"), "String");
+                    return new PrimitiveValue(SplitMethod(ActualNode.ChildNodes[0].ToString(), "Value"), "String") 
+                    {
+
+                        IsString = ActualNode.ChildNodes[0].ToString().Contains("(SimpleString)")  
+                    
+                    };
 
                 }
 

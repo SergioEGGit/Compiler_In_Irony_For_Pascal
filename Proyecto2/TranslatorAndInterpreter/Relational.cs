@@ -1150,7 +1150,61 @@ namespace Proyecto2.TranslatorAndInterpreter
                 else if (Type == "string")
                 {
 
+                    // Obtener Instancia 
+                    ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
 
+                    // Agregar Labels 
+                    if (this.BoolTrue.Equals(""))
+                    {
+
+                        // Crear Label 
+                        this.BoolTrue = Instance_1.CreateLabel();
+
+                    }
+                    if (this.BoolFalse.Equals(""))
+                    {
+
+                        // Crear Label 
+                        this.BoolFalse = Instance_1.CreateLabel();
+
+                    }
+
+                    // Agregar Comentario
+                    Instance_1.AddCommentOneLine("Obtener Posicion Inicial De Los Strings");
+
+                    // Obtener Strings 
+                    Instance_1.AddOneExpression("T1", Left.Value.ToString());
+                    Instance_1.AddOneExpression("T2", Right.Value.ToString());
+
+                    // Agregar Comentario 
+                    Instance_1.AddCommentOneLine("Llamada A Función");
+
+                    // Agregar Llamada A Metodo 
+                    Instance_1.AddFunctionCall("compare_string");
+
+                    // Agregar Comentario
+                    Instance_1.AddCommentOneLine("Validación Expression Relacional");
+
+                    // Agregar If De Salto 
+                    Instance_1.AddConditionalJump("T4", "!=", "1", this.BoolTrue);
+
+                    // Agregar Identacion
+                    Instance_1.AddIdent();
+
+                    // Agregar Salto No Condicional
+                    Instance_1.AddNonConditionalJump(this.BoolFalse);
+
+                    // Quitar Identacion
+                    Instance_1.DeleteIdent();
+
+                    // Obtener
+                    AuxiliaryReturn = new ObjectReturn("", "boolean")
+                    {
+
+                        BoolTrue = this.BoolTrue,
+                        BoolFalse = this.BoolFalse
+
+                    };
 
                 }
 

@@ -621,6 +621,9 @@ namespace Proyecto2.Misc
             // Agregar Identacion
             AddIdent();
 
+            // Agregar Comentario 
+            AddCommentOneLine("Recorrido De Ambas Cadenas");
+
             // Añadir Label 
             AddLabel(ActualLabel_1);
 
@@ -662,8 +665,14 @@ namespace Proyecto2.Misc
             // Agregar Identacion
             AddIdent();
 
+            // Agregar Comentario 
+            AddCommentOneLine("El 1 Indica Que Los Strings Son Iguales");
+
             // Agregar Estado 
             AddOneExpression("T4", "1");
+
+            // Agregar Comentario 
+            AddCommentOneLine("Verificar Si Es Fin De Cadena");
 
             // Agregar If 
             AddConditionalJump("T3", "==", "-1", ActualLabel_3);
@@ -694,6 +703,7 @@ namespace Proyecto2.Misc
             AddCommentOneLine("Fin Del Método");
 
             // Sin Identacion 
+            DeleteIdent();
             DeleteIdent();
 
             // Fin Del Metodo 

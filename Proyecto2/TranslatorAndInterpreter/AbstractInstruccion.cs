@@ -1,5 +1,6 @@
 ﻿// ------------------------------------------ Librerias E Imports ---------------------------------------------------
 using Proyecto2.Misc;
+using System;
 
 // ------------------------------------------------ NameSpace -------------------------------------------------------
 namespace Proyecto2.TranslatorAndInterpreter
@@ -9,8 +10,11 @@ namespace Proyecto2.TranslatorAndInterpreter
     abstract class AbstractInstruccion
     {
 
+        // Bool Auxiliary 
+        public String BoolAux = "";
+
         // Creación De Metodos Abstractos 
-        
+
         // Método Traducir 
         public abstract object Translate(EnviromentTable Env);
 
