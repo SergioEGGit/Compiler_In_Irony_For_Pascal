@@ -266,7 +266,209 @@ namespace Proyecto2.TranslatorAndInterpreter
         // Método Compilar
         public override object Compilate(EnviromentTable Env)
         {
-            throw new NotImplementedException();
+
+            // Contador Auxiliar 
+            int AuxiliaryCounter = 1;
+
+            // Nuevo Entorno 
+            EnviromentTable CaseEnv = new EnviromentTable(Env, "Env_Case");
+
+            // Crear Instancia 
+            ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
+
+            // Agrear Comentario 
+            Instance_1.AddCommentOneLine("Comienzo Instrucción Switch Case");
+
+            // Crear Etiquetas 
+            String LabelCaseInicio = Instance_1.CreateLabel();
+            String LabelCaseFinal = Instance_1.CreateLabel();
+
+            // Agregar A Entorno 
+            CaseEnv.ContinueLabel = LabelCaseInicio;
+            CaseEnv.BreakLabel = LabelCaseFinal;
+
+            // Agregar Etiqueta De Inicio 
+            Instance_1.AddLabel(LabelCaseInicio);
+
+            // Agregar Identacion 
+            Instance_1.AddIdent();
+
+            // Verificar Si ESta Nullo
+            if(this.CaseList != null)
+            {
+                // Recorrer Cases 
+                foreach (Cases AuxCase in this.CaseList)
+                {
+
+                    // Verificar Que No Esa Nullo
+                    if (AuxCase != null)
+                    {
+
+                        // Verificar Si No Esta Nullo
+                        if(AuxCase.Expression_ != null && this.Expression_ != null)
+                        {
+
+                            // Crear Etiquetas 
+                            String LabelInicioCase = Instance_1.CreateLabel();
+                            String LabelFinalCase = Instance_1.CreateLabel();
+
+                            // Agregar Comentario 
+                            Instance_1.AddCommentOneLine("Case No." + AuxiliaryCounter + "\n");
+
+                            // Obtener Expresiones
+                            ObjectReturn SwitchExp = this.Expression_.Compilate(CaseEnv);
+                            ObjectReturn CaseExp = AuxCase.Expression_.Compilate(CaseEnv);
+
+                            // Verificar Tipo
+                            if(SwitchExp.Type.Equals("integer") || SwitchExp.Type.Equals("real"))
+                            {
+
+                                // Agregar Comentario
+                                Instance_1.AddCommentOneLine("Validación Expression Relacional");
+
+                                // Agregar If De Salto 
+                                Instance_1.AddConditionalJump(SwitchExp.GetValue(), "==", CaseExp.GetValue(), LabelInicioCase);
+
+                                // Agregar Identacion
+                                Instance_1.AddIdent();
+
+                                // Agregar Salto No Condicional
+                                Instance_1.AddNonConditionalJump(LabelFinalCase);
+
+                                // Quitar Identacion
+                                Instance_1.DeleteIdent();
+
+                            }
+                            else if (SwitchExp.Type.Equals("string"))
+                            {
+
+                                // Agregar Comentario
+                                Instance_1.AddCommentOneLine("Obtener Posicion Inicial De Los Strings");
+
+                                // Obtener Strings 
+                                Instance_1.AddOneExpression("T1", SwitchExp.GetValue().ToString());
+                                Instance_1.AddOneExpression("T2", CaseExp.GetValue().ToString());
+
+                                // Agregar Comentario 
+                                Instance_1.AddCommentOneLine("Llamada A Función");
+
+                                // Agregar Llamada A Metodo 
+                                Instance_1.AddFunctionCall("compare_string");
+
+                                // Agregar Comentario
+                                Instance_1.AddCommentOneLine("Validación Expression Relacional");
+
+                                // Agregar If De Salto 
+                                Instance_1.AddConditionalJump("T4", "==", "1", LabelInicioCase);
+
+                                // Agregar Identacion
+                                Instance_1.AddIdent();
+
+                                // Agregar Salto No Condicional
+                                Instance_1.AddNonConditionalJump(LabelFinalCase);
+
+                                // Quitar Identacion
+                                Instance_1.DeleteIdent();
+
+                            }
+
+                            // Agregar Etiqueta 
+                            Instance_1.AddLabel(LabelInicioCase);
+
+                            // Agregar Identacion 
+                            Instance_1.AddIdent();
+                            
+                            // Ejectuar 
+                            // AuxCase.Expression_.Compilate(CaseEnv);
+
+                            // Ejecutar Instrucciones 
+                            AuxCase.Compilate(CaseEnv);
+
+                            // Agregar Comentario
+                            Instance_1.AddCommentOneLine("Instrucción Break");
+
+                            // Agregar Break 
+                            Instance_1.AddNonConditionalJump(LabelCaseFinal);
+                            
+                            // Eliminar Identacion 
+                            Instance_1.DeleteIdent();
+
+                            // Agregar Label 
+                            Instance_1.AddLabel(LabelFinalCase);
+
+                            // Agregar Identacion 
+                            Instance_1.AddIdent();
+
+                            // Agregar Comentario 
+                            Instance_1.AddCommentOneLine("Fin Case No." + AuxiliaryCounter + "\n");
+
+                            // Eliminar Identacion 
+                            Instance_1.DeleteIdent();
+
+                            // Aumentar Contador 
+                            AuxiliaryCounter += 1;
+
+                        }
+                        else if (AuxCase.Expression_ == null && this.Expression_ != null)
+                        {
+
+                            // Crear Etiquetas 
+                            String LabelInicioDefault = Instance_1.CreateLabel();
+                            String LabelFinalDefault = Instance_1.CreateLabel();
+
+                            // Agregar Comentario 
+                            Instance_1.AddCommentOneLine("Default");
+
+                            // Agregar Etiqueta 
+                            Instance_1.AddLabel(LabelInicioDefault);
+
+                            // Agregar Identacion 
+                            Instance_1.AddIdent();
+
+                            // Ejecutar Instrucciones 
+                            AuxCase.Compilate(CaseEnv);
+
+                            // Eliminar Identacion 
+                            Instance_1.DeleteIdent();
+
+                            // Agregar Label 
+                            Instance_1.AddLabel(LabelFinalDefault);
+
+                            // Agregar Identacion 
+                            Instance_1.AddIdent();
+
+                            // Agregar Comentario 
+                            Instance_1.AddCommentOneLine("Fin Default \n");
+
+                            // Eliminar Identacion 
+                            Instance_1.DeleteIdent();
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            // Quitar Identacion 
+            Instance_1.DeleteIdent();
+
+            // Agregar Etiqueta De Inicio 
+            Instance_1.AddLabel(LabelCaseFinal);
+
+            // Añadir Identacion 
+            Instance_1.AddIdent();
+
+            // Agregar Comentario 
+            Instance_1.AddCommentOneLine("Fin Instrucción Switch Case\n");
+
+            // Eliminar Identacion 
+            Instance_1.DeleteIdent();
+
+            // Retornar 
+            return null;
+
         }
 
     }

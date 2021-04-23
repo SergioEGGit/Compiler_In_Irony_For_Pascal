@@ -38,9 +38,34 @@ namespace Proyecto2.TranslatorAndInterpreter
         // Método Compilar
         public override object Compilate(EnviromentTable Env)
         {
-            throw new NotImplementedException();
+
+            // Verificar SI ES Nullo
+            if (this.InstruccionsList != null)
+            {
+
+                // Recorrer Lista De Instrucciones
+                foreach (AbstractInstruccion Instruccion in this.InstruccionsList)
+                {
+
+                    // Verificar Si Es Nullo
+                    if (Instruccion != null)
+                    {
+
+                        // Compilar Instruccion
+                        Instruccion.Compilate(Env);
+                                                
+                    }
+
+                }
+
+            }
+
+            // Retonar 
+            return null;
+
         }
 
+        // Método Ejecutar 
         public override object Execute(EnviromentTable Env)
         {
 
@@ -123,6 +148,7 @@ namespace Proyecto2.TranslatorAndInterpreter
 
         }
 
+        // Método Traducir
         public override object Translate(EnviromentTable Env)
         {
 

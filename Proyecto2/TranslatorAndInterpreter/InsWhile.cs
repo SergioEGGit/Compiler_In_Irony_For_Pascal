@@ -225,7 +225,93 @@ namespace Proyecto2.TranslatorAndInterpreter
         // Método Compilar
         public override object Compilate(EnviromentTable Env)
         {
-            throw new NotImplementedException();
+            
+            // Crear Nuevo Entorno
+            EnviromentTable WhileEnv = new EnviromentTable(Env, "Env_While");
+
+            // Obtener Instancia 
+            ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
+
+            //  Agregar Comentario 
+            Instance_1.AddCommentOneLine("Comienzo Instrucción While");
+
+            // Crear Label 
+            String LabelWhile = Instance_1.CreateLabel();
+
+            // Añadir Label 
+            Instance_1.AddLabel(LabelWhile);
+
+            // Agregar Identacion 
+            Instance_1.AddIdent();
+            
+            // Verificar La Expression
+            ObjectReturn WhileExp = this.Expression_.Compilate(WhileEnv);
+
+            // Verificar Si No Es Nullo
+            if(WhileExp != null)
+            {
+
+                // Verificar Si Hay Error Semantico 
+                if(WhileExp.Type.Equals("boolean"))
+                {
+
+                    // Agregar Etiquetas De Break Y Continue 
+                    WhileEnv.BreakLabel = WhileExp.BoolFalse;
+                    WhileEnv.ContinueLabel = LabelWhile;
+
+                    // Agergar Etiqueta True 
+                    Instance_1.AddLabel(WhileExp.BoolTrue);
+
+                    // Añadir Identacion 
+                    Instance_1.AddIdent();
+                    
+                    // Verificar Si Hay Instrucciones 
+                    if (this.InstruccionsList != null)
+                    {
+
+                        // Recorrer Lista De Instrucciones 
+                        foreach (AbstractInstruccion Instruccion in this.InstruccionsList)
+                        {
+
+                            // Verificar Si Es Nullo
+                            if (Instruccion != null)
+                            {
+
+                                // Ejecutar Instruccion
+                                Instruccion.Compilate(WhileEnv);
+
+                            }
+
+                        }
+
+                    }
+
+                    // Agregar Salto De Retorno Del While 
+                    Instance_1.AddNonConditionalJump(LabelWhile);
+
+                    // Eliminar Identación
+                    Instance_1.DeleteIdent();
+                    Instance_1.DeleteIdent();
+
+                    // Agregar Label 
+                    Instance_1.AddLabel(WhileExp.BoolFalse);
+
+                    // Agregar Identación
+                    Instance_1.AddIdent();
+
+                    // Agregar Comentario 
+                    Instance_1.AddCommentOneLine("Fin Instrucción While\n");
+
+                    // Eliminar Identación
+                    Instance_1.DeleteIdent();
+
+                }
+
+            }
+
+            // Retornar 
+            return null;
+
         }
 
     }

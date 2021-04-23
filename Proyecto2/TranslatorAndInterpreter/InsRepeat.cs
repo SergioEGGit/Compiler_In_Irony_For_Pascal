@@ -218,7 +218,76 @@ namespace Proyecto2.TranslatorAndInterpreter
         // Método Compilar
         public override object Compilate(EnviromentTable Env)
         {
-            throw new NotImplementedException();
+
+            // Crear Nuevo Entorno
+            EnviromentTable RepeatEnv = new EnviromentTable(Env, "Env_Repeat");
+
+            // Obtener Instancia 
+            ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
+
+            // Inicia Repeat
+            Instance_1.AddCommentOneLine("Comienzo Instrucción Repeat");
+
+            // Crear Label 
+            String LabelRepeatInicio = Instance_1.CreateLabel();
+            String LabelRepeatFinal = Instance_1.CreateLabel();
+
+            // Agregar A Entorno 
+            RepeatEnv.ContinueLabel = LabelRepeatInicio;
+            RepeatEnv.BreakLabel = LabelRepeatFinal;
+
+            // Agregar Condicion 
+            this.Expression_.BoolTrue = LabelRepeatFinal;
+            this.Expression_.BoolFalse = LabelRepeatInicio;
+
+            // Añadir Label 
+            Instance_1.AddLabel(LabelRepeatInicio);
+
+            // Agregbar Identacion 
+            Instance_1.AddIdent();
+
+            // Verificar Si Hay Instrucciones 
+            if (this.InstruccionsList != null)
+            {
+
+                // Recorrer Lista De Instrucciones 
+                foreach (AbstractInstruccion Instruccion in this.InstruccionsList)
+                {
+
+                    // Verificar Si ESta Nullo
+                    if (Instruccion != null)
+                    {
+
+                        // Ejecutar Instruccion
+                        Instruccion.Compilate(RepeatEnv);                            
+
+                    }
+
+                }
+
+            }
+
+            // Ejecutar Expression
+            this.Expression_.Compilate(RepeatEnv);
+
+            // Eliminar Identacion
+            Instance_1.DeleteIdent();
+
+            // Añadir Final 
+            Instance_1.AddLabel(LabelRepeatFinal);
+
+            // Agregar Identación
+            Instance_1.AddIdent();
+
+            // Agregar Comentario 
+            Instance_1.AddCommentOneLine("Fin Instrucción Repeat\n");
+
+            // Eliminar Identación
+            Instance_1.DeleteIdent();           
+
+            // Retornar 
+            return null;
+
         }
 
     }

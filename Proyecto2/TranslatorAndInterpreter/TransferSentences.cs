@@ -39,20 +39,26 @@ namespace Proyecto2.TranslatorAndInterpreter
             {
 
                 // Inicializar 
-                TypeReturn = new ObjectReturn("", "");
+                TypeReturn = new ObjectReturn("", "")
+                {
 
-                // Setear Opcional 
-                TypeReturn.Option = "break";
+                    // Setear Opcional 
+                    Option = "break"
+
+                };
 
             }
             else if (this.TransType.Equals("Continue"))
             {
 
                 // Inicializar 
-                TypeReturn = new ObjectReturn("", "");
+                TypeReturn = new ObjectReturn("", "")
+                {
 
-                // Setear Opcional 
-                TypeReturn.Option = "continue";
+                    // Setear Opcional 
+                    Option = "continue"
+
+                };
 
             }
             else if (this.TransType.Equals("Return"))
@@ -112,7 +118,38 @@ namespace Proyecto2.TranslatorAndInterpreter
         // Método Compilar
         public override object Compilate(EnviromentTable Env)
         {
-            throw new NotImplementedException();
+
+            // Instancia 
+            ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
+
+            // Buscar Etiquetas 
+            String[] AuxiliaryArray = Env.SearchBreakAndContinueCycles();
+
+            // Verificar Tipo De Sentencia 
+            if (this.TransType.Equals("Break"))
+            {
+
+                // Agregar Comentario 
+                Instance_1.AddCommentOneLine("Instrucción Break");
+
+                // Agregar Salto 
+                Instance_1.AddNonConditionalJump(AuxiliaryArray[0]);
+
+            }
+            else if(this.TransType.Equals("Continue")) 
+            {
+
+                // Agregar Comentario
+                Instance_1.AddCommentOneLine("Instrucción Continue");
+
+                // Agregar Salto 
+                Instance_1.AddNonConditionalJump(AuxiliaryArray[1]);
+
+            }
+           
+            // Retornar 
+            return null;
+
         }
 
     }

@@ -28,6 +28,12 @@ namespace Proyecto2.Misc
         // Tamaño Del Ambiente 
         public int EnviromentSize;
 
+        // Etiqueta Break 
+        public String BreakLabel;
+
+        // Etiqueta Continue 
+        public String ContinueLabel;
+
         // Constructor 
         public EnviromentTable(EnviromentTable ParentEnviroment, String EnviromentName) 
         {
@@ -38,6 +44,8 @@ namespace Proyecto2.Misc
             this.Functions = new Dictionary<String, FunctionTable>();
             this.EnviromentName = EnviromentName;
             this.EnviromentSize = 0;
+            this.BreakLabel = "";
+            this.ContinueLabel = "";
 
             // Agregar Entorno A Lista 
             VariablesMethods.EnviromentList.AddLast(this);
@@ -244,6 +252,44 @@ namespace Proyecto2.Misc
 
             // Retornar Null
             return false;
+
+        }
+
+        // Buscar Etiqueta Break And Continue Cycles
+        public String[] SearchBreakAndContinueCycles()
+        {
+
+            // Obtener Entorno Actual
+            EnviromentTable ActualEnv = this;
+
+            // Array Auxiliar
+            String[] AuxiliaryArray = { "", "" };
+
+            // Recorrer Entornos
+            while (ActualEnv != null)
+            {
+
+                // Verificar Si COntiene Nombre De Ciclos 
+                if (ActualEnv.EnviromentName.Contains("While") || ActualEnv.EnviromentName.Contains("Repeat") || ActualEnv.EnviromentName.Contains("For"))
+                {
+
+                    // Obtener Valores
+                    AuxiliaryArray[0] = ActualEnv.BreakLabel;
+                    AuxiliaryArray[1] = ActualEnv.ContinueLabel;
+
+                    // Retornar 
+                    return AuxiliaryArray;
+
+                }
+
+
+                // Avanzar Puntero
+                ActualEnv = ActualEnv.ParentEnviroment;
+
+            }
+
+            // Retornar Null
+            return AuxiliaryArray;
 
         }
 
