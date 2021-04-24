@@ -68,7 +68,10 @@ namespace Proyecto2.TranslatorAndInterpreter
         // Método Compilar
         public override object Compilate(EnviromentTable Env)
         {
-            throw new NotImplementedException();
+
+            // Retornar 
+            return null;
+
         }
 
     }

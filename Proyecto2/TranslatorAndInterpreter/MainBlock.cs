@@ -158,18 +158,36 @@ namespace Proyecto2.TranslatorAndInterpreter
             // Instancia Codigo TA
             ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
 
+            // Agregar Comentario 
+            Instance_1.AddCommentOneLine("Método Main", "Uno");
+
+            // Agregar Inicio Bloque
+            Instance_1.AddFuncBegin("main");
+
+            // Agregar Identacion
+            Instance_1.AddIdent();
+
+            // Verificar Tamaño
+            if (Instance_1.SizeGlobalDeclarations() > 0) 
+            {
+
+                // Añadir Comentario 
+                Instance_1.AddCommentOneLine("Variables Y Constantes Globales", "Uno");
+
+                // Eliminar Identacion
+                Instance_1.DeleteIdent();
+
+                // Añadir Declaracion De Variables
+                Instance_1.AddGlobalVariables();
+
+            }
+
+            // Agregar Identacion
+            Instance_1.AddIdent();
+
             // Verificar Si No Esta Nullo
             if (this.IntruccionsList != null)
             {
-
-                // Agregar Comentario 
-                Instance_1.AddCommentOneLine("Método Main");
-
-                // Agregar Inicio Bloque
-                Instance_1.AddFuncBegin("main");
-
-                // Agregar Identacion
-                Instance_1.AddIdent();
 
                 // Recorrer Lista De Instrucciones 
                 foreach (AbstractInstruccion Instruccion in this.IntruccionsList)
@@ -184,15 +202,15 @@ namespace Proyecto2.TranslatorAndInterpreter
                                                 
                     }
 
-                }
-
-                // Quitar Identacion
-                Instance_1.DeleteIdent();
-
-                // Agregar Final Bloque
-                Instance_1.AddFuncEnd();
+                }                
 
             }
+
+            // Quitar Identacion
+            Instance_1.DeleteIdent();
+
+            // Agregar Final Bloque
+            Instance_1.AddFuncEnd();
 
             // Retornar 
             return null;

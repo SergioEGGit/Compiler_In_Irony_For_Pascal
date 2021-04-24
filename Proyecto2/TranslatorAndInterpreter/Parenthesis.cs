@@ -105,7 +105,23 @@ namespace Proyecto2.TranslatorAndInterpreter
 
             // Agregar Etiquetas 
             Value.BoolTrue = this.BoolTrue;
-            Value.BoolFalse = this.BoolFalse;            
+            Value.BoolFalse = this.BoolFalse;
+
+            // Verificar Si Es Global 
+            if (this.IsGlobal)
+            {
+
+                // Agregar Valor 
+                Value.IsGlobal = true;
+
+            }
+            else
+            {
+
+                // Agreagr Valor
+                Value.IsGlobal = false;
+            
+            }
 
             // Verificar Si No EStan Nullos 
             if(this.Value != null)

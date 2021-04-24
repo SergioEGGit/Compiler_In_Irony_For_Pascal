@@ -148,6 +148,28 @@ namespace Proyecto2.TranslatorAndInterpreter
             // Objecto A Retornar
             ObjectReturn AuxiliaryReturn = null;
 
+            // Agregar Valroes 
+            String CommentAuxiliary;
+            String InsAuxiliary;
+
+            // Verificar Si Es Global 
+            if (this.IsGlobal)
+            {
+
+                // Agregar Valores 
+                CommentAuxiliary = "Uno Global";
+                InsAuxiliary = "Dos Global";
+
+            }
+            else
+            {
+
+                // Agregar Valores 
+                CommentAuxiliary = "Uno";
+                InsAuxiliary = "Dos";
+
+            }
+
             if(IsString)
             {
 
@@ -187,10 +209,10 @@ namespace Proyecto2.TranslatorAndInterpreter
                     String ActualTemporary = Instancia_1.CreateTemporary();
 
                     // Agregar Comentario
-                    Instancia_1.AddCommentOneLine("Almacenar String En El Heap (Print)");
+                    Instancia_1.AddCommentOneLine("Almacenar String En El Heap (Print)", CommentAuxiliary);
 
                     // Obtener Puntero Heap 
-                    Instancia_1.AddOneExpression(ActualTemporary, "HP");
+                    Instancia_1.AddOneExpression(ActualTemporary, "HP", InsAuxiliary);
 
                     // Variable Ascii
                     int Ascii;
@@ -203,18 +225,18 @@ namespace Proyecto2.TranslatorAndInterpreter
                         Ascii = (int)Letter;
 
                         // Agregar Valor A Heap
-                        Instancia_1.AddValueToHeap("HP", Ascii.ToString());
+                        Instancia_1.AddValueToHeap("HP", Ascii.ToString(), InsAuxiliary);
 
                         // Mover Puntero 
-                        Instancia_1.MovePointerHeap();
+                        Instancia_1.MovePointerHeap(InsAuxiliary);
 
                     }
 
                     // Agregar Valor A Heap
-                    Instancia_1.AddValueToHeap("HP", "-1");
+                    Instancia_1.AddValueToHeap("HP", "-1", InsAuxiliary);
 
                     // Mover Puntero 
-                    Instancia_1.MovePointerHeap();
+                    Instancia_1.MovePointerHeap(InsAuxiliary);
 
                     // Agregar A Objecto Valor
                     AuxiliaryReturn = new ObjectReturn(ActualTemporary, "string")
@@ -268,21 +290,21 @@ namespace Proyecto2.TranslatorAndInterpreter
                     }
 
                     // Agregar Comentario 
-                    Instance_1.AddCommentOneLine("Salto Condición Bool");
+                    Instance_1.AddCommentOneLine("Salto Condición Bool", CommentAuxiliary);
 
                     // Verificar Valor 
                     if (AuxiliaryValueB)
                     {
 
                         // Agregar Goto 
-                        Instance_1.AddNonConditionalJump(this.BoolTrue);
+                        Instance_1.AddNonConditionalJump(this.BoolTrue, InsAuxiliary);
 
                     }
                     else
                     {
 
                         // Agregar Goto 
-                        Instance_1.AddNonConditionalJump(this.BoolFalse);
+                        Instance_1.AddNonConditionalJump(this.BoolFalse, InsAuxiliary);
 
                     }
 

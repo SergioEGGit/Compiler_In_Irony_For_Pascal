@@ -18,6 +18,9 @@ namespace Proyecto2.TranslatorAndInterpreter
         // Es Bool Etiqueta False 
         public String BoolFalse = "";
 
+        // Es Global 
+        public bool IsGlobal = false;
+
         // Creación De Metodos Abstractos 
 
         // Método Traducir 

@@ -94,6 +94,58 @@ namespace Proyecto2.Misc
             
         }
 
+        // Agregar Variable A Tabla De Simbolos
+        public SymbolTable AddVariableStack(String Identifier, String Type, String DecType, String Env, int Line, int Column)
+        {
+
+            // Variables
+            bool Variables = true;
+            bool Functions = true;
+
+            // Verificar si La Variable Existe En El Ambito
+            if (this.PrimitiveVariables.ContainsKey(Identifier.ToLower()))
+            {
+
+                // Ya Existe 
+                Variables = false;
+
+            }
+
+            // Verificar si La Funcion Existe En El Ambito
+            if (this.Functions.ContainsKey(Identifier.ToLower()))
+            {
+
+                // Ya Existe 
+                Functions = false;
+
+            }
+
+            // Verificar 
+            if (Variables && Functions)
+            {
+
+                // Obtener Posicion 
+                int PositionStack = this.EnviromentSize;
+
+                // Incremtnar Tamaña
+                this.EnviromentSize += 1;
+
+                // Crear Varaible 
+                SymbolTable NewVariable = new SymbolTable(Identifier, Type, PositionStack, DecType, Env, Line, Column);
+
+                // Agregar Variable A Lista De Simbolos
+                this.PrimitiveVariables.Add(Identifier.ToLower(), NewVariable);
+
+                // Retornar 
+                return NewVariable;
+
+            }
+
+            // Retornar
+            return null;
+
+        }
+
         // Obtener Variable De Tabla De Simbolos
         public SymbolTable GetVariable(String VarName) 
         {

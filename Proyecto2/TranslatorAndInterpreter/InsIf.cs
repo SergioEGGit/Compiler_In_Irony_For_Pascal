@@ -249,8 +249,12 @@ namespace Proyecto2.TranslatorAndInterpreter
             // Obtener Instancia 
             ThreeAddressCode Instancia_1 = ThreeAddressCode.GetInstance;
 
+            // Auxiliares 
+            String CommentAuxiliary = "Uno";
+            String InsAuxiliary = "Dos";
+
             // Agregar Comentarios 
-            Instancia_1.AddCommentOneLine("Comienzo Instrucción If\n");
+            Instancia_1.AddCommentOneLine("Comienzo Instrucción If\n", CommentAuxiliary);
 
             // Verificar La Expression
             ObjectReturn ElseExp = this.Expression_.Compilate(IfEnv);
@@ -264,7 +268,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                 {
 
                     // Agregar Lable 
-                    Instancia_1.AddLabel(ElseExp.BoolTrue);
+                    Instancia_1.AddLabel(ElseExp.BoolTrue, InsAuxiliary);
 
                     // Agregar Identacion 
                     Instancia_1.AddIdent();

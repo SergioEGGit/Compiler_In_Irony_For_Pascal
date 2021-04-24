@@ -615,9 +615,49 @@ namespace Proyecto2.TranslatorAndInterpreter
             ObjectReturn Left = null;
             ObjectReturn Right = null;
 
+            // Crear Auxiliares 
+            String CommentAuxiliary;
+            String InsAuxiliary;
+
+            // Verificar Si EStoy En Global
+            if (this.IsGlobal)
+            {
+
+                // Agregar Valores
+                CommentAuxiliary = "Uno Global";
+                InsAuxiliary = "Dos Global";
+
+
+            }
+            else
+            {
+
+                // Agregar Valores 
+                CommentAuxiliary = "Uno";
+                InsAuxiliary = "Dos";
+
+            }
+
             // Verificar Si No EStan Nullos 
             if (LeftValue != null)
             {
+
+                // Verificar Si EStoy En Global
+                if (this.IsGlobal)
+                {
+
+                    // Agregar Valores 
+                    this.LeftValue.IsGlobal = true;
+
+
+                }
+                else
+                {
+
+                    // Agregar Valores 
+                    this.LeftValue.IsGlobal = false;
+
+                }
 
                 // Ejecutar
                 Left = this.LeftValue.Compilate(Env);
@@ -627,8 +667,25 @@ namespace Proyecto2.TranslatorAndInterpreter
             {
 
                 // Verificar Si No Es Boolean
-                if(!Left.Type.Equals("boolean"))
+                if (!Left.Type.Equals("boolean"))
                 {
+
+                    // Verificar Si EStoy En Global
+                    if (this.IsGlobal)
+                    {
+
+                        // Agregar Valores 
+                        this.RightValue.IsGlobal = true;
+
+
+                    }
+                    else
+                    {
+
+                        // Agregar Valores 
+                        this.RightValue.IsGlobal = false;
+
+                    }
 
                     // Ejecutar 
                     Right = this.RightValue.Compilate(Env);
@@ -680,16 +737,16 @@ namespace Proyecto2.TranslatorAndInterpreter
                     }
 
                     // Agregar Comentario
-                    Instance_1.AddCommentOneLine("Validación Expression Relacional");
+                    Instance_1.AddCommentOneLine("Validación Expression Relacional", CommentAuxiliary);
 
                     // Agregar If De Salto 
-                    Instance_1.AddConditionalJump(Left.GetValue(), "<=", Right.GetValue(), this.BoolTrue);
+                    Instance_1.AddConditionalJump(Left.GetValue(), "<=", Right.GetValue(), this.BoolTrue, InsAuxiliary);
 
                     // Agregar Identacion
                     Instance_1.AddIdent();
 
                     // Agregar Salto No Condicional
-                    Instance_1.AddNonConditionalJump(this.BoolFalse);
+                    Instance_1.AddNonConditionalJump(this.BoolFalse, InsAuxiliary);
 
                     // Quitar Identacion
                     Instance_1.DeleteIdent();
@@ -732,16 +789,16 @@ namespace Proyecto2.TranslatorAndInterpreter
                     }
 
                     // Agregar Comentario
-                    Instance_1.AddCommentOneLine("Validación Expression Relacional");
+                    Instance_1.AddCommentOneLine("Validación Expression Relacional", CommentAuxiliary);
 
                     // Agregar If De Salto 
-                    Instance_1.AddConditionalJump(Left.GetValue(), ">=", Right.GetValue(), this.BoolTrue);
+                    Instance_1.AddConditionalJump(Left.GetValue(), ">=", Right.GetValue(), this.BoolTrue, InsAuxiliary);
 
                     // Agregar Identacion
                     Instance_1.AddIdent();
 
                     // Agregar Salto No Condicional
-                    Instance_1.AddNonConditionalJump(this.BoolFalse);
+                    Instance_1.AddNonConditionalJump(this.BoolFalse, InsAuxiliary);
 
                     // Quitar Identacion
                     Instance_1.DeleteIdent();
@@ -785,16 +842,16 @@ namespace Proyecto2.TranslatorAndInterpreter
                     }
 
                     // Agregar Comentario
-                    Instance_1.AddCommentOneLine("Validación Expression Relacional");
+                    Instance_1.AddCommentOneLine("Validación Expression Relacional", CommentAuxiliary);
 
                     // Agregar If De Salto 
-                    Instance_1.AddConditionalJump(Left.GetValue(), "<", Right.GetValue(), this.BoolTrue);
+                    Instance_1.AddConditionalJump(Left.GetValue(), "<", Right.GetValue(), this.BoolTrue, InsAuxiliary);
 
                     // Agregar Identacion
                     Instance_1.AddIdent();
 
                     // Agregar Salto No Condicional
-                    Instance_1.AddNonConditionalJump(this.BoolFalse);
+                    Instance_1.AddNonConditionalJump(this.BoolFalse, InsAuxiliary);
 
                     // Quitar Identacion
                     Instance_1.DeleteIdent();
@@ -838,16 +895,16 @@ namespace Proyecto2.TranslatorAndInterpreter
                     }
 
                     // Agregar Comentario
-                    Instance_1.AddCommentOneLine("Validación Expression Relacional");
+                    Instance_1.AddCommentOneLine("Validación Expression Relacional", CommentAuxiliary);
 
                     // Agregar If De Salto 
-                    Instance_1.AddConditionalJump(Left.GetValue(), ">", Right.GetValue(), this.BoolTrue);
+                    Instance_1.AddConditionalJump(Left.GetValue(), ">", Right.GetValue(), this.BoolTrue, InsAuxiliary);
 
                     // Agregar Identacion
                     Instance_1.AddIdent();
 
                     // Agregar Salto No Condicional
-                    Instance_1.AddNonConditionalJump(this.BoolFalse);
+                    Instance_1.AddNonConditionalJump(this.BoolFalse, InsAuxiliary);
 
                     // Quitar Identacion
                     Instance_1.DeleteIdent();
@@ -891,16 +948,16 @@ namespace Proyecto2.TranslatorAndInterpreter
                     }
 
                     // Agregar Comentario
-                    Instance_1.AddCommentOneLine("Validación Expression Relacional");
+                    Instance_1.AddCommentOneLine("Validación Expression Relacional", CommentAuxiliary);
 
                     // Agregar If De Salto 
-                    Instance_1.AddConditionalJump(Left.GetValue(), "==", Right.GetValue(), this.BoolTrue);
+                    Instance_1.AddConditionalJump(Left.GetValue(), "==", Right.GetValue(), this.BoolTrue, InsAuxiliary);
 
                     // Agregar Identacion
                     Instance_1.AddIdent();
 
                     // Agregar Salto No Condicional
-                    Instance_1.AddNonConditionalJump(this.BoolFalse);
+                    Instance_1.AddNonConditionalJump(this.BoolFalse, InsAuxiliary);
 
                     // Quitar Identacion
                     Instance_1.DeleteIdent();
@@ -926,11 +983,28 @@ namespace Proyecto2.TranslatorAndInterpreter
                     String BoolFalse = Instance_1.CreateLabel();
      
                     // Añadir Label 
-                    Instance_1.AddLabel(Left.BoolTrue);
+                    Instance_1.AddLabel(Left.BoolTrue, InsAuxiliary);
 
                     // Agregar Labels False And True 
                     this.RightValue.BoolTrue = BoolTrue;
                     this.RightValue.BoolFalse = BoolFalse;
+
+                    // Verificar Si EStoy En Global
+                    if (this.IsGlobal)
+                    {
+
+                        // Agregar Valores 
+                        this.RightValue.IsGlobal = true;
+
+
+                    }
+                    else
+                    {
+
+                        // Agregar Valores 
+                        this.RightValue.IsGlobal = false;
+
+                    }
 
                     // Agregar Identacion 
                     Instance_1.AddIdent();
@@ -942,11 +1016,28 @@ namespace Proyecto2.TranslatorAndInterpreter
                     Instance_1.DeleteIdent();
 
                     // Añadir Label False 
-                    Instance_1.AddLabel(Left.BoolFalse);
+                    Instance_1.AddLabel(Left.BoolFalse, InsAuxiliary);
 
                     // Agregar Labels False And True 
                     this.RightValue.BoolTrue = BoolFalse;
                     this.RightValue.BoolFalse = BoolTrue;
+
+                    // Verificar Si EStoy En Global
+                    if (this.IsGlobal)
+                    {
+
+                        // Agregar Valores 
+                        this.RightValue.IsGlobal = true;
+
+
+                    }
+                    else
+                    {
+
+                        // Agregar Valores 
+                        this.RightValue.IsGlobal = false;
+
+                    }
 
                     // Agregar Identacion 
                     Instance_1.AddIdent();
@@ -999,29 +1090,29 @@ namespace Proyecto2.TranslatorAndInterpreter
                     }
 
                     // Agregar Comentario
-                    Instance_1.AddCommentOneLine("Obtener Posicion Inicial De Los Strings");
+                    Instance_1.AddCommentOneLine("Obtener Posicion Inicial De Los Strings", CommentAuxiliary);
 
                     // Obtener Strings 
-                    Instance_1.AddOneExpression("T1", Left.Value.ToString());
-                    Instance_1.AddOneExpression("T2", Right.Value.ToString());
+                    Instance_1.AddOneExpression("T1", Left.Value.ToString(), InsAuxiliary);
+                    Instance_1.AddOneExpression("T2", Right.Value.ToString(), InsAuxiliary);
 
                     // Agregar Comentario 
-                    Instance_1.AddCommentOneLine("Llamada A Función");
+                    Instance_1.AddCommentOneLine("Llamada A Función", CommentAuxiliary);
 
                     // Agregar Llamada A Metodo 
-                    Instance_1.AddFunctionCall("compare_string");
+                    Instance_1.AddFunctionCall("compare_string", InsAuxiliary);
 
                     // Agregar Comentario
-                    Instance_1.AddCommentOneLine("Validación Expression Relacional");
+                    Instance_1.AddCommentOneLine("Validación Expression Relacional", CommentAuxiliary);
 
                     // Agregar If De Salto 
-                    Instance_1.AddConditionalJump("T4", "==", "1", this.BoolTrue);
+                    Instance_1.AddConditionalJump("T4", "==", "1", this.BoolTrue, InsAuxiliary);
 
                     // Agregar Identacion
                     Instance_1.AddIdent();
 
                     // Agregar Salto No Condicional
-                    Instance_1.AddNonConditionalJump(this.BoolFalse);
+                    Instance_1.AddNonConditionalJump(this.BoolFalse, InsAuxiliary);
 
                     // Quitar Identacion
                     Instance_1.DeleteIdent();
@@ -1065,16 +1156,16 @@ namespace Proyecto2.TranslatorAndInterpreter
                     }
 
                     // Agregar Comentario
-                    Instance_1.AddCommentOneLine("Validación Expression Relacional");
+                    Instance_1.AddCommentOneLine("Validación Expression Relacional", CommentAuxiliary);
 
                     // Agregar If De Salto 
-                    Instance_1.AddConditionalJump(Left.GetValue(), "!=", Right.GetValue(), this.BoolTrue);
+                    Instance_1.AddConditionalJump(Left.GetValue(), "!=", Right.GetValue(), this.BoolTrue, InsAuxiliary);
 
                     // Agregar Identacion
                     Instance_1.AddIdent();
 
                     // Agregar Salto No Condicional
-                    Instance_1.AddNonConditionalJump(this.BoolFalse);
+                    Instance_1.AddNonConditionalJump(this.BoolFalse, InsAuxiliary);
 
                     // Quitar Identacion
                     Instance_1.DeleteIdent();
@@ -1100,11 +1191,28 @@ namespace Proyecto2.TranslatorAndInterpreter
                     String BoolFalse = Instance_1.CreateLabel();
 
                     // Añadir Label 
-                    Instance_1.AddLabel(Left.BoolTrue);
+                    Instance_1.AddLabel(Left.BoolTrue, InsAuxiliary);
 
                     // Agregar Labels False And True 
                     this.RightValue.BoolTrue = BoolFalse;
                     this.RightValue.BoolFalse = BoolTrue;
+
+                    // Verificar Si EStoy En Global
+                    if (this.IsGlobal)
+                    {
+
+                        // Agregar Valores 
+                        this.RightValue.IsGlobal = true;
+
+
+                    }
+                    else
+                    {
+
+                        // Agregar Valores 
+                        this.RightValue.IsGlobal = false;
+
+                    }
 
                     // Agregar Identacion
                     Instance_1.AddIdent();
@@ -1116,11 +1224,28 @@ namespace Proyecto2.TranslatorAndInterpreter
                     Instance_1.DeleteIdent();
 
                     // Añadir Label False 
-                    Instance_1.AddLabel(Left.BoolFalse);
+                    Instance_1.AddLabel(Left.BoolFalse, InsAuxiliary);
 
                     // Agregar Labels False And True 
                     this.RightValue.BoolTrue = BoolTrue;
                     this.RightValue.BoolFalse = BoolFalse;
+
+                    // Verificar Si EStoy En Global
+                    if (this.IsGlobal)
+                    {
+
+                        // Agregar Valores 
+                        this.RightValue.IsGlobal = true;
+
+
+                    }
+                    else
+                    {
+
+                        // Agregar Valores 
+                        this.RightValue.IsGlobal = false;
+
+                    }
 
                     // Agregar Identacion
                     Instance_1.AddIdent();
@@ -1170,29 +1295,29 @@ namespace Proyecto2.TranslatorAndInterpreter
                     }
 
                     // Agregar Comentario
-                    Instance_1.AddCommentOneLine("Obtener Posicion Inicial De Los Strings");
+                    Instance_1.AddCommentOneLine("Obtener Posicion Inicial De Los Strings", CommentAuxiliary);
 
                     // Obtener Strings 
-                    Instance_1.AddOneExpression("T1", Left.Value.ToString());
-                    Instance_1.AddOneExpression("T2", Right.Value.ToString());
+                    Instance_1.AddOneExpression("T1", Left.Value.ToString(), InsAuxiliary);
+                    Instance_1.AddOneExpression("T2", Right.Value.ToString(), InsAuxiliary);
 
                     // Agregar Comentario 
-                    Instance_1.AddCommentOneLine("Llamada A Función");
+                    Instance_1.AddCommentOneLine("Llamada A Función", CommentAuxiliary);
 
                     // Agregar Llamada A Metodo 
-                    Instance_1.AddFunctionCall("compare_string");
+                    Instance_1.AddFunctionCall("compare_string", InsAuxiliary);
 
                     // Agregar Comentario
-                    Instance_1.AddCommentOneLine("Validación Expression Relacional");
+                    Instance_1.AddCommentOneLine("Validación Expression Relacional", CommentAuxiliary);
 
                     // Agregar If De Salto 
-                    Instance_1.AddConditionalJump("T4", "!=", "1", this.BoolTrue);
+                    Instance_1.AddConditionalJump("T4", "!=", "1", this.BoolTrue, InsAuxiliary);
 
                     // Agregar Identacion
                     Instance_1.AddIdent();
 
                     // Agregar Salto No Condicional
-                    Instance_1.AddNonConditionalJump(this.BoolFalse);
+                    Instance_1.AddNonConditionalJump(this.BoolFalse, InsAuxiliary);
 
                     // Quitar Identacion
                     Instance_1.DeleteIdent();

@@ -150,7 +150,115 @@ namespace Proyecto2.TranslatorAndInterpreter
         // Método Compilar
         public override object Compilate(EnviromentTable Env)
         {
-            throw new NotImplementedException();
+
+            // Verificar La Expression 1
+            ObjectReturn AsgExp = this.Expression_.Compilate(Env);
+
+            // Simbolo
+            SymbolTable ActualVar = Env.GetVariable(this.Identifier);
+
+            // Function 
+            FunctionTable ActualFunc = Env.GetFunction(this.Identifier);
+
+            // Value Auxiliar 
+            ObjectReturn ActualValue = new ObjectReturn("", "");
+
+            // Obtener Instancia 
+            ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
+
+            // Agregar Comentario 
+            Instance_1.AddCommentOneLine("Asignación De Variables", "Uno");
+
+            // Buscar Variable 
+            if (AsgExp != null)
+            {
+
+                // Verificar Si Es Funcion 
+                if (ActualFunc != null && ActualVar == null)
+                {
+
+                    // Obtener Valores 
+                    ActualValue.Type = AsgExp.Type;
+                    ActualValue.Value = AsgExp.Value;
+                    ActualValue.Option = "return";
+
+                    // Retornar Expression 
+                    return ActualValue;
+
+                }
+                else if (ActualFunc == null && ActualVar != null)
+                {
+
+                    // Verificar Si Ambas Condiciones Son Integers
+                    if (ActualVar.Type.Equals(AsgExp.Type))
+                    {
+
+                        if (ActualVar.Type.Equals("boolean"))
+                        {
+
+                            // Crear Etiqueta 
+                            String LabelAuxiliary = Instance_1.CreateLabel();
+
+                            // Añadir Etiqueta Verdadera 
+                            Instance_1.AddLabel(AsgExp.BoolTrue, "Dos");
+
+                            // Añadir Identacion 
+                            Instance_1.AddIdent();
+
+                            // Añadir A STack 
+                            Instance_1.AddValueToStack(ActualVar.GetValue(), "1", "Dos");
+
+                            // Añadir Goto 
+                            Instance_1.AddNonConditionalJump(LabelAuxiliary, "Dos");
+
+                            // Eliminar Identacion 
+                            Instance_1.DeleteIdent();
+
+                            // Añadir Etiqueta Falsa 
+                            Instance_1.AddLabel(AsgExp.BoolFalse, "Dos");
+
+                            // Añadir Identacion 
+                            Instance_1.AddIdent();
+
+                            // Añadir A STack 
+                            Instance_1.AddValueToStack(ActualVar.GetValue(), "0", "Dos");
+
+                            // Añadir Goto 
+                            Instance_1.AddNonConditionalJump(LabelAuxiliary, "Dos");
+
+                            // Eliminar Identacion 
+                            Instance_1.DeleteIdent();
+
+                            // Agrego Etiqueta Auxiliar 
+                            Instance_1.AddLabel(LabelAuxiliary, "Dos");
+
+                            // Añadir Identacion 
+                            Instance_1.AddIdent();
+
+                            // Añadir Comentario 
+                            Instance_1.AddCommentOneLine("Fin Asignación Expresión Boolean", "Uno");
+
+                            // Eliminar Identacion 
+                            Instance_1.DeleteIdent();
+
+                        }
+                        else
+                        {
+
+                            // Agreagr A Stack 
+                            Instance_1.AddValueToStack(ActualVar.GetValue(), AsgExp.GetValue(), "Dos");
+                        
+                        }
+
+                    }
+
+                }
+
+            }
+
+            // Retornar
+            return null;
+
         }
 
     }

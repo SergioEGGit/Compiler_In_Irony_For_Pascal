@@ -39,6 +39,7 @@ namespace Proyecto2.TranslatorAndInterpreter
         
         } 
 
+        // Método Ejecutar
         public override object Execute(EnviromentTable Env)
         {
 
@@ -155,6 +156,7 @@ namespace Proyecto2.TranslatorAndInterpreter
 
         }
 
+        // Método Traducir
         public override object Translate(EnviromentTable Env)
         {
 
@@ -246,8 +248,12 @@ namespace Proyecto2.TranslatorAndInterpreter
             // Obtener Instancia 
             ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
 
+            // Auxiliares 
+            String CommentAuxiliary = "Uno";
+            String InsAuxiliary = "Dos";
+
             // Verificar Tipo Else 
-            if(this.ElseType.Equals("ElseIf"))
+            if (this.ElseType.Equals("ElseIf"))
             {
 
                 // Crear Nuevo Entorno 
@@ -261,16 +267,16 @@ namespace Proyecto2.TranslatorAndInterpreter
                     String TemporaryAux = Instance_1.CreateLabel();
 
                     // Agregar Salto 
-                    Instance_1.AddNonConditionalJump(TemporaryAux);
+                    Instance_1.AddNonConditionalJump(TemporaryAux, InsAuxiliary);
 
                     // Agregar Label 
-                    Instance_1.AddLabel(this.BoolAux);
+                    Instance_1.AddLabel(this.BoolAux, InsAuxiliary);
 
                     // Agregar Identacion 
                     Instance_1.AddIdent();
                     
                     // AGregar Comentario 
-                    Instance_1.AddCommentOneLine("Else If");
+                    Instance_1.AddCommentOneLine("Else If", CommentAuxiliary);
 
                     // Ejecutar Else If 
                     InsIf.Compilate(ElseIfEnv);
@@ -279,13 +285,13 @@ namespace Proyecto2.TranslatorAndInterpreter
                     Instance_1.DeleteIdent();
 
                     // Añadir Label
-                    Instance_1.AddLabel(TemporaryAux);
+                    Instance_1.AddLabel(TemporaryAux, InsAuxiliary);
 
                     // Agregar Identacion
                     Instance_1.AddIdent();
 
                     // Agregar Comentario 
-                    Instance_1.AddCommentOneLine("Fin Else If \n");
+                    Instance_1.AddCommentOneLine("Fin Else If \n", CommentAuxiliary);
 
                     // Eliminar IDentacion
                     Instance_1.DeleteIdent();
@@ -303,10 +309,10 @@ namespace Proyecto2.TranslatorAndInterpreter
                 String TemporaryAux = Instance_1.CreateLabel();
 
                 // Agregar Salto 
-                Instance_1.AddNonConditionalJump(TemporaryAux);
+                Instance_1.AddNonConditionalJump(TemporaryAux, InsAuxiliary);
 
                 // Agregar Label 
-                Instance_1.AddLabel(this.BoolAux);
+                Instance_1.AddLabel(this.BoolAux, InsAuxiliary);
 
                 // Agregar Identacion 
                 Instance_1.AddIdent();
@@ -337,13 +343,13 @@ namespace Proyecto2.TranslatorAndInterpreter
                 Instance_1.DeleteIdent();
                  
                 // Añadir Label
-                Instance_1.AddLabel(TemporaryAux);
+                Instance_1.AddLabel(TemporaryAux, InsAuxiliary);
 
                 // Agregar Identacion
                 Instance_1.AddIdent();
 
                 // Agregar Comentario 
-                Instance_1.AddCommentOneLine("Fin Else \n");
+                Instance_1.AddCommentOneLine("Fin Else \n", CommentAuxiliary);
 
                 // Eliminar IDentacion
                 Instance_1.DeleteIdent();
@@ -353,13 +359,13 @@ namespace Proyecto2.TranslatorAndInterpreter
             {
 
                 // Agregar Salida 
-                Instance_1.AddLabel(this.BoolAux);
+                Instance_1.AddLabel(this.BoolAux, InsAuxiliary);
 
                 // Agregar Identacion
                 Instance_1.AddIdent();
 
                 // Agregar Comentario 
-                Instance_1.AddCommentOneLine("Fin If \n");
+                Instance_1.AddCommentOneLine("Fin If \n", CommentAuxiliary);
 
                 // Eliminar IDentacion
                 Instance_1.DeleteIdent();

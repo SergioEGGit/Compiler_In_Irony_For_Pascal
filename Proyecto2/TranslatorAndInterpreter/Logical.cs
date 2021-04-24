@@ -251,13 +251,33 @@ namespace Proyecto2.TranslatorAndInterpreter
         // Método Compilar
         public override ObjectReturn Compilate(EnviromentTable Env)
         {
-            
+
             // Varibles 
             ObjectReturn Left = null;
             ObjectReturn Right = null;
 
             // Auxiliar
             ObjectReturn AuxiliaryReturn = null;
+
+            // Crear Auxiliares 
+            String InsAuxiliary;
+
+            // Verificar Si EStoy En Global
+            if (this.IsGlobal)
+            {
+
+                // Agregar Valores 
+                InsAuxiliary = "Dos Global";
+
+
+            }
+            else
+            {
+
+                // Agregar Valores 
+                InsAuxiliary = "Dos";
+
+            }
 
             // Verificar Operacion
             if (this.LogicalType.Equals("And"))
@@ -297,8 +317,27 @@ namespace Proyecto2.TranslatorAndInterpreter
                 // Agregar A Derecha Falsa
                 this.RightValue.BoolFalse = this.BoolFalse;
 
+                // Verificar Si EStoy En Global
+                if (this.IsGlobal)
+                {
+
+                    // Agregar Valores 
+                    this.LeftValue.IsGlobal = true;
+                    this.RightValue.IsGlobal = true;
+
+
+                }
+                else
+                {
+
+                    // Agregar Valores 
+                    this.LeftValue.IsGlobal = false;
+                    this.RightValue.IsGlobal = false;
+
+                }
+
                 // Verificar Si No Esta Nullo
-                if(this.LeftValue != null) 
+                if (this.LeftValue != null) 
                 {
 
                     // Compilar Left 
@@ -307,7 +346,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                 }
 
                 // Agregar Label 
-                Instance_1.AddLabel(this.LeftValue.BoolTrue);
+                Instance_1.AddLabel(this.LeftValue.BoolTrue, InsAuxiliary);
 
                 // Agregar Identacion
                 Instance_1.AddIdent();
@@ -377,6 +416,25 @@ namespace Proyecto2.TranslatorAndInterpreter
                 // Agregar A Derecha Falsa
                 this.RightValue.BoolFalse = this.BoolFalse;
 
+                // Verificar Si EStoy En Global
+                if (this.IsGlobal)
+                {
+
+                    // Agregar Valores 
+                    this.LeftValue.IsGlobal = true;
+                    this.RightValue.IsGlobal = true;
+
+
+                }
+                else
+                {
+
+                    // Agregar Valores 
+                    this.LeftValue.IsGlobal = false;
+                    this.RightValue.IsGlobal = false;
+
+                }
+
                 // Verificar Si No Esta Nullo
                 if (this.LeftValue != null)
                 {
@@ -387,7 +445,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                 }
 
                 // Agregar Label 
-                Instance_1.AddLabel(this.LeftValue.BoolFalse);
+                Instance_1.AddLabel(this.LeftValue.BoolFalse, InsAuxiliary);
 
                 // Agregar Identacion
                 Instance_1.AddIdent();
@@ -447,6 +505,23 @@ namespace Proyecto2.TranslatorAndInterpreter
 
                 // Agregar A Derecha Verdadera
                 this.RightValue.BoolFalse = this.BoolTrue;
+
+                // Verificar Si EStoy En Global
+                if (this.IsGlobal)
+                {
+
+                    // Agregar Valores 
+                    this.RightValue.IsGlobal = true;
+
+
+                }
+                else
+                {
+
+                    // Agregar Valores 
+                    this.RightValue.IsGlobal = false;
+
+                }
 
                 // Verificar Si No Esta Nullo
                 if (this.RightValue != null)

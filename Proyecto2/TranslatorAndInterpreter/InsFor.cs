@@ -358,7 +358,149 @@ namespace Proyecto2.TranslatorAndInterpreter
         // Método Compilar
         public override object Compilate(EnviromentTable Env)
         {
-            throw new NotImplementedException();
+
+            // Crear Nuevo Entorno
+            EnviromentTable ForEnv = new EnviromentTable(Env, "Env_For");
+
+            // Verificar La Expression 1
+            ObjectReturn AsgExp = this.Expression_.Compilate(ForEnv);
+
+            // Verificar La Expression 2
+            ObjectReturn LmExp = this.Expression__.Compilate(ForEnv);
+
+            // Simbolo
+            SymbolTable ActualVar = ForEnv.GetVariable(this.Identifier);
+
+            // Obtener Instancia 
+            ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
+
+            // Crear Label 
+            String InicioForLabel = Instance_1.CreateLabel();
+            String FinalForLabel = Instance_1.CreateLabel();
+
+            // Agregar A Entorno Las Etiquetas 
+            ForEnv.ContinueLabel = InicioForLabel;
+            ForEnv.BreakLabel = FinalForLabel;
+
+            // Agregar Comentario
+            Instance_1.AddCommentOneLine("Comienzo Instrucción For", "Uno");
+
+            // Buscar Variable 
+            if (ActualVar != null)
+            {
+
+                // Verificar TIpo De Foor 
+                if (this.TypeFor.Equals("to"))
+                {
+
+                    // Crear Temporal 
+                    String TemporaryActual = Instance_1.CreateTemporary();
+                    String TemporarySum = Instance_1.CreateTemporary();
+                    String TemporaryIndex = Instance_1.CreateTemporary();
+                                        
+                    // Inicializar Variable 
+                    Instance_1.AddValueToStack(ActualVar.GetValue(), AsgExp.GetValue(), "Dos");
+
+                    // Agregar Inicio For 
+                    Instance_1.AddLabel(InicioForLabel, "Dos");
+
+                    // Agregar Identacion 
+                    Instance_1.AddIdent();
+
+                    // Setear Valor A Temporal
+                    Instance_1.AddOneExpression(TemporaryIndex, ActualVar.GetValue(), "Dos");
+
+                    // Obtener Valor Variable 
+                    Instance_1.GetValueOfStack(TemporaryIndex, TemporaryActual, "Dos");
+
+                    // Verificar Condicion 
+                    Instance_1.AddConditionalJump(TemporaryActual, ">", LmExp.GetValue(), FinalForLabel, "Dos");
+
+                    // Verificar Si La Lista De Instrucciones ESta Nulla
+                    if (this.InstruccionsList != null)
+                    {
+
+                        // Recorrer Lista 
+                        foreach (AbstractInstruccion Instruccion in this.InstruccionsList)
+                        {
+
+                            // Verificar Si NO Es Null
+                            if (Instruccion != null)
+                            {
+
+                                // Obtener Objeto
+                                Instruccion.Compilate(ForEnv);
+                                                                       
+
+                            }
+
+                        }
+
+                    }
+
+                    // Sumar Variable 
+                    Instance_1.AddTwoExpression(TemporarySum, TemporaryActual, "+", "1", "Dos");
+
+                    // Agregar Nuevo Valor Variable
+                    Instance_1.AddValueToStack(ActualVar.GetValue(), TemporarySum, "Dos");
+
+                    // Agregar Salto No Condicional 
+                    Instance_1.AddNonConditionalJump(InicioForLabel, "Dos");
+
+                    // Quitar Identacion 
+                    Instance_1.DeleteIdent();
+
+                    // Agregar Final For 
+                    Instance_1.AddLabel(FinalForLabel, "Dos");
+
+                    // Agregar IDentacion
+                    Instance_1.AddIdent();
+
+                    // AGregar Comentario 
+                    Instance_1.AddCommentOneLine("Fin Instrucción For", "Uno");
+
+                    // Eliminar Identacion
+                    Instance_1.DeleteIdent();
+
+                }
+                else
+                {
+
+                    // For 
+                    for (int Count = int.Parse(AsgExp.Value.ToString()); Count >= int.Parse(LmExp.Value.ToString()); Count--)
+                    {
+                                            
+                        // Verificar Si La Lista De Instrucciones ESta Nulla
+                        if (this.InstruccionsList != null)
+                        {
+
+                            // Recorrer Lista 
+                            foreach (AbstractInstruccion Instruccion in this.InstruccionsList)
+                            {
+
+                                // Verificar Si NO Es Null
+                                if (Instruccion != null)
+                                {
+
+                                    // Obtener Objeto
+                                    Instruccion.Compilate(ForEnv);
+                                                                                
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            // Retornar
+            return null;
+
         }
 
     }

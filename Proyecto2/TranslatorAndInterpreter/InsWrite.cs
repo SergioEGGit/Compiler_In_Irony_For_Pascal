@@ -235,8 +235,12 @@ namespace Proyecto2.TranslatorAndInterpreter
             // Obtener Instnacia
             ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
 
+            // Auxiliares 
+            String CommentAuxiliary = "Uno";
+            String InsAuxiliary = "Dos";
+
             // Verificar Tipo De Write 
-            if(ExpressionList != null)
+            if (ExpressionList != null)
             {
 
                 // Recorrer Lista De Expressiones 
@@ -251,7 +255,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                         AuxiliaryObject = Expression.Compilate(Env);
 
                         // Añadir Comentario 
-                        Instance_1.AddCommentOneLine("Método Print");
+                        Instance_1.AddCommentOneLine("Método Print", CommentAuxiliary);
 
                         // Verificar SI ES Diferetne De Nullo
                         if (AuxiliaryObject != null)
@@ -276,13 +280,13 @@ namespace Proyecto2.TranslatorAndInterpreter
                             {
 
                                 // Agregar Expresion
-                                Instance_1.AddOneExpression("T1", AuxiliaryObject.GetValue());
+                                Instance_1.AddOneExpression("T1", AuxiliaryObject.GetValue(), InsAuxiliary);
 
                                 // Agregar Comentario 
-                                Instance_1.AddCommentOneLine("Llamada Funcion Nativa (Imprimir String)");
+                                Instance_1.AddCommentOneLine("Llamada Funcion Nativa (Imprimir String)", CommentAuxiliary);
                                 
                                 // Agregar Llamada A Funcion 
-                                Instance_1.AddFunctionCall("print_string");
+                                Instance_1.AddFunctionCall("print_string", InsAuxiliary);
                             
                             }
                             else if(AuxiliaryObject.Type.Equals("boolean")) 
@@ -292,7 +296,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                                 String ExitLabel = Instance_1.CreateLabel();
 
                                 // Agregar Lable True 
-                                Instance_1.AddLabel(AuxiliaryObject.BoolTrue);
+                                Instance_1.AddLabel(AuxiliaryObject.BoolTrue, InsAuxiliary);
 
                                 // Agregar Identacion 
                                 Instance_1.AddIdent();
@@ -301,13 +305,13 @@ namespace Proyecto2.TranslatorAndInterpreter
                                 Instance_1.PrintBool(true);
 
                                 // Añadir Goto
-                                Instance_1.AddNonConditionalJump(ExitLabel);
+                                Instance_1.AddNonConditionalJump(ExitLabel, InsAuxiliary);
 
                                 // Quitar Identacion
                                 Instance_1.DeleteIdent();
 
                                 // Agregar Lable True 
-                                Instance_1.AddLabel(AuxiliaryObject.BoolFalse);
+                                Instance_1.AddLabel(AuxiliaryObject.BoolFalse, InsAuxiliary);
 
                                 // Agregar Identacion 
                                 Instance_1.AddIdent();
@@ -316,19 +320,19 @@ namespace Proyecto2.TranslatorAndInterpreter
                                 Instance_1.PrintBool(false);
 
                                 // Añadir Goto
-                                Instance_1.AddNonConditionalJump(ExitLabel);
+                                Instance_1.AddNonConditionalJump(ExitLabel, InsAuxiliary);
 
                                 // Quitar Identacion
                                 Instance_1.DeleteIdent();
 
                                 // Agregar Etiquta Salida 
-                                Instance_1.AddLabel(ExitLabel);
+                                Instance_1.AddLabel(ExitLabel, InsAuxiliary);
 
                                 // Agregar Identacion 
                                 Instance_1.AddIdent();
 
                                 // Agregar Comentario 
-                                Instance_1.AddCommentOneLine("Fin Imprimir Bool\n");
+                                Instance_1.AddCommentOneLine("Fin Imprimir Bool\n", CommentAuxiliary);
 
                                 // Quitar Identacion 
                                 Instance_1.DeleteIdent();

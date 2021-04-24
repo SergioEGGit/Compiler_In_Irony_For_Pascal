@@ -1868,14 +1868,14 @@ namespace Proyecto2.Irony_Resources
             {
 
                 // Mostrar Mensage 
-                MessageBox.Show("Existen Errores En El Analisis..!");
+                // MessageBox.Show("Existen Errores En El Analisis..!");
 
             }
             else
             {
 
                 // Generar Arbol De Analisis Sintactico 
-                GenerateReportAST(RootTreeNode);
+                // GenerateReportAST(RootTreeNode);
 
                 // Verificar Si El Archivo No Esta Vacio
                 if (RootTreeNode.ChildNodes.Count > 0)

@@ -472,12 +472,44 @@ namespace Proyecto2.TranslatorAndInterpreter
             if (this.LeftValue != null)
             {
 
+                // Verificar Si Global 
+                if (this.IsGlobal)
+                {
+
+                    // Agregar Expression 
+                    this.LeftValue.IsGlobal = true;
+
+                }
+                else
+                {
+
+                    // Agregar Expression 
+                    this.LeftValue.IsGlobal = false;
+
+                }
+
                 // Ejecutar
                 Left = this.LeftValue.Compilate(Env);
 
             }
             if (this.RightValue != null)
             {
+
+                // Verificar Si Global 
+                if (this.IsGlobal)
+                {
+
+                    // Agregar Expression 
+                    this.RightValue.IsGlobal = true;
+
+                }
+                else
+                {
+
+                    // Agregar Expression 
+                    this.RightValue.IsGlobal = false;
+
+                }
 
                 // Ejecutar 
                 Right = this.RightValue.Compilate(Env);
@@ -493,6 +525,29 @@ namespace Proyecto2.TranslatorAndInterpreter
 
                 // Obtener Tipo Operacion
                 Type = DominantType.TypeTableValue(Left.Type.ToString(), Right.Type.ToString());
+
+            }
+
+            // Crear Auxiliares 
+            String CommentAuxiliary;
+            String InsAuxiliary;
+
+            // Verificar Si EStoy En Global
+            if(this.IsGlobal)
+            {
+
+                // Agregar Valores 
+                CommentAuxiliary = "Uno Global";
+                InsAuxiliary = "Dos Global";
+                
+
+            }
+            else
+            {
+
+                // Agregar Valores 
+                CommentAuxiliary = "Uno";
+                InsAuxiliary = "Dos";
 
             }
 
@@ -514,7 +569,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                 {
 
                     // Añadir Expression
-                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "+", Right.GetValue());
+                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "+", Right.GetValue(), InsAuxiliary);
 
                     // Obtener
                     AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type)
@@ -529,7 +584,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                 {
 
                     // Añadir Expression
-                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "+", Right.GetValue());
+                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "+", Right.GetValue(), InsAuxiliary);
 
                     // Obtener
                     AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type)
@@ -550,19 +605,19 @@ namespace Proyecto2.TranslatorAndInterpreter
                     // Instance_1.DeleteTemporary(ActualTemporary_1);
 
                     // Añadir Expression 1
-                    Instance_1.AddOneExpression("T1", Left.GetValue());
+                    Instance_1.AddOneExpression("T1", Left.GetValue(), InsAuxiliary);
 
                     // Añadir Expression 2
-                    Instance_1.AddOneExpression("T2", Right.GetValue());
+                    Instance_1.AddOneExpression("T2", Right.GetValue(), InsAuxiliary);
 
                     // Agregar Comentario 
-                    Instance_1.AddCommentOneLine("Llamada Funcion Nativa (Concatenar String)");
+                    Instance_1.AddCommentOneLine("Llamada Funcion Nativa (Concatenar String)", CommentAuxiliary);
 
                     // Agregar Llamada A Funcion 
-                    Instance_1.AddFunctionCall("concat_string");
+                    Instance_1.AddFunctionCall("concat_string", InsAuxiliary);
 
                     // Obtener Valor De Nueva Cadena 
-                    Instance_1.AddOneExpression(ActualTemporary_1, "T4");
+                    Instance_1.AddOneExpression(ActualTemporary_1, "T4", InsAuxiliary);
 
                     // Obtener
                     AuxiliaryReturn = new ObjectReturn(ActualTemporary_1, Type)
@@ -592,7 +647,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                 {
 
                     // Añadir Expression
-                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "-", Right.GetValue());
+                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "-", Right.GetValue(), InsAuxiliary);
 
                     // Obtener
                     AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type)
@@ -607,7 +662,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                 {
 
                     // Añadir Expression
-                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "-", Right.GetValue());
+                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "-", Right.GetValue(), InsAuxiliary);
 
                     // Obtener
                     AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type)
@@ -637,7 +692,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                 {
 
                     // Añadir Expression
-                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "*", Right.GetValue());
+                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "*", Right.GetValue(), InsAuxiliary);
 
                     // Obtener
                     AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type)
@@ -652,7 +707,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                 {
 
                     // Añadir Expression
-                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "*", Right.GetValue());
+                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "*", Right.GetValue(), InsAuxiliary);
 
                     // Obtener
                     AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type)
@@ -682,7 +737,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                 {
 
                     // Añadir Expression
-                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "/", Right.GetValue());
+                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "/", Right.GetValue(), InsAuxiliary);
 
                     // Obtener
                     AuxiliaryReturn = new ObjectReturn(ActualTemporary, "real")
@@ -697,7 +752,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                 {
 
                     // Añadir Expression
-                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "/", Right.GetValue());
+                    Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "/", Right.GetValue(), InsAuxiliary);
 
                     // Obtener
                     AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type)
@@ -731,7 +786,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                     {
 
                         // Añadir Expression
-                        Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "%", Right.GetValue());
+                        Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "%", Right.GetValue(), InsAuxiliary);
 
                         // Obtener
                         AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type)
@@ -752,7 +807,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                     {
 
                         // Añadir Expression
-                        Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "%", Right.GetValue());
+                        Instance_1.AddTwoExpression(ActualTemporary, Left.GetValue(), "%", Right.GetValue(), InsAuxiliary);
 
                         // Obtener
                         AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type)
@@ -784,7 +839,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                 {
 
                     // Añadir Expression
-                    Instance_1.AddTwoExpression(ActualTemporary, "0", "-", Right.GetValue());
+                    Instance_1.AddTwoExpression(ActualTemporary, "0", "-", Right.GetValue(), InsAuxiliary);
 
                     // Obtener
                     AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type)
@@ -799,7 +854,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                 {
 
                     // Añadir Expression
-                    Instance_1.AddTwoExpression(ActualTemporary, "0", "-", Right.GetValue());
+                    Instance_1.AddTwoExpression(ActualTemporary, "0", "-", Right.GetValue(), InsAuxiliary);
 
                     // Obtener
                     AuxiliaryReturn = new ObjectReturn(ActualTemporary, Type)

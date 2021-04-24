@@ -270,6 +270,10 @@ namespace Proyecto2.TranslatorAndInterpreter
             // Contador Auxiliar 
             int AuxiliaryCounter = 1;
 
+            // Auxiliares 
+            String CommentAuxiliary = "Uno";
+            String InsAuxiliary = "Dos";
+
             // Nuevo Entorno 
             EnviromentTable CaseEnv = new EnviromentTable(Env, "Env_Case");
 
@@ -277,7 +281,7 @@ namespace Proyecto2.TranslatorAndInterpreter
             ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
 
             // Agrear Comentario 
-            Instance_1.AddCommentOneLine("Comienzo Instrucción Switch Case");
+            Instance_1.AddCommentOneLine("Comienzo Instrucción Switch Case", CommentAuxiliary);
 
             // Crear Etiquetas 
             String LabelCaseInicio = Instance_1.CreateLabel();
@@ -288,7 +292,7 @@ namespace Proyecto2.TranslatorAndInterpreter
             CaseEnv.BreakLabel = LabelCaseFinal;
 
             // Agregar Etiqueta De Inicio 
-            Instance_1.AddLabel(LabelCaseInicio);
+            Instance_1.AddLabel(LabelCaseInicio, InsAuxiliary);
 
             // Agregar Identacion 
             Instance_1.AddIdent();
@@ -313,7 +317,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                             String LabelFinalCase = Instance_1.CreateLabel();
 
                             // Agregar Comentario 
-                            Instance_1.AddCommentOneLine("Case No." + AuxiliaryCounter + "\n");
+                            Instance_1.AddCommentOneLine("Case No." + AuxiliaryCounter + "\n", CommentAuxiliary);
 
                             // Obtener Expresiones
                             ObjectReturn SwitchExp = this.Expression_.Compilate(CaseEnv);
@@ -324,16 +328,16 @@ namespace Proyecto2.TranslatorAndInterpreter
                             {
 
                                 // Agregar Comentario
-                                Instance_1.AddCommentOneLine("Validación Expression Relacional");
+                                Instance_1.AddCommentOneLine("Validación Expression Relacional", CommentAuxiliary);
 
                                 // Agregar If De Salto 
-                                Instance_1.AddConditionalJump(SwitchExp.GetValue(), "==", CaseExp.GetValue(), LabelInicioCase);
+                                Instance_1.AddConditionalJump(SwitchExp.GetValue(), "==", CaseExp.GetValue(), LabelInicioCase, InsAuxiliary);
 
                                 // Agregar Identacion
                                 Instance_1.AddIdent();
 
                                 // Agregar Salto No Condicional
-                                Instance_1.AddNonConditionalJump(LabelFinalCase);
+                                Instance_1.AddNonConditionalJump(LabelFinalCase, InsAuxiliary);
 
                                 // Quitar Identacion
                                 Instance_1.DeleteIdent();
@@ -343,29 +347,29 @@ namespace Proyecto2.TranslatorAndInterpreter
                             {
 
                                 // Agregar Comentario
-                                Instance_1.AddCommentOneLine("Obtener Posicion Inicial De Los Strings");
+                                Instance_1.AddCommentOneLine("Obtener Posicion Inicial De Los Strings", CommentAuxiliary);
 
                                 // Obtener Strings 
-                                Instance_1.AddOneExpression("T1", SwitchExp.GetValue().ToString());
-                                Instance_1.AddOneExpression("T2", CaseExp.GetValue().ToString());
+                                Instance_1.AddOneExpression("T1", SwitchExp.GetValue().ToString(), InsAuxiliary);
+                                Instance_1.AddOneExpression("T2", CaseExp.GetValue().ToString(), InsAuxiliary);
 
                                 // Agregar Comentario 
-                                Instance_1.AddCommentOneLine("Llamada A Función");
+                                Instance_1.AddCommentOneLine("Llamada A Función", CommentAuxiliary);
 
                                 // Agregar Llamada A Metodo 
-                                Instance_1.AddFunctionCall("compare_string");
+                                Instance_1.AddFunctionCall("compare_string", InsAuxiliary);
 
                                 // Agregar Comentario
-                                Instance_1.AddCommentOneLine("Validación Expression Relacional");
+                                Instance_1.AddCommentOneLine("Validación Expression Relacional", CommentAuxiliary);
 
                                 // Agregar If De Salto 
-                                Instance_1.AddConditionalJump("T4", "==", "1", LabelInicioCase);
+                                Instance_1.AddConditionalJump("T4", "==", "1", LabelInicioCase, InsAuxiliary);
 
                                 // Agregar Identacion
                                 Instance_1.AddIdent();
 
                                 // Agregar Salto No Condicional
-                                Instance_1.AddNonConditionalJump(LabelFinalCase);
+                                Instance_1.AddNonConditionalJump(LabelFinalCase, InsAuxiliary);
 
                                 // Quitar Identacion
                                 Instance_1.DeleteIdent();
@@ -373,7 +377,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                             }
 
                             // Agregar Etiqueta 
-                            Instance_1.AddLabel(LabelInicioCase);
+                            Instance_1.AddLabel(LabelInicioCase, InsAuxiliary);
 
                             // Agregar Identacion 
                             Instance_1.AddIdent();
@@ -385,22 +389,22 @@ namespace Proyecto2.TranslatorAndInterpreter
                             AuxCase.Compilate(CaseEnv);
 
                             // Agregar Comentario
-                            Instance_1.AddCommentOneLine("Instrucción Break");
+                            Instance_1.AddCommentOneLine("Instrucción Break", CommentAuxiliary);
 
                             // Agregar Break 
-                            Instance_1.AddNonConditionalJump(LabelCaseFinal);
+                            Instance_1.AddNonConditionalJump(LabelCaseFinal, InsAuxiliary);
                             
                             // Eliminar Identacion 
                             Instance_1.DeleteIdent();
 
                             // Agregar Label 
-                            Instance_1.AddLabel(LabelFinalCase);
+                            Instance_1.AddLabel(LabelFinalCase, InsAuxiliary);
 
                             // Agregar Identacion 
                             Instance_1.AddIdent();
 
                             // Agregar Comentario 
-                            Instance_1.AddCommentOneLine("Fin Case No." + AuxiliaryCounter + "\n");
+                            Instance_1.AddCommentOneLine("Fin Case No." + AuxiliaryCounter + "\n", CommentAuxiliary);
 
                             // Eliminar Identacion 
                             Instance_1.DeleteIdent();
@@ -417,10 +421,10 @@ namespace Proyecto2.TranslatorAndInterpreter
                             String LabelFinalDefault = Instance_1.CreateLabel();
 
                             // Agregar Comentario 
-                            Instance_1.AddCommentOneLine("Default");
+                            Instance_1.AddCommentOneLine("Default", CommentAuxiliary);
 
                             // Agregar Etiqueta 
-                            Instance_1.AddLabel(LabelInicioDefault);
+                            Instance_1.AddLabel(LabelInicioDefault, InsAuxiliary);
 
                             // Agregar Identacion 
                             Instance_1.AddIdent();
@@ -432,13 +436,13 @@ namespace Proyecto2.TranslatorAndInterpreter
                             Instance_1.DeleteIdent();
 
                             // Agregar Label 
-                            Instance_1.AddLabel(LabelFinalDefault);
+                            Instance_1.AddLabel(LabelFinalDefault, InsAuxiliary);
 
                             // Agregar Identacion 
                             Instance_1.AddIdent();
 
                             // Agregar Comentario 
-                            Instance_1.AddCommentOneLine("Fin Default \n");
+                            Instance_1.AddCommentOneLine("Fin Default \n", CommentAuxiliary);
 
                             // Eliminar Identacion 
                             Instance_1.DeleteIdent();
@@ -455,13 +459,13 @@ namespace Proyecto2.TranslatorAndInterpreter
             Instance_1.DeleteIdent();
 
             // Agregar Etiqueta De Inicio 
-            Instance_1.AddLabel(LabelCaseFinal);
+            Instance_1.AddLabel(LabelCaseFinal, InsAuxiliary);
 
             // Añadir Identacion 
             Instance_1.AddIdent();
 
             // Agregar Comentario 
-            Instance_1.AddCommentOneLine("Fin Instrucción Switch Case\n");
+            Instance_1.AddCommentOneLine("Fin Instrucción Switch Case\n", CommentAuxiliary);
 
             // Eliminar Identacion 
             Instance_1.DeleteIdent();

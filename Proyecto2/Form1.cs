@@ -36,7 +36,7 @@ namespace Proyecto2
             Instancia_1.ResetIntermediateCode();
 
             // Agregar Comentario
-            Instancia_1.AddCommentOneLine("Funciones Nativas");
+            Instancia_1.AddCommentOneLine("Funciones Nativas", "Uno");
 
             // Agregar Print
             Instancia_1.AddNativePrintString();

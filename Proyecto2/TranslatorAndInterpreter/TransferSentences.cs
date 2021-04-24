@@ -130,20 +130,20 @@ namespace Proyecto2.TranslatorAndInterpreter
             {
 
                 // Agregar Comentario 
-                Instance_1.AddCommentOneLine("Instrucción Break");
+                Instance_1.AddCommentOneLine("Instrucción Break", "Uno");
 
                 // Agregar Salto 
-                Instance_1.AddNonConditionalJump(AuxiliaryArray[0]);
+                Instance_1.AddNonConditionalJump(AuxiliaryArray[0], "Dos");
 
             }
             else if(this.TransType.Equals("Continue")) 
             {
 
                 // Agregar Comentario
-                Instance_1.AddCommentOneLine("Instrucción Continue");
+                Instance_1.AddCommentOneLine("Instrucción Continue", "Uno");
 
                 // Agregar Salto 
-                Instance_1.AddNonConditionalJump(AuxiliaryArray[1]);
+                Instance_1.AddNonConditionalJump(AuxiliaryArray[1], "Dos");
 
             }
            

@@ -232,14 +232,18 @@ namespace Proyecto2.TranslatorAndInterpreter
             // Obtener Instancia 
             ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
 
+            // Auxiliares 
+            String CommentAuxiliary = "Uno";
+            String InsAuxiliary = "Dos";
+
             //  Agregar Comentario 
-            Instance_1.AddCommentOneLine("Comienzo Instrucción While");
+            Instance_1.AddCommentOneLine("Comienzo Instrucción While", CommentAuxiliary);
 
             // Crear Label 
             String LabelWhile = Instance_1.CreateLabel();
 
             // Añadir Label 
-            Instance_1.AddLabel(LabelWhile);
+            Instance_1.AddLabel(LabelWhile, InsAuxiliary);
 
             // Agregar Identacion 
             Instance_1.AddIdent();
@@ -260,7 +264,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                     WhileEnv.ContinueLabel = LabelWhile;
 
                     // Agergar Etiqueta True 
-                    Instance_1.AddLabel(WhileExp.BoolTrue);
+                    Instance_1.AddLabel(WhileExp.BoolTrue, InsAuxiliary);
 
                     // Añadir Identacion 
                     Instance_1.AddIdent();
@@ -287,20 +291,20 @@ namespace Proyecto2.TranslatorAndInterpreter
                     }
 
                     // Agregar Salto De Retorno Del While 
-                    Instance_1.AddNonConditionalJump(LabelWhile);
+                    Instance_1.AddNonConditionalJump(LabelWhile, InsAuxiliary);
 
                     // Eliminar Identación
                     Instance_1.DeleteIdent();
                     Instance_1.DeleteIdent();
 
                     // Agregar Label 
-                    Instance_1.AddLabel(WhileExp.BoolFalse);
+                    Instance_1.AddLabel(WhileExp.BoolFalse, InsAuxiliary);
 
                     // Agregar Identación
                     Instance_1.AddIdent();
 
                     // Agregar Comentario 
-                    Instance_1.AddCommentOneLine("Fin Instrucción While\n");
+                    Instance_1.AddCommentOneLine("Fin Instrucción While\n", CommentAuxiliary);
 
                     // Eliminar Identación
                     Instance_1.DeleteIdent();

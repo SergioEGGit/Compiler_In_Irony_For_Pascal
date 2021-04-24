@@ -225,8 +225,12 @@ namespace Proyecto2.TranslatorAndInterpreter
             // Obtener Instancia 
             ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
 
+            // Auxiliares 
+            String CommentAuxiliary = "Uno";
+            String InsAuxiliary = "Dos";
+
             // Inicia Repeat
-            Instance_1.AddCommentOneLine("Comienzo Instrucción Repeat");
+            Instance_1.AddCommentOneLine("Comienzo Instrucción Repeat", CommentAuxiliary);
 
             // Crear Label 
             String LabelRepeatInicio = Instance_1.CreateLabel();
@@ -241,7 +245,7 @@ namespace Proyecto2.TranslatorAndInterpreter
             this.Expression_.BoolFalse = LabelRepeatInicio;
 
             // Añadir Label 
-            Instance_1.AddLabel(LabelRepeatInicio);
+            Instance_1.AddLabel(LabelRepeatInicio, InsAuxiliary);
 
             // Agregbar Identacion 
             Instance_1.AddIdent();
@@ -274,13 +278,13 @@ namespace Proyecto2.TranslatorAndInterpreter
             Instance_1.DeleteIdent();
 
             // Añadir Final 
-            Instance_1.AddLabel(LabelRepeatFinal);
+            Instance_1.AddLabel(LabelRepeatFinal, InsAuxiliary);
 
             // Agregar Identación
             Instance_1.AddIdent();
 
             // Agregar Comentario 
-            Instance_1.AddCommentOneLine("Fin Instrucción Repeat\n");
+            Instance_1.AddCommentOneLine("Fin Instrucción Repeat\n", CommentAuxiliary);
 
             // Eliminar Identación
             Instance_1.DeleteIdent();           

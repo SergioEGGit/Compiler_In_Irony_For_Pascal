@@ -98,7 +98,32 @@ namespace Proyecto2.TranslatorAndInterpreter
         // Método Compilar
         public override object Compilate(EnviromentTable Env)
         {
-            throw new NotImplementedException();
+
+
+            // Verificar Si Esta Nullo
+            if (this.ConstList != null)
+            {
+
+                // Ejectuar Traduccion
+                foreach (AbstractInstruccion Const in this.ConstList)
+                {
+
+                    // Verifiar Si Es Nullo
+                    if (Const != null)
+                    {
+
+                        // Agregar ha Traduccion
+                        Const.Compilate(Env);
+
+                    }
+
+                }
+
+            }
+
+            // Retornar Null 
+            return null;
+
         }
 
     }
