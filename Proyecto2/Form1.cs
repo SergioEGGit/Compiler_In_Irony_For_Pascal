@@ -50,9 +50,6 @@ namespace Proyecto2
             // Analizar Texto Compilar
             ParserTranslate.AnalyzeCompilate(EntranceString);
 
-            // Analizar Texto Ejeuctar
-            ParserTranslate.AnalyzeExecute(EntranceString);
-
             // Limpiar Consola 
             TextConsole.Text = "";
 

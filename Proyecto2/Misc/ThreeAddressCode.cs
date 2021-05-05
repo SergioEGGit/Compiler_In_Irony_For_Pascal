@@ -12,7 +12,7 @@ namespace Proyecto2.Misc
 
         // Instancia 
         private static ThreeAddressCode ActualInstance = null;
-        
+
         // Temporal Contador 
         private int TemporaryCounter;
 
@@ -32,7 +32,7 @@ namespace Proyecto2.Misc
         private String GlobalDeclarations;
 
         // Constructor 
-        private ThreeAddressCode() 
+        private ThreeAddressCode()
         {
 
             // Inicializar Valores
@@ -50,23 +50,23 @@ namespace Proyecto2.Misc
         {
 
             // Método Get
-            get 
+            get
             {
 
                 // Verificar Si Existe La Instancia
-                if(ActualInstance == null) 
+                if (ActualInstance == null)
                 {
 
                     // Nueva Instancia
                     ActualInstance = new ThreeAddressCode();
-                
+
                 }
 
                 // Retornar 
                 return ActualInstance;
-                
+
             }
-        
+
         }
 
         // Agregar Codigo 
@@ -76,7 +76,7 @@ namespace Proyecto2.Misc
             // Split 
             String[] Auxiliary = Type.Split(" ");
 
-            if(Auxiliary.Length > 1) 
+            if (Auxiliary.Length > 1)
             {
 
                 // Verificar Tipo
@@ -114,7 +114,7 @@ namespace Proyecto2.Misc
                     IntermediateCode += Ident + LineCode + "\n\n";
 
                 }
-                else if(Auxiliary[0].Equals("Uno"))
+                else if (Auxiliary[0].Equals("Uno"))
                 {
 
                     // Agregar Codigo A Variable 
@@ -134,7 +134,7 @@ namespace Proyecto2.Misc
         }
 
         // Agregar Varibles Globales 
-        public void AddGlobalVariables() 
+        public void AddGlobalVariables()
         {
 
             // Agregar Codigo 
@@ -143,25 +143,25 @@ namespace Proyecto2.Misc
         }
 
         // Size Global Variables 
-        public int SizeGlobalDeclarations() 
+        public int SizeGlobalDeclarations()
         {
 
             // Obtener Tamaño
             return this.GlobalDeclarations.Length;
-        
+
         }
 
         // Obtener Codigo
-        public String GetIntermediateCode() 
+        public String GetIntermediateCode()
         {
 
             // Retornar Codigo 
             return IntermediateCode;
-        
+
         }
 
         // Limpiar Codigo
-        public void ResetIntermediateCode() 
+        public void ResetIntermediateCode()
         {
 
             // Inicializar Valores
@@ -175,7 +175,7 @@ namespace Proyecto2.Misc
         }
 
         // Agregar Cabecera 
-        public String CreateHeader() 
+        public String CreateHeader()
         {
 
             // Auxiliar Header 
@@ -215,7 +215,7 @@ namespace Proyecto2.Misc
 
                 }
 
-            }            
+            }
 
             // Retornar 
             return AuxiliaryString;
@@ -223,7 +223,7 @@ namespace Proyecto2.Misc
         }
 
         // Crear Un Temporal 
-        public String CreateTemporary() 
+        public String CreateTemporary()
         {
 
             // Aumentar Contador 
@@ -237,11 +237,11 @@ namespace Proyecto2.Misc
 
             // Crear Temporal 
             return AuxiliaryString;
-        
+
         }
 
         // Crear Un Label 
-        public String CreateLabel() 
+        public String CreateLabel()
         {
 
             // Aumentar Contador 
@@ -256,7 +256,7 @@ namespace Proyecto2.Misc
         }
 
         // Agregar Label 
-        public void AddLabel(String Label, String IdentType) 
+        public void AddLabel(String Label, String IdentType)
         {
 
             // Linea De codigo 
@@ -264,7 +264,7 @@ namespace Proyecto2.Misc
 
             // Agregar Linea 
             AddLineToIntermediateCode(LineCode, IdentType);
-        
+
         }
 
         // Obtener Array De Temporales 
@@ -274,6 +274,21 @@ namespace Proyecto2.Misc
             // Retornar Temporal 
             return TemporaryArray;
 
+        }
+
+        // Agregar Temporal 
+        public void AddTemporaryToArray(String Temporary)
+        {
+
+            // Verificar Si Existe Temporal 
+            if (!TemporaryArray.ContainsKey(Temporary))
+            {
+
+                // Agregar A Array 
+                TemporaryArray.Add(Temporary, Temporary);
+            
+            }
+        
         }
 
         // Reemplazar Array De Temporales 
@@ -528,6 +543,165 @@ namespace Proyecto2.Misc
             // Agregar Linea A Heap 
             AddLineToIntermediateCode(LineCode, "Dos");
 
+        }
+
+        // Recursivas 
+
+        // Guardar Temporales 
+        public int SaveTemporaryAux(EnviromentTable ActualEnv) 
+        {
+
+            // Entorno Func O Global 
+            EnviromentTable Func_Global_Env = ActualEnv;
+
+            // Recorrer Env 
+            while(Func_Global_Env != null) 
+            {
+
+                // Verificar Si ES Global O Func
+                if(Func_Global_Env.EnviromentName.Contains("Env_Global") || Func_Global_Env.EnviromentName.Contains("Env_Func_")) 
+                {
+
+                    // Parar
+                    break;
+                
+                }
+
+                // Anvanzar Ambientes 
+                Func_Global_Env = Func_Global_Env.ParentEnviroment;
+            
+            }
+
+            // Verificar Si Hay Temporales En La Lista 
+            if (this.TemporaryArray.Count > 0) 
+            {
+
+                // Crear Un Nuevo Temporal 
+                String TemporaryActual = CreateTemporary();
+
+                // Limipiar Temporal 
+                DeleteTemporary(TemporaryActual);
+
+                // Tamaño Auxiliar 
+                int SizeAuxilary = 0;
+
+                // Agregar Comentario 
+                AddCommentOneLine("Comienzo Guardado De Temporales", "Uno");
+
+                // Añadir Expression Cambio De Entorno Simulado
+                AddTwoExpression(TemporaryActual, "SP", "+", Func_Global_Env.EnviromentSize.ToString(), "Dos");
+
+                // Recorrer Lista De Temporales 
+                foreach(KeyValuePair<String, String> Temporary in this.TemporaryArray) 
+                {
+
+                    // Aumentar Size Auxiliar 
+                    SizeAuxilary += 1;
+
+                    // Agregar A Stack 
+                    AddValueToStack(TemporaryActual, Temporary.Value, "Dos");
+
+                    // Verificar Si Estoy Por Terminar 
+                    if(this.TemporaryArray.Count != SizeAuxilary)
+                    {
+
+                        // Agregar Expression 
+                        AddTwoExpression(TemporaryActual, TemporaryActual, "+", "1", "Dos");
+                    
+                    }                                 
+                
+                }
+
+                // Agregar Comentario 
+                AddCommentOneLine("Fin Guardado De Temporales", "Dos");
+                
+            }
+
+            // Puntero 
+            int Pointer = ActualEnv.EnviromentSize;
+
+            // Cambiar Size Del Ambiente 
+            ActualEnv.EnviromentSize = Pointer + this.TemporaryArray.Count;
+
+            // Retornar 
+            return Pointer;
+
+        }
+
+        // Recuperar Temporales 
+        public void GetTemporaryAux(EnviromentTable ActualEnv, int Position)
+        {
+
+            // Entorno Func O Global 
+            EnviromentTable Func_Global_Env = ActualEnv;
+
+            // Recorrer Env 
+            while (Func_Global_Env != null)
+            {
+
+                // Verificar Si ES Global O Func
+                if (Func_Global_Env.EnviromentName.Contains("Env_Global") || Func_Global_Env.EnviromentName.Contains("Env_Func_"))
+                {
+
+                    // Parar
+                    break;
+
+                }
+
+                // Anvanzar Ambientes 
+                Func_Global_Env = Func_Global_Env.ParentEnviroment;
+
+            }
+
+            // Verificar Si Hay Temporales En La Lista 
+            if (this.TemporaryArray.Count > 0)
+            {
+
+                // Crear Un Nuevo Temporal 
+                String TemporaryActual = CreateTemporary();
+
+                // Limipiar Temporal 
+                DeleteTemporary(TemporaryActual);
+
+                // Tamaño Auxiliar 
+                int SizeAuxilary = 0;
+
+                // Agregar Comentario 
+                AddCommentOneLine("Comienzo Recuperación De Temporales", "Uno");
+
+                // Obtener Posicion 
+                AddTwoExpression(TemporaryActual, "SP", "+", Position.ToString(), "Dos");
+
+                // Recorrer Lista De Temporales 
+                foreach (KeyValuePair<String, String> Temporary in this.TemporaryArray)
+                {
+
+                    // Aumentar Size Auxiliar 
+                    SizeAuxilary += 1;
+
+                    // Agregar A Stack 
+                    GetValueOfStack(TemporaryActual, Temporary.Value, "Dos");
+
+                    // Verificar Si Estoy Por Terminar 
+                    if (this.TemporaryArray.Count != SizeAuxilary)
+                    {
+
+                        // Agregar Expression 
+                        AddTwoExpression(TemporaryActual, TemporaryActual, "+", "1", "Dos");
+
+                    }
+
+
+
+                }
+
+                // Agregar Comentario 
+                AddCommentOneLine("Fin Recuperación De Temporales", "Dos");
+
+                // Setear Size 
+                Func_Global_Env.EnviromentSize = Position;
+
+            }
         }
 
         // Nativas 

@@ -1,5 +1,6 @@
 ﻿// ------------------------------------------ Librerias E Imports --------------------------------------------------
 using System;
+using System.Windows.Forms;
 using System.Collections.Generic;
 using Proyecto2.Misc;
 
@@ -40,7 +41,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                     // Verifiar Si Es Nullo
                     if (Const != null)
                     {
-
+                       
                         // Agregar ha Traduccion
                         Const.Execute(Env);
 
@@ -99,11 +100,10 @@ namespace Proyecto2.TranslatorAndInterpreter
         public override object Compilate(EnviromentTable Env)
         {
 
-
             // Verificar Si Esta Nullo
             if (this.ConstList != null)
             {
-
+             
                 // Ejectuar Traduccion
                 foreach (AbstractInstruccion Const in this.ConstList)
                 {
@@ -111,7 +111,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                     // Verifiar Si Es Nullo
                     if (Const != null)
                     {
-
+                        
                         // Agregar ha Traduccion
                         Const.Compilate(Env);
 

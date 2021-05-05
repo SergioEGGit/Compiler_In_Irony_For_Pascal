@@ -320,7 +320,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                             Instance_1.AddCommentOneLine("Case No." + AuxiliaryCounter + "\n", CommentAuxiliary);
 
                             // Obtener Expresiones
-                            ObjectReturn SwitchExp = this.Expression_.Compilate(CaseEnv);
+                            ObjectReturn SwitchExp = this.Expression_.Compilate(Env);
                             ObjectReturn CaseExp = AuxCase.Expression_.Compilate(CaseEnv);
 
                             // Verificar Tipo

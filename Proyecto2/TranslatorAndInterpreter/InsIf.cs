@@ -257,7 +257,7 @@ namespace Proyecto2.TranslatorAndInterpreter
             Instancia_1.AddCommentOneLine("Comienzo Instrucción If\n", CommentAuxiliary);
 
             // Verificar La Expression
-            ObjectReturn ElseExp = this.Expression_.Compilate(IfEnv);
+            ObjectReturn ElseExp = this.Expression_.Compilate(Env);
 
             // Verificar Si Hay Error Semantico 
             if(ElseExp.Type.Equals("boolean"))

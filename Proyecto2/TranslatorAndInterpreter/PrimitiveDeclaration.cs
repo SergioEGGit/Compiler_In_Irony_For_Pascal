@@ -345,115 +345,255 @@ namespace Proyecto2.TranslatorAndInterpreter
                     String Temporary = Instance_1.CreateTemporary();
 
                     // Limpiar Temporal 
-                    // Instance_1.DeleteTemporary(Temporary); 
+                    Instance_1.DeleteTemporary(Temporary); 
 
                     // Verificar Tipo
                     if (this.Type == "integer")
                     {
 
-                        // Verificar Si La Variable Existe O NO 
-                        SymbolTable ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn);
+                        SymbolTable ActualVar = null;
 
-                        // Obtener Posicioin Del Stack Para Guardar La VAriable
-                        Instance_1.AddTwoExpression(Temporary, "SP", "+", ActualVar.Value.ToString(), InsAuxiliary);
+                        // Verificar Si Es Global 
+                        if (Env.EnviromentName.Equals("Env_Global"))
+                        {
 
-                        // Agregar A Stack 
-                        Instance_1.AddValueToStack(Temporary, "0", InsAuxiliary);
+                            // Verificar Si La Variable Existe O NO 
+                            ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, true);
+
+                            // Agregar A Stack 
+                            Instance_1.AddValueToStack(ActualVar.Value.ToString(), "0", InsAuxiliary);
+
+                        }
+                        else
+                        {
+
+                            // Verificar Si La Variable Existe O NO 
+                            ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, false);
+
+                            // Obtener Posicioin Del Stack Para Guardar La VAriable
+                            Instance_1.AddTwoExpression(Temporary, "SP", "+", ActualVar.Value.ToString(), InsAuxiliary);
+
+                            // Agregar A Stack 
+                            Instance_1.AddValueToStack(Temporary, "0", InsAuxiliary);
+
+                        }
 
                     }
                     else if (this.Type == "string")
                     {
 
-                        // Verificar Si La Variable Existe O NO 
-                        SymbolTable ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn);
+                        SymbolTable ActualVar = null;
 
-                        // Obtener Posicioin Del Stack Para Guardar La VAriable
-                        Instance_1.AddTwoExpression(Temporary, "SP", "+", ActualVar.Value.ToString(), InsAuxiliary);
+                        // Verificar Si Es Global 
+                        if (Env.EnviromentName.Equals("Env_Global"))
+                        {
 
-                        // Crear Temporal 
-                        String TemporaryHeap = Instance_1.CreateTemporary();
+                            // Verificar Si La Variable Existe O NO 
+                            ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, true);
 
-                        // Agregar String A Heap 
-                        Instance_1.AddOneExpression(TemporaryHeap, "HP", InsAuxiliary);
+                            // Crear Temporal 
+                            String TemporaryHeap = Instance_1.CreateTemporary();
 
-                        // Agregar Valor A Heap 
-                        Instance_1.AddValueToHeap("HP", "-1", InsAuxiliary);
+                            // Eliminar TEmporal 
+                            Instance_1.DeleteTemporary(TemporaryHeap);
 
-                        // Mover Heap 
-                        Instance_1.MovePointerHeap(InsAuxiliary);
+                            // Agregar String A Heap 
+                            Instance_1.AddOneExpression(TemporaryHeap, "HP", InsAuxiliary);
+
+                            // Agregar Valor A Heap 
+                            Instance_1.AddValueToHeap("HP", "-1", InsAuxiliary);
+
+                            // Mover Heap 
+                            Instance_1.MovePointerHeap(InsAuxiliary);
+
+                            // Agregar A Stack 
+                            Instance_1.AddValueToStack(ActualVar.GetValue().ToString(), TemporaryHeap, InsAuxiliary);
+
+                        }
+                        else
+                        {
+
+                            // Verificar Si La Variable Existe O NO 
+                            ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, false);
+
+                            // Obtener Posicioin Del Stack Para Guardar La VAriable
+                            Instance_1.AddTwoExpression(Temporary, "SP", "+", ActualVar.Value.ToString(), InsAuxiliary);
+
+                            // Crear Temporal 
+                            String TemporaryHeap = Instance_1.CreateTemporary();
+
+                            // Eliminar TEmporal 
+                            Instance_1.DeleteTemporary(TemporaryHeap);
+
+                            // Agregar String A Heap 
+                            Instance_1.AddOneExpression(TemporaryHeap, "HP", InsAuxiliary);
+
+                            // Agregar Valor A Heap 
+                            Instance_1.AddValueToHeap("HP", "-1", InsAuxiliary);
+
+                            // Mover Heap 
+                            Instance_1.MovePointerHeap(InsAuxiliary);
+
+                            // Agregar A Stack 
+                            Instance_1.AddValueToStack(Temporary, TemporaryHeap, InsAuxiliary);
+
+                        }
                         
-                        // Agregar A Stack 
-                        Instance_1.AddValueToStack(Temporary, TemporaryHeap, InsAuxiliary);
-
                     }
                     else if (this.Type == "boolean")
                     {
 
-                        // Verificar Si La Variable Existe O NO 
-                        SymbolTable ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn);
+                        SymbolTable ActualVar = null;
 
-                        // Obtener Posicioin Del Stack Para Guardar La VAriable
-                        Instance_1.AddTwoExpression(Temporary, "SP", "+", ActualVar.Value.ToString(), InsAuxiliary);
+                        // Verificar Si Es Global 
+                        if (Env.EnviromentName.Equals("Env_Global"))
+                        {
 
-                        // Crear Label 
-                        String ActualLabel = Instance_1.CreateLabel();
-                        String TrueLabel = Instance_1.CreateLabel();
-                        String FalseLabel = Instance_1.CreateLabel();
+                            // Verificar Si La Variable Existe O NO 
+                            ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, true);
 
-                        // Agregar Comentario 
-                        Instance_1.AddCommentOneLine("Agregar Valor Bool A Stack", CommentAuxiliary);
+                            // Crear Label 
+                            String ActualLabel = Instance_1.CreateLabel();
+                            String TrueLabel = Instance_1.CreateLabel();
+                            String FalseLabel = Instance_1.CreateLabel();
 
-                        // Agregar Label             
-                        Instance_1.AddLabel(TrueLabel, InsAuxiliary);
+                            // Agregar Comentario 
+                            Instance_1.AddCommentOneLine("Agregar Valor Bool A Stack", CommentAuxiliary);
 
-                        // Añadir Identacion 
-                        Instance_1.AddIdent();
+                            // Agregar Salto No Condicional
+                            Instance_1.AddNonConditionalJump(FalseLabel, InsAuxiliary);
 
-                        // Agregar A Stack 
-                        Instance_1.AddValueToStack(Temporary, "1", InsAuxiliary);
+                            // Agregar Label             
+                            Instance_1.AddLabel(TrueLabel, InsAuxiliary);
 
-                        // Añadir Salto 
-                        Instance_1.AddNonConditionalJump(ActualLabel, InsAuxiliary);
+                            // Añadir Identacion 
+                            Instance_1.AddIdent();
 
-                        // Eliminar Identacion 
-                        Instance_1.DeleteIdent();
+                            // Agregar A Stack 
+                            Instance_1.AddValueToStack(ActualVar.GetValue().ToString(), "1", InsAuxiliary);
 
-                        // Agregar Label 
-                        Instance_1.AddLabel(FalseLabel, InsAuxiliary);
+                            // Añadir Salto 
+                            Instance_1.AddNonConditionalJump(ActualLabel, InsAuxiliary);
 
-                        // Añadir Identacion 
-                        Instance_1.AddIdent();
+                            // Eliminar Identacion 
+                            Instance_1.DeleteIdent();
 
-                        // Agregar A Stack 
-                        Instance_1.AddValueToStack(Temporary, "0", InsAuxiliary);
+                            // Agregar Label 
+                            Instance_1.AddLabel(FalseLabel, InsAuxiliary);
 
-                        // Eliminar Identacion 
-                        Instance_1.DeleteIdent();
+                            // Añadir Identacion 
+                            Instance_1.AddIdent();
 
-                        // Añadir Label 
-                        Instance_1.AddLabel(ActualLabel, InsAuxiliary);
+                            // Agregar A Stack 
+                            Instance_1.AddValueToStack(ActualVar.GetValue().ToString(), "0", InsAuxiliary);
 
-                        // Añadir Identacion 
-                        Instance_1.AddIdent();
+                            // Eliminar Identacion 
+                            Instance_1.DeleteIdent();
 
-                        // Añadir Comentario
-                        Instance_1.AddCommentOneLine("Fin Declarción Variable Bool\n", CommentAuxiliary);
+                            // Añadir Label 
+                            Instance_1.AddLabel(ActualLabel, InsAuxiliary);
 
-                        // Eliminar Identacion 
-                        Instance_1.DeleteIdent();
+                            // Añadir Identacion 
+                            Instance_1.AddIdent();
+
+                            // Añadir Comentario
+                            Instance_1.AddCommentOneLine("Fin Declarción Variable Bool\n", CommentAuxiliary);
+
+                            // Eliminar Identacion 
+                            Instance_1.DeleteIdent();
+
+                        }
+                        else
+                        {
+
+                            // Verificar Si La Variable Existe O NO 
+                            ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, false);
+
+                            // Obtener Posicioin Del Stack Para Guardar La VAriable
+                            Instance_1.AddTwoExpression(Temporary, "SP", "+", ActualVar.Value.ToString(), InsAuxiliary);
+
+                            // Crear Label 
+                            String ActualLabel = Instance_1.CreateLabel();
+                            String TrueLabel = Instance_1.CreateLabel();
+                            String FalseLabel = Instance_1.CreateLabel();
+
+                            // Agregar Comentario 
+                            Instance_1.AddCommentOneLine("Agregar Valor Bool A Stack", CommentAuxiliary);
+
+                            // Agregar Salto No Condicional
+                            Instance_1.AddNonConditionalJump(FalseLabel, InsAuxiliary);
+
+                            // Agregar Label             
+                            Instance_1.AddLabel(TrueLabel, InsAuxiliary);
+
+                            // Añadir Identacion 
+                            Instance_1.AddIdent();
+
+                            // Agregar A Stack 
+                            Instance_1.AddValueToStack(Temporary, "1", InsAuxiliary);
+
+                            // Añadir Salto 
+                            Instance_1.AddNonConditionalJump(ActualLabel, InsAuxiliary);
+
+                            // Eliminar Identacion 
+                            Instance_1.DeleteIdent();
+
+                            // Agregar Label 
+                            Instance_1.AddLabel(FalseLabel, InsAuxiliary);
+
+                            // Añadir Identacion 
+                            Instance_1.AddIdent();
+
+                            // Agregar A Stack 
+                            Instance_1.AddValueToStack(Temporary, "0", InsAuxiliary);
+
+                            // Eliminar Identacion 
+                            Instance_1.DeleteIdent();
+
+                            // Añadir Label 
+                            Instance_1.AddLabel(ActualLabel, InsAuxiliary);
+
+                            // Añadir Identacion 
+                            Instance_1.AddIdent();
+
+                            // Añadir Comentario
+                            Instance_1.AddCommentOneLine("Fin Declarción Variable Bool\n", CommentAuxiliary);
+
+                            // Eliminar Identacion 
+                            Instance_1.DeleteIdent();
+
+                        }                        
 
                     }
                     else if (this.Type == "real")
                     {
 
-                        // Verificar Si La Variable Existe O NO 
-                        SymbolTable ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn);
+                        SymbolTable ActualVar = null;
 
-                        // Obtener Posicioin Del Stack Para Guardar La VAriable
-                        Instance_1.AddTwoExpression(Temporary, "SP", "+", ActualVar.Value.ToString(), InsAuxiliary);
+                        // Verificar Si Es Global 
+                        if (Env.EnviromentName.Equals("Env_Global"))
+                        {
 
-                        // Agregar A Stack 
-                        Instance_1.AddValueToStack(Temporary, "0.0", InsAuxiliary);
+                            // Verificar Si La Variable Existe O NO 
+                            ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, true);
+
+                            // Agregar A Stack 
+                            Instance_1.AddValueToStack(ActualVar.Value.ToString(), "0.0", InsAuxiliary);
+
+                        }
+                        else
+                        {
+
+                            // Verificar Si La Variable Existe O NO 
+                            ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, false);
+
+                            // Obtener Posicioin Del Stack Para Guardar La VAriable
+                            Instance_1.AddTwoExpression(Temporary, "SP", "+", ActualVar.Value.ToString(), InsAuxiliary);
+
+                            // Agregar A Stack 
+                            Instance_1.AddValueToStack(Temporary, "0.0", InsAuxiliary);
+
+                        }
 
                     }
                     else
@@ -467,18 +607,13 @@ namespace Proyecto2.TranslatorAndInterpreter
                 else
                 {
 
-
-                    // Verificar Si La Variable Existe O No 
-                    SymbolTable ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn);
-
                     // Crear Temporal 
                     String Temporary = Instance_1.CreateTemporary();
 
                     // Limpiar Temporal 
-                    // Instance_1.DeleteTemporary(Temporary); 
+                    Instance_1.DeleteTemporary(Temporary); 
 
-                    // Obtener Posicioin Del Stack Para Guardar La VAriable
-                    Instance_1.AddTwoExpression(Temporary, "SP", "+", ActualVar.Value.ToString(), InsAuxiliary);
+                    SymbolTable ActualVar = null;
 
                     // Setear Soy Global
                     if (Env.EnviromentName.Equals("Env_Global"))
@@ -496,12 +631,69 @@ namespace Proyecto2.TranslatorAndInterpreter
                     
                     }
 
+                    // Verificar Si ES Global 
+                    if(Env.EnviromentName.Equals("Env_Global"))
+                    {
+
+                        // Obtener Posicioin Del Stack Para Guardar La VAriable
+                        Instance_1.AddOneExpression(Temporary, (Env.EnviromentSize).ToString(), InsAuxiliary);
+
+                    }
+                    else
+                    {
+
+                        // Obtener Posicioin Del Stack Para Guardar La VAriable
+                        Instance_1.AddTwoExpression(Temporary, "SP", "+", (Env.EnviromentSize).ToString(), InsAuxiliary);
+
+                    }
+
                     // Objeto 
                     ObjectReturn Value = this.Value.Compilate(Env);
 
                     // Verififcar Que no Sea Nulo 
                     if (Value != null)
                     {
+
+                        if (Env.EnviromentName.Equals("Env_Global"))
+                        {
+
+                            // Verificar Si Es Constante
+                            if (this.DecType.Equals("Const"))
+                            {
+
+                                // Verificar Si La Variable Existe O No 
+                                ActualVar = Env.AddVariableStack(Identifier, Value.Type.ToString(), this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, true);
+
+                            }
+                            else
+                            {
+
+                                // Verificar Si La Variable Existe O No 
+                                ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, true);
+
+                            }
+
+                        }
+                        else 
+                        {
+
+                            // Verificar Si Es Constnate 
+                            if (this.DecType.Equals("Const"))
+                            {
+
+                                // Verificar Si La Variable Existe O No 
+                                ActualVar = Env.AddVariableStack(Identifier, Value.Type.ToString(), this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, false);
+
+                            }
+                            else
+                            {
+
+                                // Verificar Si La Variable Existe O No 
+                                ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, false);
+
+                            }
+
+                        }
 
                         // Verificar Que Sean Del Mismo Tipo
                         if (Value.Type.ToString().Equals("integer") && this.Type.ToString().Equals("real"))

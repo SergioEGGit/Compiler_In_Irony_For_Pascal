@@ -249,7 +249,7 @@ namespace Proyecto2.TranslatorAndInterpreter
             Instance_1.AddIdent();
             
             // Verificar La Expression
-            ObjectReturn WhileExp = this.Expression_.Compilate(WhileEnv);
+            ObjectReturn WhileExp = this.Expression_.Compilate(Env);
 
             // Verificar Si No Es Nullo
             if(WhileExp != null)

@@ -680,6 +680,7 @@ namespace Proyecto2.Irony_Resources
 
                 // Lista De Delcaraciones 
                 ParamsDec.Rule                      = ParamsDec + SymbolComma + SimpleIdentifier
+                                                    | ParamsDec + SymbolComma + ReservedVar + SimpleIdentifier
                                                     | ReservedVar + SimpleIdentifier
                                                     | SimpleIdentifier
                                                     ;

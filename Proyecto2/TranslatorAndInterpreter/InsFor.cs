@@ -363,13 +363,13 @@ namespace Proyecto2.TranslatorAndInterpreter
             EnviromentTable ForEnv = new EnviromentTable(Env, "Env_For");
 
             // Verificar La Expression 1
-            ObjectReturn AsgExp = this.Expression_.Compilate(ForEnv);
+            ObjectReturn AsgExp = this.Expression_.Compilate(Env);
 
             // Verificar La Expression 2
-            ObjectReturn LmExp = this.Expression__.Compilate(ForEnv);
+            ObjectReturn LmExp = this.Expression__.Compilate(Env);
 
             // Simbolo
-            SymbolTable ActualVar = ForEnv.GetVariable(this.Identifier);
+            SymbolTable ActualVar = ForEnv.GetVariableStack(this.Identifier);
 
             // Obtener Instancia 
             ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
@@ -397,9 +397,32 @@ namespace Proyecto2.TranslatorAndInterpreter
                     String TemporaryActual = Instance_1.CreateTemporary();
                     String TemporarySum = Instance_1.CreateTemporary();
                     String TemporaryIndex = Instance_1.CreateTemporary();
-                                        
-                    // Inicializar Variable 
-                    Instance_1.AddValueToStack(ActualVar.GetValue(), AsgExp.GetValue(), "Dos");
+                    String TemporaryAux = Instance_1.CreateTemporary();
+
+                    // Eliminar Temporal
+                    Instance_1.DeleteTemporary(TemporaryActual);
+                    Instance_1.DeleteTemporary(TemporarySum);
+                    Instance_1.DeleteTemporary(TemporaryIndex);
+                    Instance_1.DeleteTemporary(TemporaryAux);
+
+                    // Verificar Si Es Global 
+                    if (ActualVar.IsGlobalVar)
+                    {
+
+                        // Inicializar Variable 
+                        Instance_1.AddValueToStack(ActualVar.GetValue(), AsgExp.GetValue(), "Dos");
+
+                    }
+                    else 
+                    {
+
+                        // Agregar Temporal 
+                        Instance_1.AddTwoExpression(TemporaryAux, "SP", "+", ActualVar.GetValue(), "Dos");
+
+                        // Inicializar Variable 
+                        Instance_1.AddValueToStack(TemporaryAux, AsgExp.GetValue(), "Dos");
+
+                    }                    
 
                     // Agregar Inicio For 
                     Instance_1.AddLabel(InicioForLabel, "Dos");
@@ -407,8 +430,24 @@ namespace Proyecto2.TranslatorAndInterpreter
                     // Agregar Identacion 
                     Instance_1.AddIdent();
 
-                    // Setear Valor A Temporal
-                    Instance_1.AddOneExpression(TemporaryIndex, ActualVar.GetValue(), "Dos");
+                    // Verificar Si Es Global
+                    if (ActualVar.IsGlobalVar)
+                    {
+
+                        // Setear Valor A Temporal
+                        Instance_1.AddOneExpression(TemporaryIndex, ActualVar.GetValue(), "Dos");
+
+                    }
+                    else 
+                    {
+
+                        // Agregar Temporal 
+                        Instance_1.AddTwoExpression(TemporaryAux, "SP", "+", ActualVar.GetValue(), "Dos");
+
+                        // Setear Valor A Temporal
+                        Instance_1.AddOneExpression(TemporaryIndex, TemporaryAux, "Dos");
+
+                    }
 
                     // Obtener Valor Variable 
                     Instance_1.GetValueOfStack(TemporaryIndex, TemporaryActual, "Dos");
@@ -441,8 +480,24 @@ namespace Proyecto2.TranslatorAndInterpreter
                     // Sumar Variable 
                     Instance_1.AddTwoExpression(TemporarySum, TemporaryActual, "+", "1", "Dos");
 
-                    // Agregar Nuevo Valor Variable
-                    Instance_1.AddValueToStack(ActualVar.GetValue(), TemporarySum, "Dos");
+                    // Verificar Si Es Global 
+                    if (ActualVar.IsGlobalVar)
+                    {
+
+                        // Agregar Nuevo Valor Variable
+                        Instance_1.AddValueToStack(ActualVar.GetValue(), TemporarySum, "Dos");
+
+                    }
+                    else 
+                    {
+
+                        // Agregar Temporal 
+                        Instance_1.AddTwoExpression(TemporaryAux, "SP", "+", ActualVar.GetValue(), "Dos");
+
+                        // Agregar Nuevo Valor Variable
+                        Instance_1.AddValueToStack(TemporaryAux, TemporarySum, "Dos");
+
+                    }
 
                     // Agregar Salto No Condicional 
                     Instance_1.AddNonConditionalJump(InicioForLabel, "Dos");
@@ -457,7 +512,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                     Instance_1.AddIdent();
 
                     // AGregar Comentario 
-                    Instance_1.AddCommentOneLine("Fin Instrucción For", "Uno");
+                    Instance_1.AddCommentOneLine("Fin Instrucción For \n", "Uno");
 
                     // Eliminar Identacion
                     Instance_1.DeleteIdent();
@@ -466,33 +521,129 @@ namespace Proyecto2.TranslatorAndInterpreter
                 else
                 {
 
-                    // For 
-                    for (int Count = int.Parse(AsgExp.Value.ToString()); Count >= int.Parse(LmExp.Value.ToString()); Count--)
+                    // Crear Temporal 
+                    String TemporaryActual = Instance_1.CreateTemporary();
+                    String TemporaryMinus = Instance_1.CreateTemporary();
+                    String TemporaryIndex = Instance_1.CreateTemporary();
+                    String TemporaryAux = Instance_1.CreateTemporary();
+
+                    // Eliminar Temporal
+                    Instance_1.DeleteTemporary(TemporaryActual);
+                    Instance_1.DeleteTemporary(TemporaryMinus);
+                    Instance_1.DeleteTemporary(TemporaryIndex);
+                    Instance_1.DeleteTemporary(TemporaryAux);
+
+                    // Verificar 
+                    if (ActualVar.IsGlobalVar)
                     {
-                                            
-                        // Verificar Si La Lista De Instrucciones ESta Nulla
-                        if (this.InstruccionsList != null)
+
+                        // Inicializar Variable 
+                        Instance_1.AddValueToStack(ActualVar.GetValue(), AsgExp.GetValue(), "Dos");
+
+                    }
+                    else 
+                    {
+
+                        // Agregar Temporal 
+                        Instance_1.AddTwoExpression(TemporaryAux, "SP", "+", ActualVar.GetValue(), "Dos");
+
+                        // Inicializar Variable 
+                        Instance_1.AddValueToStack(TemporaryAux, AsgExp.GetValue(), "Dos");
+
+                    }
+
+                    // Agregar Inicio For 
+                    Instance_1.AddLabel(InicioForLabel, "Dos");
+
+                    // Agregar Identacion 
+                    Instance_1.AddIdent();
+
+                    // Verificar Global 
+                    if (ActualVar.IsGlobalVar)
+                    {
+
+                        // Setear Valor A Temporal
+                        Instance_1.AddOneExpression(TemporaryIndex, ActualVar.GetValue(), "Dos");
+
+                    }
+                    else 
+                    {
+
+                        // Agregar Temporal 
+                        Instance_1.AddTwoExpression(TemporaryAux, "SP", "+", ActualVar.GetValue(), "Dos");
+
+                        // Setear Valor A Temporal
+                        Instance_1.AddOneExpression(TemporaryIndex, TemporaryAux, "Dos");
+
+                    }
+
+                    // Obtener Valor Variable 
+                    Instance_1.GetValueOfStack(TemporaryIndex, TemporaryActual, "Dos");
+
+                    // Verificar Condicion 
+                    Instance_1.AddConditionalJump(TemporaryActual, "<", LmExp.GetValue(), FinalForLabel, "Dos");
+
+                    // Verificar Si La Lista De Instrucciones ESta Nulla
+                    if (this.InstruccionsList != null)
+                    {
+
+                        // Recorrer Lista 
+                        foreach (AbstractInstruccion Instruccion in this.InstruccionsList)
                         {
 
-                            // Recorrer Lista 
-                            foreach (AbstractInstruccion Instruccion in this.InstruccionsList)
+                            // Verificar Si NO Es Null
+                            if (Instruccion != null)
                             {
 
-                                // Verificar Si NO Es Null
-                                if (Instruccion != null)
-                                {
+                                // Obtener Objeto
+                                Instruccion.Compilate(ForEnv);
 
-                                    // Obtener Objeto
-                                    Instruccion.Compilate(ForEnv);
-                                                                                
-
-                                }
 
                             }
 
                         }
 
                     }
+
+                    // Sumar Variable 
+                    Instance_1.AddTwoExpression(TemporaryMinus, TemporaryActual, "-", "1", "Dos");
+
+                    // Verificar Global
+                    if (ActualVar.IsGlobalVar)
+                    {
+
+                        // Agregar Nuevo Valor Variable
+                        Instance_1.AddValueToStack(ActualVar.GetValue(), TemporaryMinus, "Dos");
+
+                    }
+                    else 
+                    {
+
+                        // Agregar Temporal 
+                        Instance_1.AddTwoExpression(TemporaryAux, "SP", "+", ActualVar.GetValue(), "Dos");
+
+                        // Agregar Nuevo Valor Variable
+                        Instance_1.AddValueToStack(TemporaryAux, TemporaryMinus, "Dos");
+
+                    }
+
+                    // Agregar Salto No Condicional 
+                    Instance_1.AddNonConditionalJump(InicioForLabel, "Dos");
+
+                    // Quitar Identacion 
+                    Instance_1.DeleteIdent();
+
+                    // Agregar Final For 
+                    Instance_1.AddLabel(FinalForLabel, "Dos");
+
+                    // Agregar IDentacion
+                    Instance_1.AddIdent();
+
+                    // AGregar Comentario 
+                    Instance_1.AddCommentOneLine("Fin Instrucción For \n", "Uno");
+
+                    // Eliminar Identacion
+                    Instance_1.DeleteIdent();
 
                 }
 

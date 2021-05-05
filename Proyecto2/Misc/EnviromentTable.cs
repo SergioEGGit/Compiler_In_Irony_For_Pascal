@@ -19,8 +19,14 @@ namespace Proyecto2.Misc
         // Lista De Variables Primitivas
         public Dictionary<String, SymbolTable> PrimitiveVariables;
 
+        // Lista De Variables Stack 
+        public Dictionary<String, SymbolTable> PrimitiveVariablesStack;
+
         // Lista De Funcions 
-        public Dictionary<String, FunctionTable> Functions; 
+        public Dictionary<String, FunctionTable> Functions;
+
+        // Lista De Funcions Stack
+        public Dictionary<String, FunctionTable> FunctionsStack;
 
         // Nombre Del Ambiente Actual
         public String EnviromentName;
@@ -34,6 +40,12 @@ namespace Proyecto2.Misc
         // Etiqueta Continue 
         public String ContinueLabel;
 
+        // Etiqueta Return 
+        public String ReturnLabel;
+
+        // Simbolo Funcion 
+        public FunctionTable ActualFunction;
+
         // Constructor 
         public EnviromentTable(EnviromentTable ParentEnviroment, String EnviromentName) 
         {
@@ -42,13 +54,27 @@ namespace Proyecto2.Misc
             this.ParentEnviroment = ParentEnviroment;
             this.PrimitiveVariables = new Dictionary<String, SymbolTable>();
             this.Functions = new Dictionary<String, FunctionTable>();
+            this.PrimitiveVariablesStack = new Dictionary<String, SymbolTable>();
+            this.FunctionsStack = new Dictionary<String, FunctionTable>();
             this.EnviromentName = EnviromentName;
             this.EnviromentSize = 0;
             this.BreakLabel = "";
             this.ContinueLabel = "";
+            this.ReturnLabel = "";
+            this.ActualFunction = null;
 
             // Agregar Entorno A Lista 
             VariablesMethods.EnviromentList.AddLast(this);
+        
+        }
+
+        // Setear Funcion Env
+        public void SetFunctionEnv(String ReturnLabel) 
+        {
+
+            // Setear Valores 
+            this.ReturnLabel = ReturnLabel;
+            this.EnviromentSize = 1;
         
         }
 
@@ -81,8 +107,14 @@ namespace Proyecto2.Misc
             if(Variables && Functions)
             {
 
+                // Obtener Posicion 
+                int PositionStack = this.EnviromentSize;
+
+                // Incremtnar Tamaña
+                this.EnviromentSize += 1;
+
                 // Agregar Variable A Lista De Simbolos
-                this.PrimitiveVariables.Add(Identifier.ToLower(), new SymbolTable(Identifier, Type, Value, DecType, Env, Line, Column));
+                this.PrimitiveVariables.Add(Identifier.ToLower(), new SymbolTable(Identifier, Type, Value, PositionStack, DecType, Env, Line, Column));
 
                 // Agregada Con Exito
                 return true;
@@ -95,7 +127,7 @@ namespace Proyecto2.Misc
         }
 
         // Agregar Variable A Tabla De Simbolos
-        public SymbolTable AddVariableStack(String Identifier, String Type, String DecType, String Env, int Line, int Column)
+        public SymbolTable AddVariableStack(String Identifier, String Type, String DecType, String Env, int Line, int Column, bool IsGlobalVar)
         {
 
             // Variables
@@ -103,7 +135,7 @@ namespace Proyecto2.Misc
             bool Functions = true;
 
             // Verificar si La Variable Existe En El Ambito
-            if (this.PrimitiveVariables.ContainsKey(Identifier.ToLower()))
+            if (this.PrimitiveVariablesStack.ContainsKey(Identifier.ToLower()))
             {
 
                 // Ya Existe 
@@ -112,7 +144,7 @@ namespace Proyecto2.Misc
             }
 
             // Verificar si La Funcion Existe En El Ambito
-            if (this.Functions.ContainsKey(Identifier.ToLower()))
+            if (this.FunctionsStack.ContainsKey(Identifier.ToLower()))
             {
 
                 // Ya Existe 
@@ -131,16 +163,34 @@ namespace Proyecto2.Misc
                 this.EnviromentSize += 1;
 
                 // Crear Varaible 
-                SymbolTable NewVariable = new SymbolTable(Identifier, Type, PositionStack, DecType, Env, Line, Column);
+                SymbolTable NewVariable;
+
+                if (IsGlobalVar)
+                {
+
+                    NewVariable = new SymbolTable(Identifier, Type, PositionStack, PositionStack, DecType, Env, Line, Column)
+                    {
+
+                        IsGlobalVar = true
+
+                    };
+
+                }
+                else
+                {
+
+                    NewVariable = new SymbolTable(Identifier, Type, PositionStack, PositionStack, DecType, Env, Line, Column);
+                   
+                }
 
                 // Agregar Variable A Lista De Simbolos
-                this.PrimitiveVariables.Add(Identifier.ToLower(), NewVariable);
+                this.PrimitiveVariablesStack.Add(Identifier.ToLower(), NewVariable);
 
                 // Retornar 
                 return NewVariable;
 
             }
-
+           
             // Retornar
             return null;
 
@@ -174,6 +224,36 @@ namespace Proyecto2.Misc
             // Retornar Null
             return null;
         
+        }
+
+        // Obtener Variable De Tabla De Simbolos
+        public SymbolTable GetVariableStack(String VarName)
+        {
+
+            // Obtener Entorno Actual
+            EnviromentTable ActualEnv = this;
+
+            // Recorrer Entornos
+            while (ActualEnv != null)
+            {
+
+                // Buscar Variable 
+                if (ActualEnv.PrimitiveVariablesStack.ContainsKey(VarName.ToLower()))
+                {
+
+                    // Retornar Variable 
+                    return ActualEnv.PrimitiveVariablesStack[VarName.ToLower()];
+
+                }
+
+                // Avanzar Puntero
+                ActualEnv = ActualEnv.ParentEnviroment;
+
+            }
+
+            // Retornar Null
+            return null;
+
         }
 
         // Setear Variable De Tabla De Simbolos
@@ -246,6 +326,49 @@ namespace Proyecto2.Misc
 
         }
 
+        // Añadir Funcion
+        public bool AddFunctionStack(String FuncType, String Identifier, String ReturnType, LinkedList<ObjectReturn> ParamsList, LinkedList<AbstractInstruccion> DeclarationsList, LinkedList<AbstractInstruccion> InstruccionsList, String EnvName, int TokenLine, int TokenColumn, EnviromentTable Env)
+        {
+
+            // Variables
+            bool Variables = true;
+            bool Functions = true;
+
+            // Verificar si La Variable Existe En El Ambito
+            if (this.PrimitiveVariablesStack.ContainsKey(Identifier.ToLower()))
+            {
+
+                // Ya Existe 
+                Variables = false;
+
+            }
+
+            // Verificar si La Funcion Existe En El Ambito
+            if (this.FunctionsStack.ContainsKey(Identifier.ToLower()))
+            {
+
+                // Ya Existe 
+                Functions = false;
+
+            }
+
+            // Verificar 
+            if (Variables && Functions)
+            {
+
+                // Agregar Variable A Lista De Simbolos
+                this.FunctionsStack.Add(Identifier.ToLower(), new FunctionTable(FuncType, Identifier, ReturnType, ParamsList, DeclarationsList, InstruccionsList, EnvName, TokenLine, TokenColumn, Env));
+
+                // Agregada Con Exito
+                return true;
+
+            }
+
+            // Retornar 
+            return false;
+
+        }
+
         // Obtener Variable De Tabla De Simbolos
         public FunctionTable GetFunction(String FuncName)
         {
@@ -263,6 +386,36 @@ namespace Proyecto2.Misc
 
                     // Retornar Variable 
                     return ActualEnv.Functions[FuncName.ToLower()];
+
+                }
+
+                // Avanzar Puntero
+                ActualEnv = ActualEnv.ParentEnviroment;
+
+            }
+
+            // Retornar Null
+            return null;
+
+        }
+
+        // Obtener Variable De Tabla De Simbolos
+        public FunctionTable GetFunctionStack(String FuncName)
+        {
+
+            // Obtener Entorno Actual
+            EnviromentTable ActualEnv = this;
+
+            // Recorrer Entornos
+            while (ActualEnv != null)
+            {
+
+                // Buscar Variable 
+                if (ActualEnv.FunctionsStack.ContainsKey(FuncName.ToLower()))
+                {
+
+                    // Retornar Variable 
+                    return ActualEnv.FunctionsStack[FuncName.ToLower()];
 
                 }
 
@@ -372,6 +525,37 @@ namespace Proyecto2.Misc
 
             // Retornar Null
             return false;
+
+        }
+
+        // Buscar Funcion
+        public EnviromentTable SearchReturnFuncs()
+        {
+
+            // Obtener Entorno Actual
+            EnviromentTable ActualEnv = this;
+
+            // Recorrer Entornos
+            while (ActualEnv != null)
+            {
+
+                // Verificar Si COntiene Nombre De Ciclos 
+                if (ActualEnv.EnviromentName.Contains("Func"))
+                {
+
+                    // Obtener Valores
+                    return ActualEnv;
+
+                }
+
+
+                // Avanzar Puntero
+                ActualEnv = ActualEnv.ParentEnviroment;
+
+            }
+
+            // Retornar Null
+            return null;
 
         }
 

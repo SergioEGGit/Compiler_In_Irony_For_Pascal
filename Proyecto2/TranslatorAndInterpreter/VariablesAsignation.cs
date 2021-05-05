@@ -155,10 +155,10 @@ namespace Proyecto2.TranslatorAndInterpreter
             ObjectReturn AsgExp = this.Expression_.Compilate(Env);
 
             // Simbolo
-            SymbolTable ActualVar = Env.GetVariable(this.Identifier);
+            SymbolTable ActualVar = Env.GetVariableStack(this.Identifier);
 
             // Function 
-            FunctionTable ActualFunc = Env.GetFunction(this.Identifier);
+            FunctionTable ActualFunc = Env.GetFunctionStack(this.Identifier);
 
             // Value Auxiliar 
             ObjectReturn ActualValue = new ObjectReturn("", "");
@@ -205,8 +205,30 @@ namespace Proyecto2.TranslatorAndInterpreter
                             // Añadir Identacion 
                             Instance_1.AddIdent();
 
+                            // Crear Temporal 
+                            String Temporary = Instance_1.CreateTemporary();
+
+                            // Eliminar TEmporal 
+                            Instance_1.DeleteTemporary(Temporary);
+
+                            // Verificar Si Es Global 
+                            if (ActualVar.IsGlobalVar)
+                            {
+
+                                // Añadir Expression 
+                                Instance_1.AddOneExpression(Temporary, ActualVar.GetValue(), "Dos");
+
+                            }
+                            else
+                            {
+
+                                // Añadir Expression 
+                                Instance_1.AddTwoExpression(Temporary, "SP", "+", ActualVar.GetValue(), "Dos");
+
+                            }
+
                             // Añadir A STack 
-                            Instance_1.AddValueToStack(ActualVar.GetValue(), "1", "Dos");
+                            Instance_1.AddValueToStack(Temporary, "1", "Dos");
 
                             // Añadir Goto 
                             Instance_1.AddNonConditionalJump(LabelAuxiliary, "Dos");
@@ -220,8 +242,17 @@ namespace Proyecto2.TranslatorAndInterpreter
                             // Añadir Identacion 
                             Instance_1.AddIdent();
 
+                            // Crear Temporal 
+                            String Temporary_False = Instance_1.CreateTemporary();
+
+                            // Eliminar TEmporal 
+                            Instance_1.DeleteTemporary(Temporary_False);
+
+                            // Añadir Expression 
+                            Instance_1.AddTwoExpression(Temporary_False, "SP", "+", ActualVar.GetValue(), "Dos");
+
                             // Añadir A STack 
-                            Instance_1.AddValueToStack(ActualVar.GetValue(), "0", "Dos");
+                            Instance_1.AddValueToStack(Temporary_False, "0", "Dos");
 
                             // Añadir Goto 
                             Instance_1.AddNonConditionalJump(LabelAuxiliary, "Dos");
@@ -236,7 +267,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                             Instance_1.AddIdent();
 
                             // Añadir Comentario 
-                            Instance_1.AddCommentOneLine("Fin Asignación Expresión Boolean", "Uno");
+                            Instance_1.AddCommentOneLine("Fin Asignación Expresión Boolean \n", "Uno");
 
                             // Eliminar Identacion 
                             Instance_1.DeleteIdent();
@@ -245,8 +276,30 @@ namespace Proyecto2.TranslatorAndInterpreter
                         else
                         {
 
+                            // Crear Temporal 
+                            String Temporary = Instance_1.CreateTemporary();
+
+                            // Eliminar TEmporal 
+                            Instance_1.DeleteTemporary(Temporary);
+
+                            // Verificar Si Es Global 
+                            if (ActualVar.IsGlobalVar)
+                            {
+
+                                // Añadir Expression 
+                                Instance_1.AddOneExpression(Temporary, ActualVar.GetValue(), "Dos");
+
+                            }
+                            else
+                            {
+
+                                // Añadir Expression 
+                                Instance_1.AddTwoExpression(Temporary, "SP", "+", ActualVar.GetValue(), "Dos");
+
+                            }
+
                             // Agreagr A Stack 
-                            Instance_1.AddValueToStack(ActualVar.GetValue(), AsgExp.GetValue(), "Dos");
+                            Instance_1.AddValueToStack(Temporary, AsgExp.GetValue(), "Dos");
                         
                         }
 

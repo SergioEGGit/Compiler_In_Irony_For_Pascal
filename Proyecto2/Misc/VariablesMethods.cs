@@ -79,6 +79,7 @@ namespace Proyecto2.Misc
                                  "                  <th> Nombre </th>\n" +
                                  "                  <th> Tipo </th>\n" +
                                  "                  <th> Valor </th>\n" +
+                                 "                  <th> Position </th>\n" + 
                                  "                  <th> Tipo Declaracion </th>\n" +
                                  "                  <th> Entorno </th>\n" +
                                  "                  <th> Linea </th>\n" +
@@ -116,6 +117,7 @@ namespace Proyecto2.Misc
                                           "                 <td><center>" + Valor.Value.Identifier.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.Type.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + AuxiliaryObject.Value.ToString() + "</center></td>\n" +
+                                          "                 <td><center>" + Valor.Value.Position.ToString() + "</center></td>\n" +     
                                           "                 <td><center>" + Valor.Value.DecType.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.Env.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.Line.ToString() + "</center></td>\n" +
@@ -136,6 +138,7 @@ namespace Proyecto2.Misc
                                           "                 <td><center>" + Valor.Value.Identifier.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.Type.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + AuxiliaryObject.Value.ToString() + "</center></td>\n" +
+                                          "                 <td><center>" + Valor.Value.Position.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.DecType.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.Env.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.Line.ToString() + "</center></td>\n" +
@@ -163,6 +166,7 @@ namespace Proyecto2.Misc
                                           "                 <td><center>" + Valor.Value.Identifier + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.ReturnType + "</center></td>\n" +
                                           "                 <td><center> - </center></td>\n" +
+                                          "                 <td><center> - </center></td>\n" +
                                           "                 <td><center>" + Valor.Value.TypeFunc + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.Env.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.Line.ToString() + "</center></td>\n" +
@@ -182,6 +186,7 @@ namespace Proyecto2.Misc
                                           "             <tr>\n" +
                                           "                 <td><center>" + Valor.Value.Identifier.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.ReturnType.ToString() + "</center></td>\n" +
+                                          "                 <td><center> - </center></td>\n" +
                                           "                 <td><center> - </center></td>\n" +
                                           "                 <td><center>" + Valor.Value.TypeFunc.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.Env.ToString() + "</center></td>\n" +

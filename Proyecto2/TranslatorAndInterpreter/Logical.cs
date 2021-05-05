@@ -533,19 +533,24 @@ namespace Proyecto2.TranslatorAndInterpreter
                 }
 
                 // Verificar Tipos 
-                if (Right.Type.Equals("boolean") && Right != null)
-                {
+                if (Right != null) {
 
-                    // Obtener
-                    AuxiliaryReturn = new ObjectReturn("", "boolean")
+                    if (Right.Type.Equals("boolean"))
                     {
 
-                        BoolTrue = this.BoolTrue,
-                        BoolFalse = this.BoolFalse
+                        // Obtener
+                        AuxiliaryReturn = new ObjectReturn("", "boolean")
+                        {
 
-                    };
+                            BoolTrue = this.BoolTrue,
+                            BoolFalse = this.BoolFalse
+
+                        };
+
+                    }
 
                 }
+                
 
             }
 

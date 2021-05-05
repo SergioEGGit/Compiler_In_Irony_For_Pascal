@@ -198,7 +198,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                     {
 
                         // Compilar
-                        Instruccion.Compilate(MainEnv);
+                        Instruccion.Compilate(Env);
                                                 
                     }
 

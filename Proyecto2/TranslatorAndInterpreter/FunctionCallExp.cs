@@ -97,7 +97,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                                     {
 
                                         // Ejecutar 
-                                        ObjectReturn ObjectTransfer = (ObjectReturn)Instruccion.Execute(FuncEnv);
+                                        ObjectReturn ObjectTransfer = (ObjectReturn) Instruccion.Execute(FuncEnv);
 
                                         // Verificar SI ESta Nullo
                                         if (ObjectTransfer != null)
@@ -912,7 +912,400 @@ namespace Proyecto2.TranslatorAndInterpreter
         // Método Compilar
         public override ObjectReturn Compilate(EnviromentTable Env)
         {
-            throw new NotImplementedException();
+           
+            // Buscar Funcion 
+            FunctionTable ActualFunction = Env.GetFunctionStack(this.Identifier);
+
+            // Obteener Instancia 
+            ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
+
+            // Guardar TEmporales 
+            int SizeTemporary = Instance_1.SaveTemporaryAux(Env);
+
+            // Array Temporal 
+            Dictionary<int, AbstractExpression> ParamsFuncList = new Dictionary<int, AbstractExpression>();
+
+            // Verificar Is Parametros ESTa Vacios 
+            if (this.ParamsList != null)
+            {
+
+                // Crear Contador 
+                int Counter = 0;
+
+                // Recorrer Lista 
+                foreach (AbstractExpression ExpressionParam in this.ParamsList)
+                {
+
+                    // Insertar En Litsa 
+                    ParamsFuncList.Add(Counter, ExpressionParam);
+
+                    // Sumar Contador 
+                    Counter += 1;
+
+                }
+
+
+            }
+
+            // Crear TEmporal 
+            String Temporary = Instance_1.CreateTemporary();
+
+            // Limpiar Temporarl 
+            Instance_1.DeleteTemporary(Temporary);
+
+            // Verificar Si Existe La Funcion 
+            if (ActualFunction != null)
+            {
+
+                // Verificar Parametros 
+                if (ActualFunction.ParamsList != null && ParamsFuncList != null)
+                {
+
+                    // Cantidad De Parametros 
+                    int ParamsActual = this.ParamsList.Count;
+
+                    // Parametros Funciones 
+                    int ParamsFunc = 0;
+
+                    // Obtener El Puntero Del Ambiente 
+                    Instance_1.AddTwoExpression(Temporary, "SP", "+", (Env.EnviromentSize + 1).ToString(), "Dos");
+
+                    // Crear Variable Para Evitar Sumar Al Final 
+                    int Limit = 0;
+
+                    // Obtener Parametros 
+                    foreach (ObjectReturn Param in ActualFunction.ParamsList)
+                    {
+
+                        // Split No1 
+                        String[] Split1 = Param.Value.ToString().Split(',');
+
+                        // Recorer Split 
+                        foreach (String Var in Split1)
+                        {
+
+                            // Sumar Parametros 
+                            ParamsFunc += 1;
+
+                        }
+
+                    }
+
+                    // Verificar Si Tiene EL Mismo Tamaño 
+                    if (ParamsActual == ParamsFunc)
+                    {
+
+                        // Contador 
+                        int AuxiliaryCounter = 0;
+
+                        // Obtener Parametros 
+                        foreach (ObjectReturn Param in ActualFunction.ParamsList)
+                        {
+
+                            // Split No1 
+                            String[] Split1 = Param.Value.ToString().Split(',');
+
+                            // Recorer Split 
+                            foreach (String Var in Split1)
+                            {
+
+                                // Verificar Por Referencias 
+                                String[] Split2 = Var.Split(' ');
+
+                                // Obtener Tipos
+                                ObjectReturn TypeObject = ParamsFuncList[AuxiliaryCounter].Compilate(Env);
+
+                                // Verifivar Si ESTa Null
+                                if (TypeObject != null)
+                                {
+
+                                    // Verificar Si Hay Dos 
+                                    if (Split2.Length == 2)
+                                    {
+
+                                        // Verificar Tipo
+                                        if (Param.Type.ToString().Equals(TypeObject.Type))
+                                        {
+
+                                            // Parametros Por Referencia 
+
+                                            // Verificar Tipo Parametro 
+                                            if (TypeObject.Type.Equals("boolean"))
+                                            {
+
+                                                // Verficar Etiqueta 
+                                                Instance_1.AddLabel(TypeObject.BoolTrue, "Dos");
+
+                                                // Agregar Identacion 
+                                                Instance_1.AddIdent();
+
+                                                // Agregar Comentario 
+                                                Instance_1.AddCommentOneLine("Agregar Parametro A Stack Tipo boolean", "Uno");
+
+                                                // Agregamos Parametro A Stack
+                                                Instance_1.AddValueToStack(Temporary, "1", "Dos");
+
+                                                // Quitar Identacion 
+                                                Instance_1.DeleteIdent();
+
+                                                // Verficar Etiqueta 
+                                                Instance_1.AddLabel(TypeObject.BoolFalse, "Dos");
+
+                                                // Agregar Identacion 
+                                                Instance_1.AddIdent();
+
+                                                // Agregar Comentario 
+                                                Instance_1.AddCommentOneLine("Agregar Parametro A Stack Tipo boolean", "Uno");
+
+                                                // Agregamos Parametro A Stack
+                                                Instance_1.AddValueToStack(Temporary, "0", "Dos");
+
+                                                // Quitar Identacion 
+                                                Instance_1.DeleteIdent();
+
+                                            }
+                                            else
+                                            {
+
+                                                // Agregar Comentario 
+                                                Instance_1.AddCommentOneLine("Agregar Parametro A Stack Tipo " + TypeObject.Type, "Uno");
+
+                                                // Agregamos Parametro A Stack
+                                                Instance_1.AddValueToStack(Temporary, TypeObject.GetValue(), "Dos");
+
+                                            }
+                                           
+                                        }
+                                        else
+                                        {
+
+                                            // Agregar Error 
+                                            VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "El Tipo De Parametro Y El Tipo De Expression Indicado No Coinciden", this.TokenLine, this.TokenColumn));
+
+                                            // Aumentar Contador
+                                            VariablesMethods.AuxiliaryCounter += 1;
+
+                                            // TErminar 
+                                            break;
+
+                                        }
+
+                                    }
+                                    else
+                                    {
+
+                                        // Verificar TIpo 
+                                        if (TypeObject != null)
+                                        {
+
+                                            // Verificar Tipo
+                                            if (Param.Type.ToString().Equals(TypeObject.Type))
+                                            {
+
+                                                // Verificar Tipo Parametro 
+                                                if (TypeObject.Type.Equals("boolean"))
+                                                {
+
+                                                    // Verficar Etiqueta 
+                                                    Instance_1.AddLabel(TypeObject.BoolTrue, "Dos");
+
+                                                    // Agregar Identacion 
+                                                    Instance_1.AddIdent();
+
+                                                    // Agregar Comentario 
+                                                    Instance_1.AddCommentOneLine("Agregar Parametro A Stack Tipo boolean", "Uno");
+
+                                                    // Agregamos Parametro A Stack
+                                                    Instance_1.AddValueToStack(Temporary, "1", "Dos");
+
+                                                    // Quitar Identacion 
+                                                    Instance_1.DeleteIdent();
+
+                                                    // Verficar Etiqueta 
+                                                    Instance_1.AddLabel(TypeObject.BoolFalse, "Dos");
+
+                                                    // Agregar Identacion 
+                                                    Instance_1.AddIdent();
+
+                                                    // Agregar Comentario 
+                                                    Instance_1.AddCommentOneLine("Agregar Parametro A Stack Tipo boolean", "Uno");
+
+                                                    // Agregamos Parametro A Stack
+                                                    Instance_1.AddValueToStack(Temporary, "0", "Dos");
+
+                                                    // Quitar Identacion 
+                                                    Instance_1.DeleteIdent();
+
+                                                }
+                                                else
+                                                {
+
+                                                    // Agregar Comentario 
+                                                    Instance_1.AddCommentOneLine("Agregar Parametro A Stack Tipo " + TypeObject.Type, "Uno");
+
+                                                    // Agregamos Parametro A Stack
+                                                    Instance_1.AddValueToStack(Temporary, TypeObject.GetValue(), "Dos");
+
+                                                }
+
+                                            }
+                                            else
+                                            {
+
+                                                // Agregar Error 
+                                                VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "El Tipo De Parametro Y El Tipo De Expression Indicado No Coinciden", this.TokenLine, this.TokenColumn));
+
+                                                // Aumentar Contador
+                                                VariablesMethods.AuxiliaryCounter += 1;
+
+                                                // TErminar 
+                                                break;
+
+                                            }
+
+                                        }
+
+                                    }
+
+                                    // Verificar Si ES El Final 
+                                    if (Limit != ActualFunction.ParamsList.Count)
+                                    {
+
+                                        // Incremtnar Putneor Ambiente 
+                                        Instance_1.AddTwoExpression(Temporary, Temporary, "+", "1", "Dos");
+
+                                    }
+
+                                    // Incrementar Limit 
+                                    Limit += 1;
+
+                                    // SUmar 
+                                    AuxiliaryCounter += 1;
+
+                                }                                
+
+                            }
+
+                        }
+
+                    }
+                    else
+                    {
+
+                        // Agregar Error 
+                        VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "La Cantidad De Parametros Indicada No Coincide Con La Cantidad Esperada", this.TokenLine, this.TokenColumn));
+
+                        // Aumentar Contador
+                        VariablesMethods.AuxiliaryCounter += 1;
+
+                    }
+
+                }
+
+            }
+            else
+            {
+
+                // Agregar Error 
+                VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "La Función Indicada No Existe", this.TokenLine, this.TokenColumn));
+
+                // Aumentar Contador
+                VariablesMethods.AuxiliaryCounter += 1;
+
+            }
+
+            ObjectReturn AuxiliaryReturn = null;
+
+            if (ActualFunction != null) {
+
+
+                // Agregar Llamda A Funcion
+                Instance_1.AddCommentOneLine("Llámada A Función", "Dos");
+
+                // Mover Entorno 
+                Instance_1.MoveNextEnv(Env.EnviromentSize.ToString());
+
+                // Llamada A Funcion 
+                Instance_1.AddFunctionCall(ActualFunction.Identifier, "Dos");
+
+                // Obtener Retorno Del Stack 
+                Instance_1.GetValueOfStack("SP", Temporary, "Dos");
+
+                // Regresar Del Entorno 
+                Instance_1.MoveAntEnv(Env.EnviromentSize.ToString());
+
+                // Recuperar Temporales 
+                Instance_1.GetTemporaryAux(Env, SizeTemporary);
+
+                // Agregar TEmporal A Array 
+                Instance_1.AddTemporaryToArray(Temporary);
+
+               
+                // Verificar Tipo De Funcion REtorno 
+                if (ActualFunction.ReturnType.Equals("boolean"))
+                {
+
+                    // Verificar Si Existe La Etiqueta
+                    if (this.BoolTrue.Equals(""))
+                    {
+
+                        // Crear Etiqueta 
+                        this.BoolTrue = Instance_1.CreateLabel();
+
+                    }
+
+                    // Verificar Si Existe La Etiqueta
+                    if (this.BoolFalse.Equals(""))
+                    {
+
+                        // Crear Etiqueta 
+                        this.BoolFalse = Instance_1.CreateLabel();
+
+                    }
+
+                    // Agregar Un If 
+                    Instance_1.AddConditionalJump(Temporary, "=", "1", this.BoolTrue, "Dos");
+
+                    // Agregar Identacion 
+                    Instance_1.AddIdent();
+
+                    // Agregar Salto No Condicional
+                    Instance_1.AddNonConditionalJump(this.BoolFalse, "Dos");
+
+                    // Eliminar Identacion 
+                    Instance_1.DeleteIdent();
+
+                    // Agregar Etiqeutas 
+                    // Crear Objeto Retorno 
+                    AuxiliaryReturn = new ObjectReturn("", ActualFunction.ReturnType)
+                    {
+
+
+                        BoolTrue = this.BoolTrue,
+                        BoolFalse = this.BoolFalse
+
+                    };
+
+                }
+                else
+                {
+
+                    // Retorno Nuevo Object 
+                    AuxiliaryReturn = new ObjectReturn(Temporary, ActualFunction.ReturnType)
+                    {
+
+                        Temporary = true
+
+                    };
+
+                }
+
+            }
+
+            // retornar 
+            return AuxiliaryReturn;
+
+
         }
 
     }    

@@ -562,7 +562,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                 String ActualTemporary = Instance_1.CreateTemporary();
 
                 // Eliminar Temporal 
-                // Instance_1.DeleteTemporary(ActualTemporary);
+                //Instance_1.DeleteTemporary(ActualTemporary);
 
                 // Verificar Tipo 
                 if (Type == "integer")
@@ -602,7 +602,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                     String ActualTemporary_1 = Instance_1.CreateTemporary();
 
                     // Eliminar Temporal 
-                    // Instance_1.DeleteTemporary(ActualTemporary_1);
+                    Instance_1.DeleteTemporary(ActualTemporary_1);
 
                     // Añadir Expression 1
                     Instance_1.AddOneExpression("T1", Left.GetValue(), InsAuxiliary);

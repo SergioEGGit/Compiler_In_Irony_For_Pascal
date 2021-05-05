@@ -32,8 +32,14 @@ namespace Proyecto2.Misc
         // Columna 
         public int Column;
 
+        // Posicion Stack 
+        public int Position;
+
+        // Es Global 
+        public bool IsGlobalVar;
+
         // Constructor 
-        public SymbolTable(String Identifier, String Type, object Value, String DecType, String Env, int Line, int Column) {
+        public SymbolTable(String Identifier, String Type, object Value, int Position, String DecType, String Env, int Line, int Column) {
 
             // Incializar Valores
             this.Identifier = Identifier;
@@ -43,9 +49,10 @@ namespace Proyecto2.Misc
             this.Env = Env;
             this.Line = Line;
             this.Column = Column;
+            this.Position = Position;
+            this.IsGlobalVar = false;
          
          }
-
 
         // Obtener Valor 
         public String GetValue()

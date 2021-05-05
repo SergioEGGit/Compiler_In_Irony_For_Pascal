@@ -1,5 +1,6 @@
 ﻿// ------------------------------------------ Librerias E Imports ---------------------------------------------------
 using System;
+using System.Windows.Forms;
 using Proyecto2.Misc;
 
 // ------------------------------------------------ Namespace -------------------------------------------------------
@@ -152,6 +153,9 @@ namespace Proyecto2.TranslatorAndInterpreter
             String CommentAuxiliary;
             String InsAuxiliary;
 
+            // Obtener Instancia 
+            ThreeAddressCode Instancia_1 = ThreeAddressCode.GetInstance;
+
             // Verificar Si Es Global 
             if (this.IsGlobal)
             {
@@ -172,22 +176,102 @@ namespace Proyecto2.TranslatorAndInterpreter
 
             if(IsString)
             {
-
+          
                 // Verificar Tipo
                 if (this.StringType.Equals("Identifier"))
-                {  
+                {
+                    
+                    // String Crear Temporal 
+                    String Temporary = Instancia_1.CreateTemporary();
+                    String TemporaryAuxiliary = Instancia_1.CreateTemporary();
+
+                    // Eliminar Temporal 
+                    Instancia_1.DeleteTemporary(TemporaryAuxiliary);
 
                     // Buscar Variable 
-                    SymbolTable ActualVar = Env.GetVariable(this.Value.ToString());
-
+                    SymbolTable ActualVar = Env.GetVariableStack(this.Value.ToString());
+                   
                     // Obtener Variable 
                     if (ActualVar != null)
                     {
+                       
+                        // Agregar Comentario 
+                        Instancia_1.AddCommentOneLine("Obtener Valor De Variable", CommentAuxiliary);
 
-                        ObjectReturn ActualValue = (ObjectReturn)ActualVar.Value;
+                        // Verificar Si Es Global 
+                        if (ActualVar.IsGlobalVar)
+                        {
 
-                        // Retornar Objecto 
-                        AuxiliaryReturn = new ObjectReturn(ActualValue.Value, ActualVar.Type);
+                            // Agrebar Mover Puntero
+                            Instancia_1.AddOneExpression(TemporaryAuxiliary, ActualVar.GetValue(), InsAuxiliary);
+
+                        }
+                        else 
+                        {
+
+                            // Agrebar Mover Puntero
+                            Instancia_1.AddTwoExpression(TemporaryAuxiliary, "SP", "+", ActualVar.GetValue(), InsAuxiliary);
+
+                        }
+
+                        // Obtener Valor Del Stack 
+                        Instancia_1.GetValueOfStack(TemporaryAuxiliary, Temporary, InsAuxiliary);
+            
+                        // Verificar Si Es Boolean 
+                        if (ActualVar.Type.Equals("boolean"))
+                        {
+
+                            // Crear Etiquetas 
+                            if (this.BoolTrue.Equals(""))
+                            {
+
+                                // Setear Valor 
+                                this.BoolTrue = Instancia_1.CreateLabel();
+                            
+                            }
+
+                            // Crear Etiquetas 
+                            if (this.BoolFalse.Equals(""))
+                            {
+
+                                // Setear Valor 
+                                this.BoolFalse = Instancia_1.CreateLabel();
+
+                            }
+
+                            // Agregar Salto Condicional
+                            Instancia_1.AddConditionalJump(Temporary, "==", "1", this.BoolTrue, InsAuxiliary);
+
+                            // Agregar IDentacion 
+                            Instancia_1.AddIdent();
+
+                            // Agregar Salot No Condicional 
+                            Instancia_1.AddNonConditionalJump(this.BoolFalse, InsAuxiliary);
+
+                            // ELiminar Identacion 
+                            Instancia_1.DeleteIdent();
+
+                            // Retornar Objecto 
+                            AuxiliaryReturn = new ObjectReturn("", ActualVar.Type)
+                            {
+
+                                BoolTrue = this.BoolTrue,
+                                BoolFalse = this.BoolFalse
+
+                            };
+
+                        }
+                        else
+                        {
+
+                            AuxiliaryReturn = new ObjectReturn(Temporary, ActualVar.Type)
+                            {
+
+                                Temporary = true
+                            
+                            };    
+                        
+                        }                        
 
                     }
                     else
@@ -201,9 +285,6 @@ namespace Proyecto2.TranslatorAndInterpreter
                 }
                 else
                 {
-
-                    // Obtener Instancia 
-                    ThreeAddressCode Instancia_1 = ThreeAddressCode.GetInstance;
 
                     // Crear Temporal 
                     String ActualTemporary = Instancia_1.CreateTemporary();

@@ -1250,7 +1250,7 @@ namespace Proyecto2.Irony_Resources
             }
             else if (ActualNode.ChildNodes.Count == 2)
             {
-
+               
                 // Identificador 
                 return "var " + SplitMethod(ActualNode.ChildNodes[1].ToString(), "Default");
 
@@ -1768,7 +1768,7 @@ namespace Proyecto2.Irony_Resources
                     return new PrimitiveValue(SplitMethod(ActualNode.ChildNodes[0].ToString(), "Value"), "Identifier")
                     {
 
-                        IsString = ActualNode.ChildNodes[0].ToString().Contains("(SimpleIdentifier)")
+                        IsString = ActualNode.ChildNodes[0].ToString().Contains("(Identifier)")
 
                     };
 
@@ -1868,14 +1868,14 @@ namespace Proyecto2.Irony_Resources
             {
 
                 // Mostrar Mensage 
-                // MessageBox.Show("Existen Errores En El Analisis..!");
+                MessageBox.Show("Existen Errores En El Analisis..!");
 
             }
             else
             {
 
                 // Generar Arbol De Analisis Sintactico 
-                // GenerateReportAST(RootTreeNode);
+                GenerateReportAST(RootTreeNode);
 
                 // Verificar Si El Archivo No Esta Vacio
                 if (RootTreeNode.ChildNodes.Count > 0)
@@ -1903,14 +1903,16 @@ namespace Proyecto2.Irony_Resources
                     Begin(RootTreeNode);
 
                     // Crear Primer Ambiente (Global)
-                    EnviromentTable GlobalEnv = new EnviromentTable(null, "Env_Global");
+                    EnviromentTable GlobalEnv_Execute = new EnviromentTable(null, "Env_Global");
+                    EnviromentTable GlobalEnv_Compilate = new EnviromentTable(null, "Env_Global");
 
                     // Recorrer Lista De Traduccion
                     foreach (var ItemTranslate in VariablesMethods.TranslateList)
                     {
 
                         // Llamar A Método Traducir 
-                        ItemTranslate.Compilate(GlobalEnv);
+                        ItemTranslate.Execute(GlobalEnv_Execute);
+                        ItemTranslate.Compilate(GlobalEnv_Compilate);                        
 
                     }
 
