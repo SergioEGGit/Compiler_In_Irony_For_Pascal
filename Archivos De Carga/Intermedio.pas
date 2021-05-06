@@ -84,7 +84,8 @@ begin
             end;
         writeln(index);
     end;
-(* ------------------------------- Agregue Bloque Begin End Y ; A Las Instruccions Que Les Faltara -------------------------------- *)
+	
+	(* ------------------------------- Agregue Bloque Begin End Y ; A Las Instruccions Que Les Faltara -------------------------------- *)
     writeln('***********************************************************************');
     writeln('************                 REPEAT                    ****************');
     writeln('***********************************************************************');
@@ -116,7 +117,7 @@ begin
             begin
                 writeln('**********                   ******                 ******  *************  ******              **********');
             end;
-	end;
+	end;		
     until (i > 12);
 
     for tabla := 1 to 5 do

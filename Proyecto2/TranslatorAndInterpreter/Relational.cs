@@ -759,7 +759,23 @@ namespace Proyecto2.TranslatorAndInterpreter
                     
                     };
 
-                }                
+                }
+                else
+                {
+
+                    // Verificar Si No Es Nulo
+                    if (Left != null && Right != null)
+                    {
+
+                        // Agregar Error 
+                        VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "No Se Permite <= Entre Los Tipos " + Left.Type.ToString() + " Y " + Right.Type.ToString(), this.TokenLine, this.TokenColumn));
+
+                        // Aumentar Contador
+                        VariablesMethods.AuxiliaryCounter += 1;
+
+                    }
+
+                }
 
             }
             else if (this.RelationalType.Equals("GreaterSame"))
@@ -811,6 +827,22 @@ namespace Proyecto2.TranslatorAndInterpreter
                         BoolFalse = this.BoolFalse
 
                     };
+
+                }
+                else
+                {
+
+                    // Verificar Si No Es Nulo
+                    if (Left != null && Right != null)
+                    {
+
+                        // Agregar Error 
+                        VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "No Se Permite >= Entre Los Tipos " + Left.Type.ToString() + " Y " + Right.Type.ToString(), this.TokenLine, this.TokenColumn));
+
+                        // Aumentar Contador
+                        VariablesMethods.AuxiliaryCounter += 1;
+
+                    }
 
                 }
 
@@ -866,6 +898,22 @@ namespace Proyecto2.TranslatorAndInterpreter
                     };
 
                 }
+                else
+                {
+
+                    // Verificar Si No Es Nulo
+                    if (Left != null && Right != null)
+                    {
+
+                        // Agregar Error 
+                        VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "No Se Permite < Entre Los Tipos " + Left.Type.ToString() + " Y " + Right.Type.ToString(), this.TokenLine, this.TokenColumn));
+
+                        // Aumentar Contador
+                        VariablesMethods.AuxiliaryCounter += 1;
+
+                    }
+
+                }
 
             }
             else if (this.RelationalType.Equals("Greater"))
@@ -917,6 +965,22 @@ namespace Proyecto2.TranslatorAndInterpreter
                         BoolFalse = this.BoolFalse
 
                     };
+
+                }
+                else
+                {
+
+                    // Verificar Si No Es Nulo
+                    if (Left != null && Right != null)
+                    {
+
+                        // Agregar Error 
+                        VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "No Se Permite > Entre Los Tipos " + Left.Type.ToString() + " Y " + Right.Type.ToString(), this.TokenLine, this.TokenColumn));
+
+                        // Aumentar Contador
+                        VariablesMethods.AuxiliaryCounter += 1;
+
+                    }
 
                 }
 
@@ -1127,6 +1191,22 @@ namespace Proyecto2.TranslatorAndInterpreter
                     };
 
                 }
+                else
+                {
+
+                    // Verificar Si No Es Nulo
+                    if (Left != null && Right != null)
+                    {
+
+                        // Agregar Error 
+                        VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "No Se Permite = Entre Los Tipos " + Left.Type.ToString() + " Y " + Right.Type.ToString(), this.TokenLine, this.TokenColumn));
+
+                        // Aumentar Contador
+                        VariablesMethods.AuxiliaryCounter += 1;
+
+                    }
+
+                }
 
             }
             else if (this.RelationalType.Equals("Differ"))
@@ -1330,6 +1410,22 @@ namespace Proyecto2.TranslatorAndInterpreter
                         BoolFalse = this.BoolFalse
 
                     };
+
+                }
+                else
+                {
+
+                    // Verificar Si No Es Nulo
+                    if (Left != null && Right != null)
+                    {
+
+                        // Agregar Error 
+                        VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "No Se Permite <> Entre Los Tipos " + Left.Type.ToString() + " Y " + Right.Type.ToString(), this.TokenLine, this.TokenColumn));
+
+                        // Aumentar Contador
+                        VariablesMethods.AuxiliaryCounter += 1;
+
+                    }
 
                 }
 

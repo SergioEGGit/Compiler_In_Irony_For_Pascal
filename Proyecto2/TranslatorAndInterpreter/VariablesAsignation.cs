@@ -177,13 +177,148 @@ namespace Proyecto2.TranslatorAndInterpreter
                 if (ActualFunc != null && ActualVar == null)
                 {
 
-                    // Obtener Valores 
-                    ActualValue.Type = AsgExp.Type;
-                    ActualValue.Value = AsgExp.Value;
-                    ActualValue.Option = "return";
+                    // Objeto 
+                    ObjectReturn ValueExp = null;
 
-                    // Retornar Expression 
-                    return ActualValue;
+                    // Verificar Si Expression Es Nulla 
+                    if (Expression_ != null)
+                    {
+
+                        // Compilar Expression 
+                        ValueExp = this.Expression_.Compilate(Env);
+
+                    }
+
+                    // Obtener Funcion 
+                    EnviromentTable FunctionEnv = Env.SearchReturnFuncs();
+
+                    // Verificar Si Existe La Funcion 
+                    if (FunctionEnv != null)
+                    {
+
+                        // Verificar Si Es Procedimiento 
+                        if (FunctionEnv.ActualFunction.TypeFunc.Equals("procedure"))
+                        {
+
+                            // Agregar Error 
+                            VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "La Instrucción Return No Es Valida Dentro De Un Procedimiento Debe De Aparecer Dentro De Una Función", this.TokenLine, this.TokenColumn));
+
+                            // Aumentar Contador
+                            VariablesMethods.AuxiliaryCounter += 1;
+
+                        }
+                        else
+                        {
+
+                            // Verificar Expresssion
+                            if (ValueExp != null)
+                            {
+
+                                // Verificar TIpo 
+                                if (FunctionEnv.ActualFunction.ReturnType.Equals(ValueExp.Type))
+                                {
+
+                                    // Verificar Tipo Boolean 
+                                    if (FunctionEnv.ActualFunction.ReturnType.Equals("boolean"))
+                                    {
+
+                                        // Crear Temporal 
+                                        String AuxiliaryLabel = Instance_1.CreateLabel();
+
+                                        // Agregar Comentario 
+                                        Instance_1.AddCommentOneLine("Return Tipo Boolean", "Uno");
+
+                                        // Agregar Label 
+                                        Instance_1.AddLabel(ValueExp.BoolTrue, "Dos");
+
+                                        // Agregar Idetnacion 
+                                        Instance_1.AddIdent();
+
+                                        // Agregar a Stack 
+                                        Instance_1.AddValueToStack("SP", "1", "Dos");
+
+                                        // Agregar Non Conditional 
+                                        Instance_1.AddNonConditionalJump(AuxiliaryLabel, "Dos");
+
+                                        // Eliminar Identacion 
+                                        Instance_1.DeleteIdent();
+
+                                        // Agregar Lable False 
+                                        Instance_1.AddLabel(ValueExp.BoolFalse, "Dos");
+
+                                        // Agregar Idetnacion 
+                                        Instance_1.AddIdent();
+
+                                        // Agregar a Stack 
+                                        Instance_1.AddValueToStack("SP", "0", "Dos");
+
+                                        // Eliminar Identacion 
+                                        Instance_1.DeleteIdent();
+
+                                        // Agregar Etiqueta Final 
+                                        Instance_1.AddLabel(AuxiliaryLabel, "Dos");
+
+                                        // Agregar Idetnacion 
+                                        Instance_1.AddIdent();
+
+                                        // Agregar Comentario 
+                                        Instance_1.AddCommentOneLine("Fin Retorno Boolean", "Uno");
+
+                                        // Eliminar Identacion 
+                                        Instance_1.DeleteIdent();
+
+                                    }
+                                    else
+                                    {
+
+                                        // Agregar Comentario 
+                                        Instance_1.AddCommentOneLine("Return Tipo " + ValueExp.Type, "Uno");
+
+                                        // Agregar Otro Valor A Stack 
+                                        Instance_1.AddValueToStack("SP", ValueExp.GetValue(), "Dos");
+
+                                    }
+
+                                    // Agregar Comentario
+                                    Instance_1.AddNonConditionalJump(FunctionEnv.ReturnLabel, "Dos");
+
+                                }
+                                else
+                                {
+
+                                    // Agregar Error 
+                                    VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "El Tipo De Retorno No Coincide Con El Tipo De La Función", this.TokenLine, this.TokenColumn));
+
+                                    // Aumentar Contador
+                                    VariablesMethods.AuxiliaryCounter += 1;
+
+                                }
+
+                            }
+                            else
+                            {
+
+                                // Agregar Error 
+                                VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "La Instruccion Return Debe De Tener Una Expresion", this.TokenLine, this.TokenColumn));
+
+                                // Aumentar Contador
+                                VariablesMethods.AuxiliaryCounter += 1;
+
+                            }
+
+                        }
+
+                    }
+                    else
+                    {
+
+                        // Agregar Error 
+                        VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "La Instrucción Return Debe Aparecer Dentro De Un Función", this.TokenLine, this.TokenColumn));
+
+                        // Aumentar Contador
+                        VariablesMethods.AuxiliaryCounter += 1;
+
+                    }
 
                 }
                 else if (ActualFunc == null && ActualVar != null)
@@ -300,10 +435,30 @@ namespace Proyecto2.TranslatorAndInterpreter
 
                             // Agreagr A Stack 
                             Instance_1.AddValueToStack(Temporary, AsgExp.GetValue(), "Dos");
-                        
+
                         }
 
                     }
+                    else
+                    {
+
+                        // Agregar Error 
+                        VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "Error Al Asignar Expression Tipo " + AsgExp.Type + " A Variable De Tipo " + ActualVar.Type, this.TokenLine, this.TokenColumn));
+
+                        // Aumentar Contador
+                        VariablesMethods.AuxiliaryCounter += 1;
+
+                    }
+
+                }
+                else 
+                {
+
+                    // Agregar Error 
+                    VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "La Variable " + this.Identifier + " No Existe En El Contexto Actual", this.TokenLine, this.TokenColumn));
+
+                    // Aumentar Contador
+                    VariablesMethods.AuxiliaryCounter += 1;
 
                 }
 

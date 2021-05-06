@@ -323,8 +323,20 @@ namespace Proyecto2.TranslatorAndInterpreter
                             ObjectReturn SwitchExp = this.Expression_.Compilate(Env);
                             ObjectReturn CaseExp = AuxCase.Expression_.Compilate(CaseEnv);
 
+                            // Verificar Tipo 
+                            if(!SwitchExp.Type.Equals(CaseExp.Type)) 
+                            {
+
+                                // Agregar Error 
+                                VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "La Expression Principal Con La Expression Del Case No." + AuxiliaryCounter.ToString() + " No Coinciden", this.TokenLine, this.TokenColumn));
+
+                                // Aumentar Contador
+                                VariablesMethods.AuxiliaryCounter += 1;
+
+                            }
+
                             // Verificar Tipo
-                            if(SwitchExp.Type.Equals("integer") || SwitchExp.Type.Equals("real"))
+                            if (SwitchExp.Type.Equals("integer") || SwitchExp.Type.Equals("real"))
                             {
 
                                 // Agregar Comentario

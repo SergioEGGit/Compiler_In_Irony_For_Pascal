@@ -272,7 +272,19 @@ namespace Proyecto2.TranslatorAndInterpreter
             }
 
             // Ejecutar Expression
-            this.Expression_.Compilate(Env);
+            ObjectReturn RepeatExp = this.Expression_.Compilate(Env);
+
+            // Verificar Tipo 
+            if(!RepeatExp.Type.Equals("boolean"))
+            {
+
+                // Agregar Error 
+                VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "La Condición De Un Ciclo Repeat Debe De Ser boolean, Se Obtuvo El Tipo " + RepeatExp.Type, this.TokenLine, this.TokenColumn));
+
+                // Aumentar Contador
+                VariablesMethods.AuxiliaryCounter += 1;
+
+            }
 
             // Eliminar Identacion
             Instance_1.DeleteIdent();

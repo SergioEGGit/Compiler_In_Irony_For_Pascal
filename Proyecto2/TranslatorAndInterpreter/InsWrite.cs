@@ -338,6 +338,16 @@ namespace Proyecto2.TranslatorAndInterpreter
                                 Instance_1.DeleteIdent();
 
                             }
+                            else
+                            {
+
+                                // Agregar Error 
+                                VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "No Se Puede Imprimir El Tipo De Dato " + AuxiliaryObject.Type, this.TokenLine, this.TokenColumn));
+
+                                // Aumentar Contador
+                                VariablesMethods.AuxiliaryCounter += 1;
+
+                            }
 
                         }
 

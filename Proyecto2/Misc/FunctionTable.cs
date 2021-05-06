@@ -43,6 +43,9 @@ namespace Proyecto2.Misc
         // Entornor Padre 
         public readonly EnviromentTable Parent;
 
+        // Numero De Parametros 
+        public int ParamsCount;
+
         // Constructor  
         public FunctionTable(String TypeFunc, String Identifier, String ReturnType, LinkedList<ObjectReturn> ParamsList, LinkedList<AbstractInstruccion> DeclarationsList, LinkedList<AbstractInstruccion> InstruccionsList, String Env, int Line, int Column, EnviromentTable Parent)
         {
@@ -58,6 +61,7 @@ namespace Proyecto2.Misc
             this.Line = Line;
             this.Column = Column;
             this.Parent = Parent;
+            this.ParamsCount = 0;
 
         }
 

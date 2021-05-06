@@ -10,8 +10,9 @@ begin
             factorial := n * factorial(n - 1);
         end; 
 end;
-
+(*------------- Me Daba Problemas Asi Que Agregue La Llamad A Una Variable -------------------*)
 function ackermann(m,n: integer): integer;
+var aux : integer;
 begin
     if (m = 0) then
         begin
@@ -23,15 +24,16 @@ begin
         end
     else
         begin
-            ackermann := ackermann(m - 1, ackermann(m,n - 1));
+			aux := ackermann(m,n - 1);
+            ackermann := ackermann(m - 1, aux);
         end;
 end;
-
+(* -------------------------------------- Agregue ; -----------------------------------------*)
 procedure Hanoi(discos:integer; origen,aux,destino:string);
 begin
     if(discos=1) then
         begin
-            writeln('Mover Disco de ',origen,' a ',destino)
+            writeln('Mover Disco de ',origen,' a ',destino);
         end
     else
         Begin

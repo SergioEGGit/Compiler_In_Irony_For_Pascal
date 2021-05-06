@@ -385,6 +385,18 @@ namespace Proyecto2.TranslatorAndInterpreter
             // Agregar Comentario
             Instance_1.AddCommentOneLine("Comienzo Instrucción For", "Uno");
 
+            // Verificar TIpo 
+            if(!(AsgExp.Type.Equals("integer") && LmExp.Type.Equals("integer")))
+            {
+                    
+                // Agregar Error 
+                VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "Las Condiciones Del Ciclo for Deben De Ser integer, Se Obtuvo Los Tipos " + LmExp.Type + ", " + LmExp.Type, this.TokenLine, this.TokenColumn));
+
+                // Aumentar Contador
+                VariablesMethods.AuxiliaryCounter += 1;
+
+            }
+
             // Buscar Variable 
             if (ActualVar != null)
             {
@@ -413,7 +425,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                         Instance_1.AddValueToStack(ActualVar.GetValue(), AsgExp.GetValue(), "Dos");
 
                     }
-                    else 
+                    else
                     {
 
                         // Agregar Temporal 
@@ -422,7 +434,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                         // Inicializar Variable 
                         Instance_1.AddValueToStack(TemporaryAux, AsgExp.GetValue(), "Dos");
 
-                    }                    
+                    }
 
                     // Agregar Inicio For 
                     Instance_1.AddLabel(InicioForLabel, "Dos");
@@ -438,7 +450,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                         Instance_1.AddOneExpression(TemporaryIndex, ActualVar.GetValue(), "Dos");
 
                     }
-                    else 
+                    else
                     {
 
                         // Agregar Temporal 
@@ -469,7 +481,7 @@ namespace Proyecto2.TranslatorAndInterpreter
 
                                 // Obtener Objeto
                                 Instruccion.Compilate(ForEnv);
-                                                                       
+
 
                             }
 
@@ -488,7 +500,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                         Instance_1.AddValueToStack(ActualVar.GetValue(), TemporarySum, "Dos");
 
                     }
-                    else 
+                    else
                     {
 
                         // Agregar Temporal 
@@ -541,7 +553,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                         Instance_1.AddValueToStack(ActualVar.GetValue(), AsgExp.GetValue(), "Dos");
 
                     }
-                    else 
+                    else
                     {
 
                         // Agregar Temporal 
@@ -566,7 +578,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                         Instance_1.AddOneExpression(TemporaryIndex, ActualVar.GetValue(), "Dos");
 
                     }
-                    else 
+                    else
                     {
 
                         // Agregar Temporal 
@@ -616,7 +628,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                         Instance_1.AddValueToStack(ActualVar.GetValue(), TemporaryMinus, "Dos");
 
                     }
-                    else 
+                    else
                     {
 
                         // Agregar Temporal 
@@ -646,6 +658,16 @@ namespace Proyecto2.TranslatorAndInterpreter
                     Instance_1.DeleteIdent();
 
                 }
+
+            }
+            else
+            {
+
+                // Agregar Error 
+                VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "La Variable " + this.Identifier + " No Existe En El Contexto Actual", this.TokenLine, this.TokenColumn));
+
+                // Aumentar Contador
+                VariablesMethods.AuxiliaryCounter += 1;
 
             }
 

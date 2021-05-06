@@ -327,7 +327,7 @@ namespace Proyecto2.Misc
         }
 
         // Añadir Funcion
-        public bool AddFunctionStack(String FuncType, String Identifier, String ReturnType, LinkedList<ObjectReturn> ParamsList, LinkedList<AbstractInstruccion> DeclarationsList, LinkedList<AbstractInstruccion> InstruccionsList, String EnvName, int TokenLine, int TokenColumn, EnviromentTable Env)
+        public bool AddFunctionStack(String FuncType, String Identifier, String ReturnType, LinkedList<ObjectReturn> ParamsList, LinkedList<AbstractInstruccion> DeclarationsList, LinkedList<AbstractInstruccion> InstruccionsList, String EnvName, int TokenLine, int TokenColumn, EnviromentTable Env, int Params)
         {
 
             // Variables
@@ -356,8 +356,16 @@ namespace Proyecto2.Misc
             if (Variables && Functions)
             {
 
+                // Funcion 
+                FunctionTable ActualFunction = new FunctionTable(FuncType, Identifier, ReturnType, ParamsList, DeclarationsList, InstruccionsList, EnvName, TokenLine, TokenColumn, Env) {
+
+                    ParamsCount = Params
+
+                };
+
+
                 // Agregar Variable A Lista De Simbolos
-                this.FunctionsStack.Add(Identifier.ToLower(), new FunctionTable(FuncType, Identifier, ReturnType, ParamsList, DeclarationsList, InstruccionsList, EnvName, TokenLine, TokenColumn, Env));
+                this.FunctionsStack.Add(Identifier.ToLower(), ActualFunction);
 
                 // Agregada Con Exito
                 return true;

@@ -922,27 +922,45 @@ namespace Proyecto2.TranslatorAndInterpreter
             // Buscar Funcion 
             FunctionTable ActualFunction = Env.GetFunctionStack(this.Identifier);
 
-            // Array Auxiliar 
-            LinkedList<ObjectReturn> AuxiliaryArray = new LinkedList<ObjectReturn>();
-
             // Obteener Instancia 
             ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
 
+            // Entorno Func O Global 
+            EnviromentTable Func_Global_Env = Env;
+
+            // Recorrer Env 
+            while (Func_Global_Env != null)
+            {
+
+                // Verificar Si ES Global O Func
+                if (Func_Global_Env.EnviromentName.Contains("Env_Global") || Func_Global_Env.EnviromentName.Contains("Env_Func_"))
+                {
+
+                    // Parar
+                    break;
+
+                }
+
+                // Anvanzar Ambientes 
+                Func_Global_Env = Func_Global_Env.ParentEnviroment;
+
+            }
+
             // Guardar TEmporales 
-            int SizeTemporary = Instance_1.SaveTemporaryAux(Env);
+            int SizeTemporary = Instance_1.SaveTemporaryAux(Func_Global_Env);
 
             // Array Temporal 
-            Dictionary<int, AbstractExpression> ParamsFuncList = new Dictionary<int, AbstractExpression>(); 
+            Dictionary<int, AbstractExpression> ParamsFuncList = new Dictionary<int, AbstractExpression>();
 
             // Verificar Is Parametros ESTa Vacios 
-            if (this.ParamsList != null) 
+            if (this.ParamsList != null)
             {
 
                 // Crear Contador 
                 int Counter = 0;
 
                 // Recorrer Lista 
-                foreach(AbstractExpression ExpressionParam in this.ParamsList) 
+                foreach (AbstractExpression ExpressionParam in this.ParamsList)
                 {
 
                     // Insertar En Litsa 
@@ -950,10 +968,10 @@ namespace Proyecto2.TranslatorAndInterpreter
 
                     // Sumar Contador 
                     Counter += 1;
-                
+
                 }
-                
-            
+
+
             }
 
             // Crear TEmporal 
@@ -977,7 +995,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                     int ParamsFunc = 0;
 
                     // Obtener El Puntero Del Ambiente 
-                    Instance_1.AddTwoExpression(Temporary, "SP", "+", (Env.EnviromentSize + 1).ToString(), "Dos");
+                    Instance_1.AddTwoExpression(Temporary, "SP", "+", (Func_Global_Env.EnviromentSize + 1).ToString(), "Dos");
 
                     // Crear Variable Para Evitar Sumar Al Final 
                     int Limit = 0;
@@ -1019,8 +1037,8 @@ namespace Proyecto2.TranslatorAndInterpreter
                             {
 
                                 // Verificar Por Referencias 
-                                String[] Split2 = Var.Split(' ');                                
-                                    
+                                String[] Split2 = Var.Split(' ');
+
                                 // Obtener Tipos
                                 ObjectReturn TypeObject = ParamsFuncList[AuxiliaryCounter].Compilate(Env);
 
@@ -1073,7 +1091,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                                                 Instance_1.DeleteIdent();
 
                                             }
-                                            else 
+                                            else
                                             {
 
                                                 // Agregar Comentario 
@@ -1106,7 +1124,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                                         // Verificar TIpo 
                                         if (TypeObject != null)
                                         {
-                                            
+
                                             // Verificar Tipo
                                             if (Param.Type.ToString().Equals(TypeObject.Type))
                                             {
@@ -1156,7 +1174,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                                                     Instance_1.AddValueToStack(Temporary, TypeObject.GetValue(), "Dos");
 
                                                 }
-                                                                                               
+
                                             }
                                             else
                                             {
@@ -1176,22 +1194,17 @@ namespace Proyecto2.TranslatorAndInterpreter
 
                                     }
 
-                                    // Verificar Si ES El Final 
-                                    if (Limit != ActualFunction.ParamsList.Count)
-                                    {
-
-                                        // Incremtnar Putneor Ambiente 
-                                        Instance_1.AddTwoExpression(Temporary, Temporary, "+", "1", "Dos");
-
-                                    }
-
-                                    // SUmar 
-                                    AuxiliaryCounter += 1;
 
                                     // Incrementar Limit 
                                     Limit += 1;
 
-                                }                                
+                                    // SUmar 
+                                    AuxiliaryCounter += 1;
+
+                                }
+
+                                // Incremtnar Putneor Ambiente 
+                                Instance_1.AddTwoExpression(Temporary, Temporary, "+", "1", "Dos");
 
                             }
 
@@ -1212,25 +1225,28 @@ namespace Proyecto2.TranslatorAndInterpreter
                 }
 
             }
-            else 
+            else
             {
 
                 // Agregar Error 
-                VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "La Función Indicada No Existe", this.TokenLine, this.TokenColumn));
+                VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "La Función " + this.Identifier + " No Existe", this.TokenLine, this.TokenColumn));
 
                 // Aumentar Contador
                 VariablesMethods.AuxiliaryCounter += 1;
 
             }
 
-            if (ActualFunction != null) 
+            ObjectReturn AuxiliaryReturn = null;
+
+            if (ActualFunction != null)
             {
 
-                // Agregar Llamda A Funcion 
-                Instance_1.AddCommentOneLine("Llámada A Función", "Dos");
+
+                // Agregar Llamda A Funcion
+                Instance_1.AddCommentOneLine("Llámada A Función Env", "Dos");
 
                 // Mover Entorno 
-                Instance_1.MoveNextEnv(Env.EnviromentSize.ToString());
+                Instance_1.MoveNextEnv(Func_Global_Env.EnviromentSize.ToString());
 
                 // Llamada A Funcion 
                 Instance_1.AddFunctionCall(ActualFunction.Identifier, "Dos");
@@ -1239,10 +1255,10 @@ namespace Proyecto2.TranslatorAndInterpreter
                 Instance_1.GetValueOfStack("SP", Temporary, "Dos");
 
                 // Regresar Del Entorno 
-                Instance_1.MoveAntEnv(Env.EnviromentSize.ToString());
+                Instance_1.MoveAntEnv(Func_Global_Env.EnviromentSize.ToString());
 
                 // Recuperar Temporales 
-                Instance_1.GetTemporaryAux(Env, SizeTemporary);
+                Instance_1.GetTemporaryAux(Func_Global_Env, SizeTemporary);
 
                 // Agregar TEmporal A Array 
                 Instance_1.AddTemporaryToArray(Temporary);
@@ -1252,14 +1268,14 @@ namespace Proyecto2.TranslatorAndInterpreter
                 {
 
                     // Crear Objeto Retorno 
-                    ObjectReturn AuxiliaryReturn = new ObjectReturn("", ActualFunction.ReturnType);
+                    AuxiliaryReturn = new ObjectReturn("", ActualFunction.ReturnType);
 
                 }
                 else
                 {
 
                     // Retorno Nuevo Object 
-                    ObjectReturn AuxiliaryReturn = new ObjectReturn(Temporary, ActualFunction.ReturnType)
+                    AuxiliaryReturn = new ObjectReturn(Temporary, ActualFunction.ReturnType)
                     {
 
                         Temporary = true
@@ -1269,7 +1285,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                 }
 
             }
-            
+
             // retornar 
             return null;
 

@@ -519,7 +519,18 @@ namespace Proyecto2.TranslatorAndInterpreter
                 }
 
                 // Verificar Que No Exista La Funcion
-                Env.AddFunctionStack(this.TypeFunc, this.Identifier, this.ReturnType, this.ParamsList, this.DeclarationsList, this.InstruccionsList, Env.EnviromentName, this.TokenLine, this.TokenColumn, Env);
+                bool Flag = Env.AddFunctionStack(this.TypeFunc, this.Identifier, this.ReturnType, this.ParamsList, this.DeclarationsList, this.InstruccionsList, Env.EnviromentName, this.TokenLine, this.TokenColumn, Env, ArrayAuxiliary.Count);
+
+                if (!Flag) 
+                {
+
+                    // Agregar Error 
+                    VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "La Función " + this.Identifier + " Ya Existe En El Contexto Actual", this.TokenLine, this.TokenColumn));
+
+                    // Aumentar Contador
+                    VariablesMethods.AuxiliaryCounter += 1;
+
+                }
 
             }
 
@@ -580,7 +591,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                                 {
 
                                     // Agregar Error 
-                                    VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "El Parametro Indicado Ya Existe En El Contexto Actual", this.TokenLine, this.TokenColumn));
+                                    VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "El Parametro " + Split2[1] + " Ya Existe En El Contexto Actual", this.TokenLine, this.TokenColumn));
 
                                     // Aumentar Contador
                                     VariablesMethods.AuxiliaryCounter += 1;
@@ -599,7 +610,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                                 {
 
                                     // Agregar Error 
-                                    VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "El Parametro Indicado Ya Existe En El Contexto Actual", this.TokenLine, this.TokenColumn));
+                                    VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "El Parametro " + Split2[0] + " Ya Existe En El Contexto Actual", this.TokenLine, this.TokenColumn));
 
                                     // Aumentar Contador
                                     VariablesMethods.AuxiliaryCounter += 1;

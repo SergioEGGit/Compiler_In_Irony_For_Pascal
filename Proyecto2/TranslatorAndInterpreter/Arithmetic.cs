@@ -628,6 +628,22 @@ namespace Proyecto2.TranslatorAndInterpreter
                     };
 
                 }
+                else
+                {
+
+                    // Verificar Si No Es Nulo
+                    if (Left != null && Right != null)
+                    {
+
+                        // Agregar Error 
+                        VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "No Se Permite La Suma Entre Los Tipos " + Left.Type.ToString() + " Y " + Right.Type.ToString(), this.TokenLine, this.TokenColumn));
+
+                        // Aumentar Contador
+                        VariablesMethods.AuxiliaryCounter += 1;
+
+                    }
+
+                }
 
             } 
             else if (this.ArithmeticType.Equals("Substraction"))
@@ -671,6 +687,22 @@ namespace Proyecto2.TranslatorAndInterpreter
                         Temporary = true
 
                     };
+
+                }
+                else
+                {
+
+                    // Verificar Si No Es Nulo
+                    if (Left != null && Right != null)
+                    {
+
+                        // Agregar Error 
+                        VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "No Se Permite La Resta Entre Los Tipos " + Left.Type.ToString() + " Y " + Right.Type.ToString(), this.TokenLine, this.TokenColumn));
+
+                        // Aumentar Contador
+                        VariablesMethods.AuxiliaryCounter += 1;
+
+                    }
 
                 }
 
@@ -718,6 +750,22 @@ namespace Proyecto2.TranslatorAndInterpreter
                     };
 
                 }
+                else
+                {
+
+                    // Verificar Si No Es Nulo
+                    if (Left != null && Right != null)
+                    {
+
+                        // Agregar Error 
+                        VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "No Se Permite La Multiplicación Entre Los Tipos " + Left.Type.ToString() + " Y " + Right.Type.ToString(), this.TokenLine, this.TokenColumn));
+
+                        // Aumentar Contador
+                        VariablesMethods.AuxiliaryCounter += 1;
+
+                    }
+
+                }
 
             }
             else if (this.ArithmeticType.Equals("Division"))
@@ -761,6 +809,22 @@ namespace Proyecto2.TranslatorAndInterpreter
                         Temporary = true
 
                     };
+
+                }
+                else
+                {
+
+                    // Verificar Si No Es Nulo
+                    if (Left != null && Right != null)
+                    {
+
+                        // Agregar Error 
+                        VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "No Se Permite La Division Entre Los Tipos " + Left.Type.ToString() + " Y " + Right.Type.ToString(), this.TokenLine, this.TokenColumn));
+
+                        // Aumentar Contador
+                        VariablesMethods.AuxiliaryCounter += 1;
+
+                    }
 
                 }
 
@@ -820,6 +884,22 @@ namespace Proyecto2.TranslatorAndInterpreter
                     }
 
                 }
+                else
+                {
+
+                    // Verificar Si No Es Nulo
+                    if (Left != null && Right != null)
+                    {
+
+                        // Agregar Error 
+                        VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "No Se Permite Mod Entre Los Tipos " + Left.Type.ToString() + " Y " + Right.Type.ToString(), this.TokenLine, this.TokenColumn));
+
+                        // Aumentar Contador
+                        VariablesMethods.AuxiliaryCounter += 1;
+
+                    }
+
+                }
 
             }
             else if (this.ArithmeticType.Equals("Minus"))
@@ -863,6 +943,22 @@ namespace Proyecto2.TranslatorAndInterpreter
                         Temporary = true
 
                     };
+
+                }
+                else
+                {
+
+                    // Verificar Si No Es Nulo
+                    if (Left != null && Right != null)
+                    {
+
+                        // Agregar Error 
+                        VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "No Se Permite Negativos En El Tipo " + Right.Type.ToString(), this.TokenLine, this.TokenColumn));
+
+                        // Aumentar Contador
+                        VariablesMethods.AuxiliaryCounter += 1;
+
+                    }
 
                 }
 

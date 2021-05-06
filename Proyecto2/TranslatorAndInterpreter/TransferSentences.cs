@@ -129,21 +129,53 @@ namespace Proyecto2.TranslatorAndInterpreter
             if (this.TransType.Equals("Break"))
             {
 
-                // Agregar Comentario 
-                Instance_1.AddCommentOneLine("Instrucción Break", "Uno");
+                // Veriricar Si ESta En Un Ciclo 
+                if (!AuxiliaryArray[0].Equals(""))
+                {
 
-                // Agregar Salto 
-                Instance_1.AddNonConditionalJump(AuxiliaryArray[0], "Dos");
+                    // Agregar Comentario 
+                    Instance_1.AddCommentOneLine("Instrucción Break", "Uno");
+
+                    // Agregar Salto 
+                    Instance_1.AddNonConditionalJump(AuxiliaryArray[0], "Dos");
+
+                }
+                else 
+                {
+
+                    // Agregar Error 
+                    VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "La Sentencia Break Debe Aparecer Dentro De Un Ciclo O Un Case", 0, 0));
+
+                    // Aumentar Contador
+                    VariablesMethods.AuxiliaryCounter += 1;
+
+                }
 
             }
             else if(this.TransType.Equals("Continue")) 
             {
 
-                // Agregar Comentario
-                Instance_1.AddCommentOneLine("Instrucción Continue", "Uno");
+                // Veriricar Si ESta En Un Ciclo 
+                if (!AuxiliaryArray[1].Equals(""))
+                {
 
-                // Agregar Salto 
-                Instance_1.AddNonConditionalJump(AuxiliaryArray[1], "Dos");
+                    // Agregar Comentario 
+                    Instance_1.AddCommentOneLine("Instrucción Continue", "Uno");
+
+                    // Agregar Salto 
+                    Instance_1.AddNonConditionalJump(AuxiliaryArray[1], "Dos");
+
+                }
+                else
+                {
+
+                    // Agregar Error 
+                    VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "La Sentencia Continue Debe Aparecer Dentro De Un Ciclo", 0, 0));
+
+                    // Aumentar Contador
+                    VariablesMethods.AuxiliaryCounter += 1;
+
+                }
 
             }
             else if(this.TransType.Equals("Return"))

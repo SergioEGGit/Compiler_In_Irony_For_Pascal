@@ -325,7 +325,19 @@ namespace Proyecto2.TranslatorAndInterpreter
             // Verificar Si EStoy En Global 
 
             // Arreglo De Identificadores 
-            String[] Identifiers = this.Identifiers.Split(',');            
+            String[] Identifiers = this.Identifiers.Split(',');
+
+            // Verificar Si Se Asigna A Un Solo ID
+            if (this.Value != null && Identifiers.Length > 1)
+            {
+
+                // Agregar Error Variables 
+                VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "Unicamente Se Puede Realizar Una Asignacion A Un Unico Identificador", this.TokenLine, this.TokenColumn));
+
+                // Aumentar Contador
+                VariablesMethods.AuxiliaryCounter += 1;
+
+            }
 
             // Agregar Comentarios 
             Instance_1.AddCommentOneLine("Declaración De Variables", CommentAuxiliary);
@@ -360,6 +372,9 @@ namespace Proyecto2.TranslatorAndInterpreter
                             // Verificar Si La Variable Existe O NO 
                             ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, true);
 
+                            // Añadir Error 
+                            AddErrorCompilate(ActualVar, Identifier);
+
                             // Agregar A Stack 
                             Instance_1.AddValueToStack(ActualVar.Value.ToString(), "0", InsAuxiliary);
 
@@ -369,6 +384,9 @@ namespace Proyecto2.TranslatorAndInterpreter
 
                             // Verificar Si La Variable Existe O NO 
                             ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, false);
+
+                            // Añadir Error 
+                            AddErrorCompilate(ActualVar, Identifier);
 
                             // Obtener Posicioin Del Stack Para Guardar La VAriable
                             Instance_1.AddTwoExpression(Temporary, "SP", "+", ActualVar.Value.ToString(), InsAuxiliary);
@@ -390,6 +408,9 @@ namespace Proyecto2.TranslatorAndInterpreter
 
                             // Verificar Si La Variable Existe O NO 
                             ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, true);
+
+                            // Añadir Error 
+                            AddErrorCompilate(ActualVar, Identifier);
 
                             // Crear Temporal 
                             String TemporaryHeap = Instance_1.CreateTemporary();
@@ -415,6 +436,9 @@ namespace Proyecto2.TranslatorAndInterpreter
 
                             // Verificar Si La Variable Existe O NO 
                             ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, false);
+
+                            // Añadir Error 
+                            AddErrorCompilate(ActualVar, Identifier);
 
                             // Obtener Posicioin Del Stack Para Guardar La VAriable
                             Instance_1.AddTwoExpression(Temporary, "SP", "+", ActualVar.Value.ToString(), InsAuxiliary);
@@ -451,6 +475,9 @@ namespace Proyecto2.TranslatorAndInterpreter
 
                             // Verificar Si La Variable Existe O NO 
                             ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, true);
+
+                            // Añadir Error 
+                            AddErrorCompilate(ActualVar, Identifier);
 
                             // Crear Label 
                             String ActualLabel = Instance_1.CreateLabel();
@@ -508,6 +535,9 @@ namespace Proyecto2.TranslatorAndInterpreter
 
                             // Verificar Si La Variable Existe O NO 
                             ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, false);
+
+                            // Añadir Error 
+                            AddErrorCompilate(ActualVar, Identifier);
 
                             // Obtener Posicioin Del Stack Para Guardar La VAriable
                             Instance_1.AddTwoExpression(Temporary, "SP", "+", ActualVar.Value.ToString(), InsAuxiliary);
@@ -577,6 +607,9 @@ namespace Proyecto2.TranslatorAndInterpreter
                             // Verificar Si La Variable Existe O NO 
                             ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, true);
 
+                            // Añadir Error 
+                            AddErrorCompilate(ActualVar, Identifier);
+
                             // Agregar A Stack 
                             Instance_1.AddValueToStack(ActualVar.Value.ToString(), "0.0", InsAuxiliary);
 
@@ -586,6 +619,9 @@ namespace Proyecto2.TranslatorAndInterpreter
 
                             // Verificar Si La Variable Existe O NO 
                             ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, false);
+
+                            // Añadir Error 
+                            AddErrorCompilate(ActualVar, Identifier);
 
                             // Obtener Posicioin Del Stack Para Guardar La VAriable
                             Instance_1.AddTwoExpression(Temporary, "SP", "+", ActualVar.Value.ToString(), InsAuxiliary);
@@ -599,7 +635,11 @@ namespace Proyecto2.TranslatorAndInterpreter
                     else
                     {
 
-                        //Tipos distintos
+                        // Agregar Error 
+                        VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "El Valor Asignado No Coinicide con El Tipo De Variable", this.TokenLine, this.TokenColumn));
+
+                        // Aumentar Contador
+                        VariablesMethods.AuxiliaryCounter += 1;
 
                     }
 
@@ -664,12 +704,18 @@ namespace Proyecto2.TranslatorAndInterpreter
                                 // Verificar Si La Variable Existe O No 
                                 ActualVar = Env.AddVariableStack(Identifier, Value.Type.ToString(), this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, true);
 
+                                // Añadir Error 
+                                AddErrorCompilate(ActualVar, Identifier);
+
                             }
                             else
                             {
 
                                 // Verificar Si La Variable Existe O No 
                                 ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, true);
+
+                                // Añadir Error 
+                                AddErrorCompilate(ActualVar, Identifier);
 
                             }
 
@@ -684,12 +730,18 @@ namespace Proyecto2.TranslatorAndInterpreter
                                 // Verificar Si La Variable Existe O No 
                                 ActualVar = Env.AddVariableStack(Identifier, Value.Type.ToString(), this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, false);
 
+                                // Añadir Error 
+                                AddErrorCompilate(ActualVar, Identifier);
+
                             }
                             else
                             {
 
                                 // Verificar Si La Variable Existe O No 
                                 ActualVar = Env.AddVariableStack(Identifier, this.Type, this.DecType, Env.EnviromentName, this.TokenLine, this.TokenColumn, false);
+
+                                // Añadir Error 
+                                AddErrorCompilate(ActualVar, Identifier);
 
                             }
 
@@ -792,10 +844,32 @@ namespace Proyecto2.TranslatorAndInterpreter
 
                 // Agregar Error
                 VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semático", "La Variable O Constante (" + Identifier + ") Ya Existe En El Ambito", this.TokenLine, this.TokenColumn));
-            
+
+                // Aumentar Contador
+                VariablesMethods.AuxiliaryCounter += 1;
+
             }
 
         }
+
+        // Indicar Error
+        private void AddErrorCompilate(SymbolTable IsError, String Identifier)
+        {
+
+            // Verificar Si Hay Error
+            if (IsError == null)
+            {
+
+                // Agregar Error
+                VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semático", "La Variable O Constante (" + Identifier + ") Ya Existe En El Ambito", this.TokenLine, this.TokenColumn));
+
+                // Aumentar Contador
+                VariablesMethods.AuxiliaryCounter += 1;
+
+            }
+
+        }
+
 
     }
 

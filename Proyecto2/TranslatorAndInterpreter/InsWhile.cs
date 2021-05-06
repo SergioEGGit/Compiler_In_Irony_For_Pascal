@@ -256,7 +256,7 @@ namespace Proyecto2.TranslatorAndInterpreter
             {
 
                 // Verificar Si Hay Error Semantico 
-                if(WhileExp.Type.Equals("boolean"))
+                if (WhileExp.Type.Equals("boolean"))
                 {
 
                     // Agregar Etiquetas De Break Y Continue 
@@ -268,7 +268,7 @@ namespace Proyecto2.TranslatorAndInterpreter
 
                     // Añadir Identacion 
                     Instance_1.AddIdent();
-                    
+
                     // Verificar Si Hay Instrucciones 
                     if (this.InstruccionsList != null)
                     {
@@ -308,6 +308,16 @@ namespace Proyecto2.TranslatorAndInterpreter
 
                     // Eliminar Identación
                     Instance_1.DeleteIdent();
+
+                }
+                else
+                {
+
+                    // Agregar Error 
+                    VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "La Condición De Un Ciclo While Debe De Ser boolean, Se Obtuvo El Tipo " + WhileExp.Type, this.TokenLine, this.TokenColumn));
+
+                    // Aumentar Contador
+                    VariablesMethods.AuxiliaryCounter += 1;
 
                 }
 

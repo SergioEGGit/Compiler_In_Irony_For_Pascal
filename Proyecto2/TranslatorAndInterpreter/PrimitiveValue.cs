@@ -277,6 +277,12 @@ namespace Proyecto2.TranslatorAndInterpreter
                     else
                     {
 
+                        // Agregar Error 
+                        VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "La Variable Indicada " + this.Value.ToString() + " No Existe En El Contexto Actual", 0, 0));
+
+                        // Aumentar Contador
+                        VariablesMethods.AuxiliaryCounter += 1;
+
                         // Retornar Objecto 
                         AuxiliaryReturn = null;
 

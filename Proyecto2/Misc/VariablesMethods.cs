@@ -78,10 +78,10 @@ namespace Proyecto2.Misc
                                  "              <tr>\n" +
                                  "                  <th> Nombre </th>\n" +
                                  "                  <th> Tipo </th>\n" +
-                                 "                  <th> Valor </th>\n" +
                                  "                  <th> Position </th>\n" + 
                                  "                  <th> Tipo Declaracion </th>\n" +
                                  "                  <th> Entorno </th>\n" +
+                                 "                  <th> Numero De Parametros </th> \n" +
                                  "                  <th> Linea </th>\n" +
                                  "                  <th> Columna </th>\n" +
                                  "              </tr>\n" +
@@ -89,9 +89,6 @@ namespace Proyecto2.Misc
 
             // Bandera Auxiliar 
             int Auxiliary = 0;
-
-            // Objeto Retorno 
-            TranslatorAndInterpreter.ObjectReturn AuxiliaryObject = null;
 
             // Verificar Que La Lista No Este Nulla
             if(EnvTable != null) 
@@ -102,11 +99,8 @@ namespace Proyecto2.Misc
                 {
 
                     // Recorrer Simbolos
-                    foreach(KeyValuePair<string, SymbolTable> Valor in Env.PrimitiveVariables) 
+                    foreach(KeyValuePair<string, SymbolTable> Valor in Env.PrimitiveVariablesStack) 
                     {
-
-                        // Obtener Objecto
-                        AuxiliaryObject = (TranslatorAndInterpreter.ObjectReturn) Valor.Value.Value;
 
                         if(Auxiliary == 0) 
                         {
@@ -116,10 +110,10 @@ namespace Proyecto2.Misc
                                           "             <tr>\n" +
                                           "                 <td><center>" + Valor.Value.Identifier.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.Type.ToString() + "</center></td>\n" +
-                                          "                 <td><center>" + AuxiliaryObject.Value.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.Position.ToString() + "</center></td>\n" +     
                                           "                 <td><center>" + Valor.Value.DecType.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.Env.ToString() + "</center></td>\n" +
+                                          "                 <td><center> - </center></td> \n" +        
                                           "                 <td><center>" + Valor.Value.Line.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.Column.ToString() + "</center></td>\n" +
                                           "             </tr>\n" +
@@ -137,10 +131,10 @@ namespace Proyecto2.Misc
                                           "             <tr>\n" +
                                           "                 <td><center>" + Valor.Value.Identifier.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.Type.ToString() + "</center></td>\n" +
-                                          "                 <td><center>" + AuxiliaryObject.Value.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.Position.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.DecType.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.Env.ToString() + "</center></td>\n" +
+                                          "                 <td><center> - </center></td> \n" +
                                           "                 <td><center>" + Valor.Value.Line.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.Column.ToString() + "</center></td>\n" +
                                           "             </tr>\n" +
@@ -154,7 +148,7 @@ namespace Proyecto2.Misc
                     }
 
                     // Recorrer Funciones
-                    foreach(KeyValuePair<string, FunctionTable> Valor in Env.Functions)
+                    foreach(KeyValuePair<string, FunctionTable> Valor in Env.FunctionsStack)
                     {
 
                         if (Auxiliary == 0)
@@ -166,9 +160,9 @@ namespace Proyecto2.Misc
                                           "                 <td><center>" + Valor.Value.Identifier + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.ReturnType + "</center></td>\n" +
                                           "                 <td><center> - </center></td>\n" +
-                                          "                 <td><center> - </center></td>\n" +
                                           "                 <td><center>" + Valor.Value.TypeFunc + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.Env.ToString() + "</center></td>\n" +
+                                          "                 <td><center>" + Valor.Value.ParamsCount + "</center></td> \n" +
                                           "                 <td><center>" + Valor.Value.Line.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.Column.ToString() + "</center></td>\n" +
                                           "             </tr>\n" +
@@ -187,9 +181,9 @@ namespace Proyecto2.Misc
                                           "                 <td><center>" + Valor.Value.Identifier.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.ReturnType.ToString() + "</center></td>\n" +
                                           "                 <td><center> - </center></td>\n" +
-                                          "                 <td><center> - </center></td>\n" +
                                           "                 <td><center>" + Valor.Value.TypeFunc.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.Env.ToString() + "</center></td>\n" +
+                                          "                 <td><center>" + Valor.Value.ParamsCount + "</center></td> \n" +
                                           "                 <td><center>" + Valor.Value.Line.ToString() + "</center></td>\n" +
                                           "                 <td><center>" + Valor.Value.Column.ToString() + "</center></td>\n" +
                                           "             </tr>\n" +

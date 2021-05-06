@@ -337,12 +337,12 @@ namespace Proyecto2.TranslatorAndInterpreter
                 }
 
                 // Verificar Si No Esta Nullo
-                if (this.LeftValue != null) 
+                if (this.LeftValue != null)
                 {
 
                     // Compilar Left 
                     Left = this.LeftValue.Compilate(Env);
-                    
+
                 }
 
                 // Agregar Label 
@@ -364,7 +364,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                 Instance_1.DeleteIdent();
 
                 // Verificar Tipos 
-                if (Left.Type.Equals("boolean") && Left != null && Right.Type.Equals("boolean") && Right != null) 
+                if (Left.Type.Equals("boolean") && Left != null && Right.Type.Equals("boolean") && Right != null)
                 {
 
                     // Obtener
@@ -377,7 +377,23 @@ namespace Proyecto2.TranslatorAndInterpreter
                     };
 
                 }
-                                
+                else
+                {
+
+                    // Verificar Si No Es Nulo
+                    if (Left != null && Right != null)
+                    {
+
+                        // Agregar Error 
+                        VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "No Se Permite and Entre Los Tipos " + Left.Type.ToString() + " Y " + Right.Type.ToString(), this.TokenLine, this.TokenColumn));
+
+                        // Aumentar Contador
+                        VariablesMethods.AuxiliaryCounter += 1;
+
+                    }
+
+                }
+
             }
             else if (this.LogicalType.Equals("Or"))
             {
@@ -476,6 +492,22 @@ namespace Proyecto2.TranslatorAndInterpreter
                     };
 
                 }
+                else
+                {
+
+                    // Verificar Si No Es Nulo
+                    if (Left != null && Right != null)
+                    {
+
+                        // Agregar Error 
+                        VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "No Se Permite or Entre Los Tipos " + Left.Type.ToString() + " Y " + Right.Type.ToString(), this.TokenLine, this.TokenColumn));
+
+                        // Aumentar Contador
+                        VariablesMethods.AuxiliaryCounter += 1;
+
+                    }
+
+                }
 
             }
             else if (this.LogicalType.Equals("Not"))
@@ -548,9 +580,20 @@ namespace Proyecto2.TranslatorAndInterpreter
                         };
 
                     }
+                    else
+                    {
 
-                }
-                
+
+                        // Agregar Error 
+                        VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "No Se Permite not En El Tipo " + Right.Type.ToString(), this.TokenLine, this.TokenColumn));
+
+                        // Aumentar Contador
+                        VariablesMethods.AuxiliaryCounter += 1;
+
+                    }
+
+                }               
+
 
             }
 

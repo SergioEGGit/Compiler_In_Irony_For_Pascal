@@ -1903,7 +1903,7 @@ namespace Proyecto2.Irony_Resources
                     Begin(RootTreeNode);
 
                     // Crear Primer Ambiente (Global)
-                    EnviromentTable GlobalEnv_Execute = new EnviromentTable(null, "Env_Global");
+                    //EnviromentTable GlobalEnv_Execute = new EnviromentTable(null, "Env_Global");
                     EnviromentTable GlobalEnv_Compilate = new EnviromentTable(null, "Env_Global");
 
                     // Recorrer Lista De Traduccion
@@ -1911,7 +1911,7 @@ namespace Proyecto2.Irony_Resources
                     {
 
                         // Llamar A Método Traducir 
-                        ItemTranslate.Execute(GlobalEnv_Execute);
+                        //ItemTranslate.Execute(GlobalEnv_Execute);
                         ItemTranslate.Compilate(GlobalEnv_Compilate);                        
 
                     }

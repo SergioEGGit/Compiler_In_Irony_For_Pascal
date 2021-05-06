@@ -306,6 +306,16 @@ namespace Proyecto2.TranslatorAndInterpreter
                 }
 
             }
+            else
+            {
+
+                // Agregar Error 
+                VariablesMethods.ErrorList.AddLast(new ErrorTable(VariablesMethods.AuxiliaryCounter, "Semántico", "La Condición De La Sentencia If Debe De Ser boolean, Se Obtuvo El Tipo " + ElseExp.Type, this.TokenLine, this.TokenColumn));
+
+                // Aumentar Contador
+                VariablesMethods.AuxiliaryCounter += 1;
+
+            }
 
             // Retornar 
             return null;
