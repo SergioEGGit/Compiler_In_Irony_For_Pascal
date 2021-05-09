@@ -113,9 +113,9 @@ namespace Proyecto2
             this.ButtonCompilate.BackColor = System.Drawing.Color.Thistle;
             this.ButtonCompilate.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.ButtonCompilate.ForeColor = System.Drawing.Color.Blue;
-            this.ButtonCompilate.Location = new System.Drawing.Point(1168, 112);
+            this.ButtonCompilate.Location = new System.Drawing.Point(1166, 112);
             this.ButtonCompilate.Name = "ButtonCompilate";
-            this.ButtonCompilate.Size = new System.Drawing.Size(109, 36);
+            this.ButtonCompilate.Size = new System.Drawing.Size(111, 36);
             this.ButtonCompilate.TabIndex = 10;
             this.ButtonCompilate.Text = "Compilar";
             this.ButtonCompilate.UseVisualStyleBackColor = false;
@@ -126,9 +126,9 @@ namespace Proyecto2
             this.ButtonOptimize.BackColor = System.Drawing.Color.Thistle;
             this.ButtonOptimize.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.ButtonOptimize.ForeColor = System.Drawing.Color.Blue;
-            this.ButtonOptimize.Location = new System.Drawing.Point(1168, 166);
+            this.ButtonOptimize.Location = new System.Drawing.Point(1166, 166);
             this.ButtonOptimize.Name = "ButtonOptimize";
-            this.ButtonOptimize.Size = new System.Drawing.Size(109, 36);
+            this.ButtonOptimize.Size = new System.Drawing.Size(111, 36);
             this.ButtonOptimize.TabIndex = 11;
             this.ButtonOptimize.Text = "Optimizar";
             this.ButtonOptimize.UseVisualStyleBackColor = false;
@@ -139,11 +139,11 @@ namespace Proyecto2
             this.ButtonRule2.BackColor = System.Drawing.Color.Thistle;
             this.ButtonRule2.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.ButtonRule2.ForeColor = System.Drawing.Color.Blue;
-            this.ButtonRule2.Location = new System.Drawing.Point(1168, 220);
+            this.ButtonRule2.Location = new System.Drawing.Point(1166, 220);
             this.ButtonRule2.Name = "ButtonRule2";
-            this.ButtonRule2.Size = new System.Drawing.Size(109, 36);
+            this.ButtonRule2.Size = new System.Drawing.Size(111, 36);
             this.ButtonRule2.TabIndex = 10;
-            this.ButtonRule2.Text = "Regla No.2";
+            this.ButtonRule2.Text = "Regla 2";
             this.ButtonRule2.UseVisualStyleBackColor = false;
             this.ButtonRule2.Click += new System.EventHandler(this.ButtonRule2_Click);
             // 
@@ -152,9 +152,9 @@ namespace Proyecto2
             this.ButtonReports.BackColor = System.Drawing.Color.Thistle;
             this.ButtonReports.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.ButtonReports.ForeColor = System.Drawing.Color.Blue;
-            this.ButtonReports.Location = new System.Drawing.Point(1168, 274);
+            this.ButtonReports.Location = new System.Drawing.Point(1166, 274);
             this.ButtonReports.Name = "ButtonReports";
-            this.ButtonReports.Size = new System.Drawing.Size(109, 36);
+            this.ButtonReports.Size = new System.Drawing.Size(111, 36);
             this.ButtonReports.TabIndex = 12;
             this.ButtonReports.Text = "Reportes";
             this.ButtonReports.UseVisualStyleBackColor = false;

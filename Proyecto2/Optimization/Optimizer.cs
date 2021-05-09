@@ -381,42 +381,6 @@ namespace Proyecto2.Optimization
                                     // Regex 
                                     Regex GotoTrue = new Regex(PatternGotoTrue);
 
-                                    // Recorrer Lista De Instrucciones 
-                                    for(int CounterAuxiliary = 0; CounterAuxiliary < PosIf; CounterAuxiliary++) 
-                                    {
-
-                                        // Buscar Goto 
-                                        if(GotoTrue.IsMatch(AuxiliaryArray[CounterAuxiliary].TextLine)) 
-                                        {
-
-                                            // Eliminar False 
-                                            Delete = false;
-
-                                            // Break
-                                            break;
-
-                                        }
-
-                                    }
-
-                                    // Recorrer Lista De Instrucciones 
-                                    for (int CounterAuxiliary = CounterLabel + 1; CounterAuxiliary < AuxiliaryArray.Count; CounterAuxiliary++)
-                                    {
-                               
-                                        // Buscar Goto 
-                                        if (GotoTrue.IsMatch(AuxiliaryArray[CounterAuxiliary].TextLine))
-                                        {
-
-                                            // Eliminar False 
-                                            Delete = false;
-
-                                            // Break
-                                            break;
-
-                                        }
-
-                                    }
-
                                     // Verificar Si Agrego 
                                     if (NumeroEtiquetas == 1 && Delete) 
                                     {

@@ -146,8 +146,8 @@ begin
         write('El valor de i: ');
         writeln(i);
         i := i - 2;
-    end;
-	until (i = 0);
+	end;
+    until (i = 0);
 
     writeln('-----------------------');
 end;

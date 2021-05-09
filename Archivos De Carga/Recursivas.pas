@@ -10,7 +10,7 @@ begin
             factorial := n * factorial(n - 1);
         end; 
 end;
-(*------------- Me Daba Problemas Asi Que Agregue La Llamad A Una Variable -------------------*)
+(* ------------------------- Agregue Una Variable Por Que Ackermann No Funcionaba -----------*)
 function ackermann(m,n: integer): integer;
 var aux : integer;
 begin
@@ -28,7 +28,7 @@ begin
             ackermann := ackermann(m - 1, aux);
         end;
 end;
-(* -------------------------------------- Agregue ; -----------------------------------------*)
+(* ------------------------------------------- Agregue ; ------------------------------------------ *)
 procedure Hanoi(discos:integer; origen,aux,destino:string);
 begin
     if(discos=1) then

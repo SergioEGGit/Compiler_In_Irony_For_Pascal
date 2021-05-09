@@ -85,7 +85,10 @@ namespace Proyecto2
             VariablesMethods.OptimizedList = new LinkedList<Optimization.OptimizationTable>();
 
             // Contador Reporte 
-            VariablesMethods.AuxiliaryCounterRep = 0;
+            VariablesMethods.AuxiliaryCounterRep += 1;
+
+            // Contador Auxiliary 
+            VariablesMethods.AuxiliaryCounterOp = 0;
 
             // Recorrer Array Auxiliar 
             for (int Counter = 0; Counter < LineSplit.Length; Counter++) 
@@ -139,7 +142,10 @@ namespace Proyecto2
             VariablesMethods.OptimizedList = new LinkedList<Optimization.OptimizationTable>();
 
             // Contador Reporte 
-            VariablesMethods.AuxiliaryCounterRep = 0;
+            VariablesMethods.AuxiliaryCounterRep += 1;
+
+            // Contador Auxiliary 
+            VariablesMethods.AuxiliaryCounterOp = 0;
 
             // Recorrer Array Auxiliar 
             for (int Counter = 0; Counter < LineSplit.Length; Counter++)
