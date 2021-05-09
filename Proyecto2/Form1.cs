@@ -1,6 +1,7 @@
 ﻿// ------------------------------------------ Librerias E Imports ---------------------------------------------------
 using System;
 using System.Windows.Forms;
+using System.Collections.Generic;
 using Proyecto2.Misc;
 
 // ------------------------------------------------ NameSpace -------------------------------------------------------
@@ -12,6 +13,9 @@ namespace Proyecto2
     {
         // Instancia Clase Irony_Analyze
         readonly Irony_Resources.Irony_Parser ParserTranslate = new Irony_Resources.Irony_Parser();
+
+        // Instancia Clase Optimizar
+        readonly Optimization.Optimizer OptimizeMethod = new Optimization.Optimizer();
 
         // Constructor Inicial 
         public Form1()
@@ -65,20 +69,110 @@ namespace Proyecto2
         }
 
         // Acción Click Botón Ejecutar
-        private void ButtonExecute_Click(object sender, EventArgs e)
+        private void ButtonOptimize_Click(object sender, EventArgs e)
         {
 
             // Obtener Texto De Consola De Entrada 
             String EntranceString = TextEntrance.Text;
 
-            // Analizar Texto 
-            ParserTranslate.AnalyzeExecute(EntranceString);
+            // Array De Lineas 
+            String[] LineSplit = EntranceString.Split("\n");
+
+            // Lista
+            List<Optimization.CodeLine> LineArray = new List<Optimization.CodeLine>();
+
+            // Vaciar Lista 
+            VariablesMethods.OptimizedList = new LinkedList<Optimization.OptimizationTable>();
+
+            // Contador Reporte 
+            VariablesMethods.AuxiliaryCounterRep = 0;
+
+            // Recorrer Array Auxiliar 
+            for (int Counter = 0; Counter < LineSplit.Length; Counter++) 
+            {
+
+                // Agregar A Array Lineas 
+                LineArray.Add(new Optimization.CodeLine(Counter, LineSplit[Counter]));
+            
+            }
+
+            // Optimizar Texto
+            LineArray = OptimizeMethod.OptimizerMethod(LineArray);
 
             // Limpiar Consola 
             TextConsole.Text = "";
 
+            // Obtener String Linas 
+            String OutputConsole = "";
+
+            // Recorrer Array 
+            foreach(Optimization.CodeLine Line in LineArray) 
+            {
+
+                // Agregar A Salida 
+                OutputConsole += Line.TextLine + "\n";
+            
+            }
+
             // Agregar Ejecucion
-            TextConsole.Text = VariablesMethods.ExecuteString;
+            TextConsole.Text = OutputConsole;           
+
+            // Abrir Reporte 
+            VariablesMethods.ReportOptimizeTable();
+
+        }
+
+        // Acción Click Botón Ejecutar
+        private void ButtonRule2_Click(object sender, EventArgs e)
+        {
+
+            // Obtener Texto De Consola De Entrada 
+            String EntranceString = TextEntrance.Text;
+
+            // Array De Lineas 
+            String[] LineSplit = EntranceString.Split("\n");
+
+            // Lista
+            List<Optimization.CodeLine> LineArray = new List<Optimization.CodeLine>();
+
+            // Vaciar Lista 
+            VariablesMethods.OptimizedList = new LinkedList<Optimization.OptimizationTable>();
+
+            // Contador Reporte 
+            VariablesMethods.AuxiliaryCounterRep = 0;
+
+            // Recorrer Array Auxiliar 
+            for (int Counter = 0; Counter < LineSplit.Length; Counter++)
+            {
+
+                // Agregar A Array Lineas 
+                LineArray.Add(new Optimization.CodeLine(Counter, LineSplit[Counter]));
+
+            }
+
+            // Optimizar Texto
+            LineArray = OptimizeMethod.OptimizerMethodRule2(LineArray);
+
+            // Limpiar Consola 
+            TextConsole.Text = "";
+
+            // Obtener String Linas 
+            String OutputConsole = "";
+
+            // Recorrer Array 
+            foreach (Optimization.CodeLine Line in LineArray)
+            {
+
+                // Agregar A Salida 
+                OutputConsole += Line.TextLine + "\n";
+
+            }
+
+            // Agregar Ejecucion
+            TextConsole.Text = OutputConsole;
+
+            // Abrir Reporte 
+            VariablesMethods.ReportOptimizeTable();
 
         }
 

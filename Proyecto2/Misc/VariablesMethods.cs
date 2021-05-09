@@ -26,6 +26,9 @@ namespace Proyecto2.Misc
         // Lista De Ambientes
         public static LinkedList<Misc.EnviromentTable> EnviromentList = new LinkedList<EnviromentTable>();
 
+        // Lista De Optimización 
+        public static LinkedList<Optimization.OptimizationTable> OptimizedList = new LinkedList<Optimization.OptimizationTable>();
+
         // String Que Contiene La Traduccion 
         public static String TranslateString = "";
 
@@ -37,6 +40,9 @@ namespace Proyecto2.Misc
 
         // Contador De Errores 
         public static int AuxiliaryCounterRep = 1;
+
+        // Contador De Optimizador 
+        public static int AuxiliaryCounterOp = 0;
 
         // Arreglo Auxiliar Identacion
         public static Stack AuxiliaryPile = new Stack();
@@ -339,6 +345,117 @@ namespace Proyecto2.Misc
 
                 // Ejecutar Comando 
                 VariablesMethods.ExecuteCommand("C:\\compiladores2\\ReporteTablaDeErrores.html");
+
+            }
+            catch (Exception)
+            {
+
+                // Mostrar Mensaje De Error 
+                MessageBox.Show("Error Al Generar El Reporte!");
+
+            }
+
+        }
+
+        // Método Reporte Tabla De Simbolos
+        public static void ReportOptimizeTable()
+        {
+
+            // Cadena Html 
+            String HtmlString = "<html> \n" +
+                                 "<head> <title> Reporte De Optimización </title> </head>\n" +
+                                 "<body style=\"background-color:#FFE4B5; \">\n" +
+                                 "  <center>\n" +
+                                 "      <font size=\"5\" face=\"Times New Roman\">\n" +
+                                 "      <table class=\"default\" width=\"100%\" style=\"font-size: 20px\">\n" +
+                                 "          <h1> Reporte De Optimización </h1>" +
+                                 "          <tbody style=\"background: rgba(128, 255, 0, 0.3);\">\n" +
+                                 "              <tr>\n" +
+                                 "                  <th> No. </th>\n" +
+                                 "                  <th> Tipo De Optimización </th>\n" +
+                                 "                  <th> Regla De Optimización </th>\n" +
+                                 "                  <th> Codigo Eliminado </th>\n" +
+                                 "                  <th> Codigo Agregado </th>\n" +
+                                 "                  <th> Fila </th> \n" +
+                                 "              </tr>\n" +
+                                 "          </tbody>\n";
+
+            // Bandera Auxiliar 
+            int Auxiliary = 0;
+
+            // Recorrer Simbolos
+            foreach (Optimization.OptimizationTable Valor in VariablesMethods.OptimizedList)
+            {
+
+                if (Auxiliary == 0)
+                {
+
+                    // Agregar Fila
+                    HtmlString += "          <tbody style=\"background: #00BFFF;\">\n" +
+                                    "             <tr>\n" +
+                                    "                 <td><center>" + Valor.AuxiliaryCounter.ToString() + "</center></td>\n" +
+                                    "                 <td><center>" + Valor.OptimizeType + "</center></td>\n" +
+                                    "                 <td><center>" + Valor.OptimizationRule + "</center></td>\n" +
+                                    "                 <td><center>" + Valor.CodeRemoved + "</center></td>\n" +
+                                    "                 <td><center>" + Valor.CodeAdded + "</center></td>\n" +
+                                    "                 <td><center>" + Valor.Line + "</center></td>\n" +
+                                    "             </tr>\n" +
+                                    "          </tbody>\n";
+
+                    // Mover Contador 
+                    Auxiliary = 1;
+
+                }
+                else
+                {
+
+                    // Agregar Fila
+                    HtmlString += "          <tbody style=\"background: #00BFFF;\">\n" +
+                                    "             <tr>\n" +
+                                    "                 <td><center>" + Valor.AuxiliaryCounter.ToString() + "</center></td>\n" +
+                                    "                 <td><center>" + Valor.OptimizeType + "</center></td>\n" +
+                                    "                 <td><center>" + Valor.OptimizationRule + "</center></td>\n" +
+                                    "                 <td><center>" + Valor.CodeRemoved + "</center></td>\n" +
+                                    "                 <td><center>" + Valor.CodeAdded + "</center></td>\n" +
+                                    "                 <td><center>" + Valor.Line + "</center></td>\n" +
+                                    "             </tr>\n" +
+                                    "          </tbody>\n";
+
+                    // Mover Contador 
+                    Auxiliary = 0;
+
+                }
+
+            }
+
+            // Agregar Resto Tabla
+            HtmlString += "      </table>\n" +
+                          "  </center>\n" +
+                          "</body>\n" +
+                          "</html>";
+
+            // Escribir Archivo
+            // Try Catch Para Evitar Errores 
+            try
+            {
+
+                // Crear FStream Archivo 
+                FileStream SimpleFileStream = File.Create("C:\\compiladores2\\ReporteOptimizacion_" + AuxiliaryCounterRep.ToString() + ".html");
+
+                // Crear Arreglo De Bytes Para Escribir La Cadena 
+                byte[] ArchiveData = new UTF8Encoding(true).GetBytes(HtmlString);
+
+                // Escribir Arreglo En Archivo 
+                SimpleFileStream.Write(ArchiveData, 0, ArchiveData.Length);
+
+                // Cerrar Archivo 
+                SimpleFileStream.Close();
+
+                // Ejecutar Comando 
+                VariablesMethods.ExecuteCommand("C:\\compiladores2\\ReporteOptimizacion_" + AuxiliaryCounterRep.ToString() + ".html");
+
+                // Aumentar Contador 
+                AuxiliaryCounterRep += 1;
 
             }
             catch (Exception)
