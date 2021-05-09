@@ -437,6 +437,41 @@ namespace Proyecto2.Misc
 
         }
 
+        // Obtener Variable De Tabla De Simbolos
+        public FunctionTable GetFunctionStackAnidate(String FuncName)
+        {
+
+            // Obtener Entorno Actual
+            EnviromentTable ActualEnv = this;
+
+            // Recorrer Entornos
+            while (ActualEnv != null)
+            {
+
+                // Recorrer Lista De Variables 
+                foreach(KeyValuePair<String, FunctionTable> ActualFunc in ActualEnv.FunctionsStack) 
+                {
+
+                    // Verificar Si Contiene 
+                    if(ActualFunc.Value.Identifier.Contains(FuncName + "_Env_Func_")) 
+                    {
+
+                        return ActualFunc.Value;
+                    
+                    }
+                
+                }
+                
+                // Avanzar Puntero
+                ActualEnv = ActualEnv.ParentEnviroment;
+
+            }
+
+            // Retornar Null
+            return null;
+
+        }
+
         // Buscar Ciclos 
         public bool SearchCycles() 
         {

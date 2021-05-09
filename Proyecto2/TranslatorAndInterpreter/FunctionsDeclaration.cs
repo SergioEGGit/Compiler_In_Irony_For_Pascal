@@ -22,7 +22,7 @@ namespace Proyecto2.TranslatorAndInterpreter
         private readonly String ReturnType;
 
         // Identificaro 
-        private readonly String Identifier;
+        private String Identifier;
 
         // LIsta De Parametros 
         private readonly LinkedList<ObjectReturn> ParamsList;
@@ -472,7 +472,7 @@ namespace Proyecto2.TranslatorAndInterpreter
         {
 
             // Verficar Si ESta Compilador 
-            if(!IsCompile) 
+            if (!IsCompile) 
             {
 
                 // Ya ESta Comiplador
@@ -518,6 +518,14 @@ namespace Proyecto2.TranslatorAndInterpreter
 
                 }
 
+                // Verificar Si Esta Anidada 
+                if(this.Anidate) 
+                {
+
+                    this.Identifier += "_" + Env.EnviromentName;
+                
+                }
+
                 // Verificar Que No Exista La Funcion
                 bool Flag = Env.AddFunctionStack(this.TypeFunc, this.Identifier, this.ReturnType, this.ParamsList, this.DeclarationsList, this.InstruccionsList, Env.EnviromentName, this.TokenLine, this.TokenColumn, Env, ArrayAuxiliary.Count);
 
@@ -537,19 +545,19 @@ namespace Proyecto2.TranslatorAndInterpreter
             // Verificar Que No Exista La Funcion
             FunctionTable ActualFunc = Env.GetFunctionStack(this.Identifier);
 
-             // Verificar SI Se Agrego 
-            if(ActualFunc != null)
+            // Verificar SI Se Agrego 
+            if (ActualFunc != null)
             {
 
                 // Obtener Instancia 
                 ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;
 
                 // Crear Entorno 
-                EnviromentTable Func_Env = new EnviromentTable(Env, "Env_Func_" + this.Identifier) 
+                EnviromentTable Func_Env = new EnviromentTable(Env, "Env_Func_" + this.Identifier)
                 {
-                
+
                     ActualFunction = ActualFunc
-                
+
                 };
 
                 // Crear Etiqueta Retorno 
@@ -562,7 +570,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                 Func_Env.SetFunctionEnv(ReturnLabel);
 
                 // Verificar Parametros 
-                if(ActualFunc.ParamsList != null)
+                if (ActualFunc.ParamsList != null)
                 {
                     
                     // Obtener Parametros 
@@ -628,6 +636,48 @@ namespace Proyecto2.TranslatorAndInterpreter
 
                 }
 
+                // Auxiliary 
+                List<AbstractInstruccion> AnidateFunctions = new List<AbstractInstruccion>();
+
+                // Verificar Si Es Diferente De Null
+                if (this.DeclarationsList != null) 
+                {
+
+                    // Compilar Declaraciones
+                    foreach (AbstractInstruccion Declaration in this.DeclarationsList)
+                    {
+
+                        // Verificar Si Son Funciones 
+                        if (typeof(FunctionsDeclaration).IsInstanceOfType(Declaration))
+                        {
+
+                            // Compilar 
+                            AnidateFunctions.Add(Declaration);
+
+                        }
+
+                    }
+
+                }
+
+                // Verificar Si Esta Null
+                if(AnidateFunctions != null) 
+                {
+
+                    // REcorrer Funciones Anidadas
+                    foreach (AbstractInstruccion Function in AnidateFunctions)
+                    {
+
+                        // Marcar Como Anidada
+                        Function.Anidate = true;
+                        
+                        // Compilar Funcion 
+                        Function.Compilate(Func_Env);
+
+                    }
+
+                }
+
                 // Limpiar Temporales 
                 Instance_1.ResetTemporaryArray();
 
@@ -645,8 +695,14 @@ namespace Proyecto2.TranslatorAndInterpreter
                     foreach (AbstractInstruccion Declaration in this.DeclarationsList)
                     {
 
-                        // Compilar 
-                        Declaration.Compilate(Func_Env);
+                        // Verificar Si Son Funciones 
+                        if(!typeof(FunctionsDeclaration).IsInstanceOfType(Declaration))
+                        {
+
+                            // Compilar 
+                            Declaration.Compilate(Func_Env);
+
+                        }
 
                     }
 
@@ -660,6 +716,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                     foreach (AbstractInstruccion Instruccion in this.InstruccionsList)
                     {
 
+                        
                         // Compilar 
                         Instruccion.Compilate(Func_Env);
 
@@ -687,7 +744,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                 Instance_1.AddFuncEnd();
 
                 // Setear Array TEmporales 
-                Instance_1.SetTemporaryArray(TemporaryArray);
+                Instance_1.SetTemporaryArray(TemporaryArray);                
 
             }
 

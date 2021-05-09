@@ -919,8 +919,20 @@ namespace Proyecto2.TranslatorAndInterpreter
         public override object Compilate(EnviromentTable Env)
         {
 
-            // Buscar Funcion 
-            FunctionTable ActualFunction = Env.GetFunctionStack(this.Identifier);
+            // Funcion 
+            FunctionTable ActualFunction;
+   
+            // Verificar Si No Es Anidada 
+            ActualFunction = Env.GetFunctionStack(this.Identifier);
+
+            // Verificar Si No ES Nullo
+            if (ActualFunction == null)
+            {
+            
+                // Buscar Anidadas 
+                ActualFunction = Env.GetFunctionStackAnidate(this.Identifier);
+
+            }
 
             // Obteener Instancia 
             ThreeAddressCode Instance_1 = ThreeAddressCode.GetInstance;

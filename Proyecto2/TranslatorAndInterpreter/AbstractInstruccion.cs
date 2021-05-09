@@ -13,6 +13,9 @@ namespace Proyecto2.TranslatorAndInterpreter
         // Bool Auxiliary 
         public String BoolAux = "";
 
+        // Es Anidado 
+        public bool Anidate = false;
+
         // Creación De Metodos Abstractos 
 
         // Método Traducir 
