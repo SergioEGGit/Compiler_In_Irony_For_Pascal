@@ -190,7 +190,7 @@ namespace Proyecto2.TranslatorAndInterpreter
 
                     // Buscar Variable 
                     SymbolTable ActualVar = Env.GetVariableStack(this.Value.ToString());
-                   
+                    
                     // Obtener Variable 
                     if (ActualVar != null)
                     {
@@ -198,7 +198,6 @@ namespace Proyecto2.TranslatorAndInterpreter
                         // Agregar Comentario 
                         Instancia_1.AddCommentOneLine("Obtener Valor De Variable", CommentAuxiliary);
 
-                        // Verificar Si Es Global 
                         if (ActualVar.IsGlobalVar)
                         {
 
@@ -209,8 +208,33 @@ namespace Proyecto2.TranslatorAndInterpreter
                         else 
                         {
 
-                            // Agrebar Mover Puntero
-                            Instancia_1.AddTwoExpression(TemporaryAuxiliary, "SP", "+", ActualVar.GetValue(), InsAuxiliary);
+                            // Verificar Si Es Anidada 
+                            if(this.Anidate)
+                            {
+                          
+                                // Crear Temporal 
+                                String Temporary_1 = Instancia_1.CreateTemporary();
+
+                                // Limpiar Temporal 
+                                Instancia_1.DeleteTemporary(Temporary_1);
+
+                                // Auxiliary Size 
+                                int EnvChange = Env.GetPositionVar(this.Value.ToString());
+                      
+                                // Obtener Valor Restar
+                                Instancia_1.AddTwoExpression(Temporary_1, "SP", "-", EnvChange.ToString(), "Dos");
+
+                                // Añadir Expression 
+                                Instancia_1.AddTwoExpression(TemporaryAuxiliary, Temporary_1, "+", ActualVar.GetValue(), "Dos");
+
+                            }
+                            else
+                            {
+
+                                // Añadir Expression 
+                                Instancia_1.AddTwoExpression(TemporaryAuxiliary, "SP", "+", ActualVar.GetValue(), "Dos");
+
+                            }
 
                         }
 

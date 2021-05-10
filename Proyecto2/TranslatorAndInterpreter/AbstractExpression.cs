@@ -21,6 +21,9 @@ namespace Proyecto2.TranslatorAndInterpreter
         // Es Global 
         public bool IsGlobal = false;
 
+        // Es Anidada 
+        public bool Anidate = false;
+
         // Creación De Metodos Abstractos 
 
         // Método Traducir 

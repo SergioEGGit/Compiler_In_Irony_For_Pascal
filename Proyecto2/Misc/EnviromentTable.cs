@@ -1,6 +1,7 @@
 ﻿// ------------------------------------------ Librerias E Imports ---------------------------------------------------
 using System.Collections.Generic;
 using System;
+using System.Windows.Forms;
 using Proyecto2.TranslatorAndInterpreter;
 
 // ------------------------------------------------ NameSpace -------------------------------------------------------
@@ -253,6 +254,48 @@ namespace Proyecto2.Misc
 
             // Retornar Null
             return null;
+
+        }
+
+        // Obtener Variable De Tabla De Simbolos
+        public int GetPositionVar(String VarName)
+        {
+
+            // Obtener Entorno Actual
+            EnviromentTable ActualEnv = this;
+
+            // Numero 
+            int SizeRestar = 0;
+
+            // Recorrer Entornos
+            while (ActualEnv != null)
+            {
+                
+                // Buscar Variable 
+                if (ActualEnv.PrimitiveVariablesStack.ContainsKey(VarName.ToLower()) && ActualEnv.ParentEnviroment != null)
+                {
+
+                    // Retornar Variable 
+                    return SizeRestar;
+
+                }
+
+                // Verificar Que No Sea Este Ambiente 
+                if (ActualEnv != this)
+                {
+
+                    // Valor De Entornos 
+                    SizeRestar += ActualEnv.EnviromentSize;
+
+                }
+
+                // Avanzar Puntero
+                ActualEnv = ActualEnv.ParentEnviroment;
+
+            }
+
+            // Retornar Null
+            return 0;
 
         }
 

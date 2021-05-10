@@ -640,7 +640,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                 List<AbstractInstruccion> AnidateFunctions = new List<AbstractInstruccion>();
 
                 // Verificar Si Es Diferente De Null
-                if (this.DeclarationsList != null) 
+                if (this.DeclarationsList != null)
                 {
 
                     // Compilar Declaraciones
@@ -661,7 +661,7 @@ namespace Proyecto2.TranslatorAndInterpreter
                 }
 
                 // Verificar Si Esta Null
-                if(AnidateFunctions != null) 
+                if (AnidateFunctions != null)
                 {
 
                     // REcorrer Funciones Anidadas
@@ -670,7 +670,7 @@ namespace Proyecto2.TranslatorAndInterpreter
 
                         // Marcar Como Anidada
                         Function.Anidate = true;
-                        
+
                         // Compilar Funcion 
                         Function.Compilate(Func_Env);
 
@@ -694,10 +694,13 @@ namespace Proyecto2.TranslatorAndInterpreter
                     // Compilar Declaraciones
                     foreach (AbstractInstruccion Declaration in this.DeclarationsList)
                     {
-
+                  
                         // Verificar Si Son Funciones 
                         if(!typeof(FunctionsDeclaration).IsInstanceOfType(Declaration))
                         {
+
+                            // Declaration False 
+                            Declaration.Anidate = false;
 
                             // Compilar 
                             Declaration.Compilate(Func_Env);
@@ -716,7 +719,16 @@ namespace Proyecto2.TranslatorAndInterpreter
                     foreach (AbstractInstruccion Instruccion in this.InstruccionsList)
                     {
 
+
+                        // Verificar Si ES Anidada 
+                        if(this.Anidate) 
+                        {
+
+                            // Es Anidada
+                            Instruccion.Anidate = true;
                         
+                        }
+
                         // Compilar 
                         Instruccion.Compilate(Func_Env);
 

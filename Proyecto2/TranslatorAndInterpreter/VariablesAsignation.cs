@@ -357,8 +357,33 @@ namespace Proyecto2.TranslatorAndInterpreter
                             else
                             {
 
-                                // Añadir Expression 
-                                Instance_1.AddTwoExpression(Temporary, "SP", "+", ActualVar.GetValue(), "Dos");
+                                // Verificar Si Es Anidada 
+                                if (this.Anidate)
+                                {
+
+                                    // Crear Temporal 
+                                    String TemporaryAuxiliary = Instance_1.CreateTemporary();
+
+                                    // Limpiar Temporal 
+                                    Instance_1.DeleteTemporary(TemporaryAuxiliary);
+
+                                    // Auxiliary Size 
+                                    int EnvChange = Env.GetPositionVar(this.Identifier);
+
+                                    // Obtener Valor Restar
+                                    Instance_1.AddTwoExpression(TemporaryAuxiliary, "SP", "-", EnvChange.ToString(), "Dos");
+
+                                    // Añadir Expression 
+                                    Instance_1.AddTwoExpression(Temporary, TemporaryAuxiliary, "+", ActualVar.GetValue(), "Dos");
+
+                                }
+                                else 
+                                {
+
+                                    // Añadir Expression 
+                                    Instance_1.AddTwoExpression(Temporary, "SP", "+", ActualVar.GetValue(), "Dos");
+
+                                }
 
                             }
 

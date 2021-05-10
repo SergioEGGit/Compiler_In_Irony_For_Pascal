@@ -1,70 +1,53 @@
-program Funciones;
-function factorial(n: integer): integer;
-begin
-    if (n = 0) then
-        begin
-            factorial := 1;
-        end
-    else
-        begin
-            factorial := n * factorial(n - 1);
-        end; 
-end;
-(* ------------------------- Agregue Una Variable Por Que Ackermann No Funcionaba -----------*)
-function ackermann(m,n: integer): integer;
-var aux : integer;
-begin
-    if (m = 0) then
-        begin
-            ackermann := n + 1;
-        end
-    else if (m>0) AND (n = 0) then
-        begin
-            ackermann := ackermann(m - 1, 1);
-        end
-    else
-        begin
-			aux := ackermann(m,n - 1);
-            ackermann := ackermann(m - 1, aux);
+program anidadas;
+var
+	w : integer = 1;
+	x : integer = 2;
+	y : integer = 3;
+	z : integer = 4;
+  procedure p1(a : integer; var b : integer);
+    var
+		w : integer = 11;
+        x : integer = 12;
+		y : integer = 13;
+	procedure p11();
+		var
+			w : integer = 21;
+			x : integer = 22;
+		procedure p111();
+    		var
+				w : integer = 31;
+			begin
+				writeln('Local 31 = ',w);
+				writeln('Ambito Padre 22 = ',x);
+				writeln('Ambito Padre de Padre 13 = ',y);
+				writeln('Global 4 = ',z);
+				writeln('Parametro por valor de Padre de Padre 1 = ',a);
+				writeln('Parametro por referencia de Padre de Padre 2 = ',b);
+				b := 1000;
+			end;
+    	begin
+			p111();
         end;
-end;
-(* ------------------------------------------- Agregue ; ------------------------------------------ *)
-procedure Hanoi(discos:integer; origen,aux,destino:string);
+  begin
+      p11();
+  end;
+  procedure p11();
+  begin
+	writeln('Aqui no debe entrar');
+  end;
 begin
-    if(discos=1) then
-        begin
-            writeln('Mover Disco de ',origen,' a ',destino);
-        end
-    else
-        Begin
-            Hanoi(discos-1,origen,destino,aux);
-            writeln('Mover disco de ',origen,' a ',destino);
-            Hanoi(discos-1,aux,origen,destino);
-        End;
-end;
-
-begin
-    writeln('1 Factorial');
-    writeln(factorial(6));
-
-    writeln('2 Ackermann');
-    writeln(ackermann(3,4));
-    
-    writeln('3 Hanoi');
-    Hanoi(3, 'A', 'B', 'C');
+	writeln('Valor Antes 2 = ',x);
+	p1(1,x);
+	writeln('Valor Despues 1000 = ',x);
 end.
 
 {
-    1 Factorial
-    720
-    2 Ackermann
-    125
-    3 Hanoi
-    Mover Disco de A a C
-    Mover disco de A a B
-    Mover Disco de C a B
-    Mover disco de A a C
-    Mover Disco de B a A
-    Mover disco de B a C
-    Mover Disco de A a C
+Valor Antes 2 = 2
+Local 31 = 31
+Ambito Padre 22 = 22
+Ambito Padre de Padre 13 = 13
+Global 4 = 4
+Parametro por valor de Padre de Padre 1 = 1
+Parametro por referencia de Padre de Padre 2 = 2
+Valor Despues 1000 = 1000
 }

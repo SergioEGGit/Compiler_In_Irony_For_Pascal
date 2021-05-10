@@ -247,6 +247,15 @@ namespace Proyecto2.TranslatorAndInterpreter
                 foreach(AbstractExpression Expression in ExpressionList)
                 {
 
+                    // Verificar Si Es Anidado 
+                    if (this.Anidate) 
+                    {
+
+                        // Expression 
+                        Expression.Anidate = true;
+                    
+                    }                    
+                    
                     // Verificar Que No SEa Nullo
                     if(Expression != null)
                     {
